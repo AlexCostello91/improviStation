@@ -1,12 +1,4 @@
 version: '3.8'
-
-# services:
-#   devcontainer:
-#     image: devcontainer
-#     build:
-#       context: .
-#       dockerfile: ./Dockerfile
-
 services:
   nginx:
     build: ./docker/nginx
@@ -14,7 +6,7 @@ services:
       - "80:80"
       - "443:443"
     volumes: 
-      - .:/var/www/html/
+      - .:/var/www/html
   php-fpm:
     build: ./docker/php-fpm
     environment:
@@ -23,7 +15,7 @@ services:
       - DB_PASSWORD=$DB_PASSWORD
       - DB_PORT=3306
     volumes: 
-      - .:/var/www/html/
+      - .:/var/www/html
   mariadb:
     image: mariadb:10.10.2
     environment:
