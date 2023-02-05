@@ -1,5 +1,6 @@
 <?php
 echo 'Hello World'.PHP_EOL;
+echo 123;
 try {
     $dbh = new PDO("mysql:host=".gethostbyname('mariadb').";dbname=".getenv('DB_DATABASE'), getenv('DB_USER'), getenv('DB_PASSWORD'), [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
