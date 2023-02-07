@@ -2,5 +2,17 @@
 	"name": "Laravel Dev Environment",
 	"service": "php-fpm",
 	"dockerComposeFile": "../docker-compose.yml",
-	"workspaceFolder": "/var/www/html"
+	"workspaceFolder": "/var/www/html",
+	//Set up laravel permissions for development
+	"postAttachCommand": "bash",
+
+	"extensions": [
+        "bmewburn.vscode-intelephense-client",
+        "eamodio.gitlens",
+        "EditorConfig.EditorConfig",
+        "mikestead.dotenv",
+        "onecentlin.laravel-blade",
+        "onecentlin.laravel5-snippets",
+        "shufo.vscode-blade-formatter"
+    ]
 }

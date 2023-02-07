@@ -5,7 +5,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    volumes: 
+    volumes:
       - .:/var/www/html
   php-fpm:
     build: ./docker/php-fpm
@@ -14,12 +14,14 @@ services:
       - DB_USER=$DB_USERNAME
       - DB_PASSWORD=$DB_PASSWORD
       - DB_PORT=3306
-    volumes: 
+    volumes:
       - .:/var/www/html
   mariadb:
     image: mariadb:10.10.2
     environment:
-      - MARIADB_ROOT_PASSWORD=$DB_ROOT_PASS
       - MARIADB_DATABASE=$DB_DATABASE
       - MARIADB_USER=$DB_USERNAME
       - MARIADB_PASSWORD=$DB_PASSWORD
+      - MARIADB_ROOT_PASSWORD=$DB_ROOT_PASS
+  redis:
+     image: redis:7.0.8-alpine
