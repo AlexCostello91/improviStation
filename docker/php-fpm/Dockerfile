@@ -12,6 +12,4 @@ RUN  apt-get update \
 	&& docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install pdo pdo_mysql \
     && pecl install redis \
-	&& docker-php-ext-enable redis \
-	&& curl -sSL https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/local/bin/composer
+	&& docker-php-ext-enable redis

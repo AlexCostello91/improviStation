@@ -25,3 +25,7 @@ services:
       - MARIADB_ROOT_PASSWORD=$DB_ROOT_PASS
   redis:
      image: redis:7.0.8-alpine
+  cli:
+    build: ./docker/cli
+    volumes:
+      - .:/var/www/html

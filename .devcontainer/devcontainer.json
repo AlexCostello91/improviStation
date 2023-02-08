@@ -1,18 +1,22 @@
 {
 	"name": "Laravel Dev Environment",
-	"service": "php-fpm",
+	"service": "cli",
 	"dockerComposeFile": "../docker-compose.yml",
 	"workspaceFolder": "/var/www/html",
 	//Set up laravel permissions for development
 	"postAttachCommand": "bash",
-
-	"extensions": [
-        "bmewburn.vscode-intelephense-client",
-        "eamodio.gitlens",
-        "EditorConfig.EditorConfig",
-        "mikestead.dotenv",
-        "onecentlin.laravel-blade",
-        "onecentlin.laravel5-snippets",
-        "shufo.vscode-blade-formatter"
-    ]
+	"remoteUser": "www-data",
+    "customizations": {
+		"vscode": {
+			"extensions": [
+				"bmewburn.vscode-intelephense-client",
+                "eamodio.gitlens",
+                "EditorConfig.EditorConfig",
+                "mikestead.dotenv",
+                "onecentlin.laravel-blade"
+			// "onecentlin.laravel5-snippets",
+        	// "shufo.vscode-blade-formatter"
+			]
+		}
+	}
 }
