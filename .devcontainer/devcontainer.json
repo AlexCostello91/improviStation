@@ -4,8 +4,8 @@
 	"dockerComposeFile": "../docker-compose.yml",
 	"workspaceFolder": "/var/www/html",
 	//Set up laravel permissions for development
-	"postAttachCommand": "bash",
 	"remoteUser": "www-data",
+    "postStartCommand": "bash",
     "customizations": {
 		"vscode": {
 			"extensions": [
@@ -13,9 +13,10 @@
                 "eamodio.gitlens",
                 "EditorConfig.EditorConfig",
                 "mikestead.dotenv",
-                "onecentlin.laravel-blade"
-			// "onecentlin.laravel5-snippets",
-        	// "shufo.vscode-blade-formatter"
+                "onecentlin.laravel-blade",
+                "vue.volar",
+			    "onecentlin.laravel5-snippets",
+                "phiter.phpstorm-snippets"
 			]
 		}
 	}

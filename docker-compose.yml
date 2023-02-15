@@ -9,6 +9,7 @@ services:
       - .:/var/www/html
   php-fpm:
     build: ./docker/php-fpm
+    user: 82:82 #82/82 is the www-data user/group on alpine images typically
     environment:
       - DB_DATABASE=$DB_DATABASE
       - DB_USER=$DB_USERNAME
@@ -24,8 +25,21 @@ services:
       - MARIADB_PASSWORD=$DB_PASSWORD
       - MARIADB_ROOT_PASSWORD=$DB_ROOT_PASS
   redis:
-     image: redis:7.0.8-alpine
+    image: redis:7.0.8-alpine
   cli:
     build: ./docker/cli
+    user: 82:82
     volumes:
       - .:/var/www/html
+  node:
+    image: node:19.6-alpine
+    user: 82:82
+    working_dir: /home/www-data/app
+    environment:
+      - NODE_ENV=development
+      - NPM_CONFIG_CACHE=/home/www-data/app/.npm #put cache somewhere user has permissions
+    ports:
+      - 5173:5173
+    volumes:
+      - .:/home/www-data/app
+    command: /bin/sh -c "npm install && npm run dev --host"

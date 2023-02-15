@@ -5,7 +5,7 @@ yarn-error.log
 /docker/nginx/ssl
 /tmp
 
-# Laravel 
+# Laravel
 /node_modules
 /public/build
 /public/hot
@@ -24,3 +24,4 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/.npm
