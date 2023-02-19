@@ -43,3 +43,7 @@ services:
     volumes:
       - .:/home/www-data/app
     command: /bin/sh -c "npm install && npm run dev --host"
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 8025:8025
