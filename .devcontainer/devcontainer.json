@@ -2,9 +2,9 @@
 	"name": "Laravel Dev Environment",
 	"service": "cli",
 	"dockerComposeFile": "../docker-compose.yml",
-	"workspaceFolder": "/var/www/html",
+	"workspaceFolder": "/workspaces/laravel",
 	//Set up laravel permissions for development
-	"remoteUser": "www-data",
+	"remoteUser": "dev",
     "postStartCommand": "bash",
     "customizations": {
 		"vscode": {
