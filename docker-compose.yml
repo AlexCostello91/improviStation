@@ -33,6 +33,7 @@ services:
   node:
     image: node:19.6-alpine
     working_dir: /workspaces/laravel
+    user: 1000:1000
     environment:
       - NODE_ENV=development
       - NPM_CONFIG_CACHE=/workspaces/laravel/.npm #put cache somewhere user has permissions
