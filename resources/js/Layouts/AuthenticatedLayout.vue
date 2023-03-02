@@ -33,6 +33,9 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('chirps.index')" :active="route().current('chirps.index')">
                                     Chirps
                                 </NavLink>
+                                <NavLink :href="route('meals.index')" :active="route().current('meals.index')">
+                                    Meals
+                                </NavLink>
                             </div>
                         </div>
 
@@ -95,6 +98,9 @@ const showingNavigationDropdown = ref(false);
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('chirps.index')" :active="route().current('chirps.index')">
                             Chirps
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('meals.index')" :active="route().current('meals.index')">
+                            Meals
                         </ResponsiveNavLink>
                     </div>
 
