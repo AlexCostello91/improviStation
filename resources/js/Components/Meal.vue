@@ -14,7 +14,7 @@ const props = defineProps(['meal']);
                             </div>
                             <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                                 <div>
-                                    <p class="truncate text-sm font-medium text-indigo-600">{{ meal.type }}</p>
+                                    <p class="truncate text-sm font-medium text-indigo-600">{{ meal.name }}</p>
                                     <p class="mt-2 flex items-center text-sm text-gray-500">
                                         <EnvelopeIcon class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400"
                                             aria-hidden="true" />
@@ -31,7 +31,7 @@ const props = defineProps(['meal']);
                                         <p class="mt-2 flex items-center text-sm text-gray-500">
                                             <CheckCircleIcon class="mr-1.5 h-5 w-5 flex-shrink-0 text-green-400"
                                                 aria-hidden="true" />
-                                            Whatever
+                                                {{ meal.type }}
                                         </p>
                                     </div>
                                 </div>

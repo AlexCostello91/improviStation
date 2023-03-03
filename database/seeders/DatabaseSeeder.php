@@ -7,6 +7,9 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+
+    protected $meal_types = ['breakfast', 'brunch', 'lunch', 'dinner', 'snack'];
+    protected $user = 3;
     /**
      * Seed the application's database.
      *
@@ -16,8 +19,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
-            ChirpSeeder::class,
-            MealSeeder::class
+            ChirpSeeder::class
         ]);
     }
 }
