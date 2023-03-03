@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Meal;
+use App\Models\MealItem;
+
 
 
 class UserSeeder extends Seeder
@@ -15,6 +17,7 @@ class UserSeeder extends Seeder
 
     protected $userCount = 3;
     protected $mealsPerUser = 4;
+    protected $mealItemsPerMeal = 2;
 
     /**
      * Run the database seeds.
@@ -25,7 +28,12 @@ class UserSeeder extends Seeder
     {
         User::factory()
             ->has(
-                Meal::factory()->count($this->mealsPerUser)
+                Meal::factory()
+                    ->has(
+                        MealItem::factory()
+                            ->count($this->mealItemsPerMeal)
+                    )
+                    ->count($this->mealsPerUser)
             )
             ->count($this->userCount)
             ->create();

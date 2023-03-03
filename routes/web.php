@@ -42,7 +42,7 @@ Route::resource('chirps', ChirpController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('meals', MealController::class)
-    ->only(['index','store'])
+    ->only(['index','show'])
     ->middleware(['auth', 'verified']);
 
 

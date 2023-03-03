@@ -1,13 +1,13 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import MealList from '@/Components/MealList.vue';
+import MealView from '@/Components/MealView.vue';
 import { Head } from '@inertiajs/vue3';
-defineProps(['meals']);
+defineProps(['meal']);
 </script>
 
 <template>
     <Head title="Meals" />
     <AuthenticatedLayout>
-        <MealList :meals="meals"/>
+        <MealView :meal="meal"/>
     </AuthenticatedLayout>
 </template>

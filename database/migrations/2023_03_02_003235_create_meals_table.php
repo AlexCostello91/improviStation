@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->enum('type',['breakfast', 'brunch', 'lunch', 'dinner', 'snack']);
+            $table->boolean('public')->default(true);
             $table->string('name');
             $table->timestamps();
         });

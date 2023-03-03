@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Meal;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 
 class MealController extends Controller
 {
@@ -15,8 +16,13 @@ class MealController extends Controller
      */
     public function index()
     {
+        $meals = Meal::with('user:id,name')
+            ->where('public', true)
+            ->orWhere('user_id', auth()->user()->id)
+            ->latest()
+            ->get();
         return Inertia::render('Meals/Index', [
-            'meals' => Meal::with('user:id,name')->latest()->get()
+            'meals' => $meals
         ]);
     }
 
@@ -49,7 +55,9 @@ class MealController extends Controller
      */
     public function show(Meal $meal)
     {
-        //
+        return Inertia::render('Meals/Show', [
+            'meal' => $meal->loadMissing('items')
+        ]);
     }
 
     /**

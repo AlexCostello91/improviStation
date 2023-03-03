@@ -13,6 +13,7 @@ class Meal extends Model
 
     protected $fillable = [
         'name',
+        'public'
     ];
 
     public function user(): BelongsTo
@@ -20,7 +21,7 @@ class Meal extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function mealItems(): hasMany
+    public function items(): hasMany
     {
         return $this->hasMany(MealItem::class);
     }

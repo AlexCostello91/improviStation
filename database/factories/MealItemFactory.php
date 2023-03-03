@@ -3,15 +3,12 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-use Illuminate\Support\Arr;
-
-use App\Models\User;
+use App\Models\Meal;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
-class MealFactory extends Factory
+class MealItemFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -23,10 +20,8 @@ class MealFactory extends Factory
         $faker = \Faker\Factory::create();
         $faker->addProvider(new \FakerRestaurant\Provider\en_US\Restaurant($faker));
         return [
-            'name' => $faker->meatName() . ' with ' . $faker->vegetableName(),
-            'user_id' => User::all()->random()->id,
-            'type' => Arr::random(['breakfast', 'brunch', 'lunch', 'dinner', 'snack']),
-            'public' => $faker->boolean()
+            'name' => $faker->foodName(),
+            'meal_id' => Meal::all()->random()->id,
         ];
     }
 }
