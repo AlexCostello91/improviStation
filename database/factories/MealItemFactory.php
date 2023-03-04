@@ -22,6 +22,7 @@ class MealItemFactory extends Factory
         return [
             'name' => $faker->foodName(),
             'meal_id' => Meal::all()->random()->id,
+            'quantity' => $faker->numberBetween(1,4)
         ];
     }
 }

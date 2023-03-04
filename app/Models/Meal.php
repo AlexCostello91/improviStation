@@ -21,7 +21,7 @@ class Meal extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function items(): hasMany
+    public function mealItems(): hasMany
     {
         return $this->hasMany(MealItem::class);
     }

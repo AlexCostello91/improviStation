@@ -13,7 +13,7 @@ dayjs.extend(relativeTime);
                 <div class="flex min-w-0 flex-1 items-center">
                     <div class="min-w-0 flex-1 px-4 md:grid md:gap-4">
                         <div>
-                            <p class="truncate text-sm font-medium text-indigo-600">{{ meal_item.name }}</p>
+                            <p class="truncate font-medium text-indigo-600">{{ meal_item.name }} <span class="text-black">x</span> {{ meal_item.quantity }}</p>
                             <p class="text-sm text-gray-900">
                                 <time :datetime="meal_item.created_at">{{ dayjs(meal_item.created_at).fromNow() }}</time>
                             </p>

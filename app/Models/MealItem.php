@@ -12,6 +12,7 @@ class MealItem extends Model
 
     protected $fillable = [
         'name',
+        'quantity'
     ];
 
     public function meal(): BelongsTo
