@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MealItem;
+use App\Models\Macro;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
-class MealItemController extends Controller
+class MacroController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,23 +41,21 @@ class MealItemController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\MealItem  $mealItem
+     * @param  \App\Models\Macro  $macro
      * @return \Illuminate\Http\Response
      */
-    public function show(MealItem $mealItem)
+    public function show(Macro $macro)
     {
-        return Inertia::render('MealItem/Show', [
-            'meal_item' => $mealItem->loadMissing('meal', 'macros')
-        ]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\MealItem  $mealItem
+     * @param  \App\Models\Macro  $macro
      * @return \Illuminate\Http\Response
      */
-    public function edit(MealItem $mealItem)
+    public function edit(Macro $macro)
     {
         //
     }
@@ -67,21 +64,21 @@ class MealItemController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\MealItem  $mealItem
+     * @param  \App\Models\Macro  $macro
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MealItem $mealItem)
+    public function update(Request $request, Macro $macro)
     {
-        //
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\MealItem  $mealItem
+     * @param  \App\Models\Macro  $macro
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MealItem $mealItem)
+    public function destroy(Macro $macro)
     {
         //
     }

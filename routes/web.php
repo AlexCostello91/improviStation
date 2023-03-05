@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\MealController;
+use App\Http\Controllers\MealItemController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -45,5 +46,8 @@ Route::resource('meals', MealController::class)
     ->only(['index','show'])
     ->middleware(['auth', 'verified']);
 
+Route::resource('mealItems', MealItemController::class)
+    ->only(['show'])
+    ->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';

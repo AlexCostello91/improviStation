@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Macro;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -18,6 +19,7 @@ class UserSeeder extends Seeder
     protected $userCount = 3;
     protected $mealsPerUser = 4;
     protected $mealItemsPerMeal = 2;
+    protected $macrosPerMealItem = 4;
 
     /**
      * Run the database seeds.
@@ -31,6 +33,16 @@ class UserSeeder extends Seeder
                 Meal::factory()
                     ->has(
                         MealItem::factory()
+                            ->has(
+                                Macro::factory()
+                                ->count($this->macrosPerMealItem)
+                                ->sequence(
+                                    ['name' => 'protein'],
+                                    ['name' => 'fat'],
+                                    ['name' => 'calories'],
+                                    ['name' => 'sodium'],
+                                )
+                            )
                             ->count($this->mealItemsPerMeal)
                     )
                     ->count($this->mealsPerUser)
