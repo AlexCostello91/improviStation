@@ -25,9 +25,4 @@ class Meal extends Model
     {
         return $this->hasMany(MealItem::class);
     }
-
-    public static function getTypes()
-    {
-        return ['breakfast', 'brunch', 'lunch', 'dinner', 'snack'];
-    }
 }

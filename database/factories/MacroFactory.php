@@ -22,7 +22,7 @@ class MacroFactory extends Factory
     {
         $faker = \Faker\Factory::create();
         return [
-            'name' => $faker->unique()->randomElement(['fat', 'protein', 'carbs', 'sugar', 'sodium', 'fiber', 'calories']),
+            'name' => $faker->unique()->randomElement(["calories", "carbs", "fat", "fiber", "protein", "sodium", "sugar"]),
             'meal_item_id' => MealItem::all()->random()->id,
             'value' => $faker->numberBetween(1, 50),
             'display_unit' => $faker->randomElement(['g', 'mg'])

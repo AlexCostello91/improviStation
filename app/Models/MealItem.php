@@ -23,6 +23,6 @@ class MealItem extends Model
 
     public function macros(): HasMany
     {
-        return $this->hasMany(Macro::class);
+        return $this->hasMany(Macro::class)->orderBy('name');
     }
 }

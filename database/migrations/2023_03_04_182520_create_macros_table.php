@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('macros', function (Blueprint $table) {
             $table->id();
             $table->foreignId('meal_item_id')->constrained()->cascadeOnDelete();
-            $table->enum('name', ['fat','protein','carbs','sugar','sodium','fiber','calories']);
+            $table->enum('name', ["calories", "carbs", "fat", "fiber", "protein", "sodium", "sugar"]);
             $table->integer('value');
             $table->enum('display_unit',['g','mg'])->default('g');
             $table->timestamps();
