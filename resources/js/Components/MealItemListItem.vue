@@ -15,9 +15,9 @@ const totalCalories = computed(()=>{
     <Link :href="route('mealItems.show', meal_item.id)">
     <li>
         <a class="block hover:bg-gray-50">
-            <div class="flex items-center px-4 py-4 sm:px-6">
+            <div class="flex items-center px-4 py-4 px-6">
                 <div class="flex min-w-0 flex-1 items-center">
-                    <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
+                    <div class="min-w-0 flex-1 px-4 grid grid-cols-2 gap-4">
                         <div>
                             <p class="truncate font-medium text-indigo-600">{{ meal_item.name }} <span
                                     class="text-black">x</span> {{ meal_item.quantity }}</p>
@@ -25,7 +25,7 @@ const totalCalories = computed(()=>{
                                 <time :datetime="meal_item.created_at">{{ dayjs(meal_item.created_at).fromNow() }}</time>
                             </p>
                         </div>
-                        <div class="flex items-center justify-center">
+                        <div class="min-w-0 flex items-center justify-center">
                             {{ totalCalories }} Calories
                         </div>
                     </div>

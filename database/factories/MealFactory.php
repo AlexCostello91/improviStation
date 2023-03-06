@@ -26,7 +26,8 @@ class MealFactory extends Factory
             'name' => $faker->meatName() . ' with ' . $faker->vegetableName(),
             'user_id' => User::all()->random()->id,
             'type' => Arr::random(['breakfast', 'brunch', 'lunch', 'dinner', 'snack']),
-            'public' => $faker->boolean()
+            'public' => $faker->boolean(),
+            'created_at' => $faker->dateTimeInInterval('-14 days', '+14 days')
         ];
     }
 }

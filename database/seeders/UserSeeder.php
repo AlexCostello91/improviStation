@@ -17,8 +17,8 @@ class UserSeeder extends Seeder
 {
 
     protected $userCount = 3;
-    protected $mealsPerUser = 4;
-    protected $mealItemsPerMeal = 2;
+    protected $mealsPerUser = 90;
+    protected $mealItemsPerMeal = 3;
     protected $macrosPerMealItem = 4;
 
     /**
