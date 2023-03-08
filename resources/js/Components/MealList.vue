@@ -4,17 +4,18 @@ import MealToggle from "@/Components/MealToggle.vue"
 import { useStorage } from "../Composables/useStorage.js";
 import { computed, reactive } from 'vue';
 import { usePage } from '@inertiajs/vue3';
-import { Transition, TransitionGroup } from "vue";
+import { TransitionGroup } from "vue";
+import PaginationPane from "./PaginationPane.vue";
 
 let props = defineProps(['meals']);
-
 let showAllMeals = useStorage('showAllMeals', false);
-
+console.log(props.meals);
 const filteredMeals = computed(() => {
     if (!showAllMeals.value) {
-        return props.meals.filter(meal => meal.user_id == usePage().props.auth.user.id);
+        //Note that using pagination returns high level pagination data, then the rest in .data
+        return props.meals.data.filter(meal => meal.user_id == usePage().props.auth.user.id);
     } else {
-        return props.meals;
+        return props.meals.data;
     }
 });
 
@@ -44,12 +45,13 @@ const filteredMeals = computed(() => {
                 </MealToggle>
             </div>
             <div class="max-w-full mx-auto p-4 overflow-hidden bg-white shadow rounded-b-md">
-                <!-- <ul role="list" class="divide-y divide-gray-200"> -->
-                    <TransitionGroup name="list" tag="ul" class="divide-y divide-gray-200">
-                        <MealListItem v-for="meal in filteredMeals" :key="meal.id" :meal="meal">
-                        </MealListItem>
-                    </TransitionGroup>
-                <!-- </ul> -->
+                <TransitionGroup name="list" tag="ul" class="divide-y divide-gray-200">
+                    <MealListItem v-for="meal in filteredMeals" :key="meal.id" :meal="meal">
+                    </MealListItem>
+                </TransitionGroup>
+                <div class="flex p-4 items-center justify-center">
+                    <PaginationPane :links="meals.links" />
+                </div>
             </div>
         </div>
     </div>

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Meal;
+use App\Models\Workout;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\DB;
 
-class MealController extends Controller
+class WorkoutController extends Controller
 {
     /**
      * Default Paging Size for Meal collections
@@ -19,16 +18,15 @@ class MealController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $meals = Meal::with('user:id,name')
-            ->where('public', true)
-            ->orWhere('user_id', auth()->user()->id)
+        $workouts = Workout::with('user:id,name')
+            ->where('user_id', auth()->user()->id)
             ->latest()
             ->paginate(self::DEFAULT_PAGE_SIZE);
 
-        return Inertia::render('Meals/Index', [
-            'meals' => $meals
+        return Inertia::render('Workouts/Index', [
+            'workouts' => $workouts
         ]);
     }
 
@@ -56,23 +54,21 @@ class MealController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Meal  $meal
+     * @param  \App\Models\Workout  $workout
      * @return \Illuminate\Http\Response
      */
-    public function show(Meal $meal)
+    public function show(Workout $workout)
     {
-        return Inertia::render('Meals/Show', [
-            'meal' => $meal->loadMissing('mealItems.macros')
-        ]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Meal  $meal
+     * @param  \App\Models\Workout  $workout
      * @return \Illuminate\Http\Response
      */
-    public function edit(Meal $meal)
+    public function edit(Workout $workout)
     {
         //
     }
@@ -81,10 +77,10 @@ class MealController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Meal  $meal
+     * @param  \App\Models\Workout  $workout
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Meal $meal)
+    public function update(Request $request, Workout $workout)
     {
         //
     }
@@ -92,10 +88,10 @@ class MealController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Meal  $meal
+     * @param  \App\Models\Workout  $workout
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Meal $meal)
+    public function destroy(Workout $workout)
     {
         //
     }

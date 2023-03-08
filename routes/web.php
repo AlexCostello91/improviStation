@@ -4,6 +4,7 @@ use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\MealController;
 use App\Http\Controllers\MealItemController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WorkoutController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -53,7 +54,9 @@ Route::get('/dashboard', function ()
                 if ($macro->name == 'calories')
                 {
                     $thisWeekTotalCalories += $macro->value;
-                } elseif ($macro->name == 'protein'){
+                }
+                elseif ($macro->name == 'protein')
+                {
                     $thisWeekTotalProtein += $macro->value;
                 }
             }
@@ -69,17 +72,19 @@ Route::get('/dashboard', function ()
                 if ($macro->name == 'calories')
                 {
                     $lastWeekTotalCalories += $macro->value;
-                }elseif ($macro->name == 'protein'){
+                }
+                elseif ($macro->name == 'protein')
+                {
                     $lastWeekTotalProtein += $macro->value;
                 }
             }
         }
     }
 
-    (int) $calorieChange = (($thisWeekTotalCalories / ($lastWeekTotalCalories == 0 ? 1 : $lastWeekTotalCalories)) - 1)*100;
+    (int) $calorieChange = (($thisWeekTotalCalories / ($lastWeekTotalCalories == 0 ? 1 : $lastWeekTotalCalories)) - 1) * 100;
     $calorieChangeDir = $calorieChange <= 0 ? 'descrease' : 'increase';
 
-    (int) $proteinChange = (($thisWeekTotalProtein / ($lastWeekTotalProtein == 0 ? 1 : $lastWeekTotalProtein)) - 1)*100;
+    (int) $proteinChange = (($thisWeekTotalProtein / ($lastWeekTotalProtein == 0 ? 1 : $lastWeekTotalProtein)) - 1) * 100;
     $proteinChangeDir = $proteinChange <= 0 ? 'descrease' : 'increase';
 
     $mealStats[] = [
@@ -93,7 +98,7 @@ Route::get('/dashboard', function ()
         'name' => 'Total Excercise This Week',
         'stat' => number_format(150, 0),
         'previousStat' => number_format(180, 0),
-        'change' => number_format(abs(180-150), 1) . '%',
+        'change' => number_format(abs(180 - 150), 1) . '%',
         'changeType' => 'descrease'
     ];
     $mealStats[] = [
@@ -118,6 +123,10 @@ Route::middleware('auth')->group(function ()
 
 Route::resource('chirps', ChirpController::class)
     ->only(['index', 'store', 'update', 'destroy'])
+    ->middleware(['auth', 'verified']);
+
+Route::resource('workouts', WorkoutController::class)
+    ->only(['index', 'show'])
     ->middleware(['auth', 'verified']);
 
 Route::resource('meals', MealController::class)

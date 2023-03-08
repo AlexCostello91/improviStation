@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Meal;
 use App\Models\MealItem;
-
+use App\Models\Workout;
 
 
 class UserSeeder extends Seeder
@@ -20,6 +20,8 @@ class UserSeeder extends Seeder
     protected $mealsPerUser = 90;
     protected $mealItemsPerMeal = 3;
     protected $macrosPerMealItem = 4;
+    protected $workoutsPerUser = 40;
+
 
     /**
      * Run the database seeds.
@@ -46,6 +48,10 @@ class UserSeeder extends Seeder
                             ->count($this->mealItemsPerMeal)
                     )
                     ->count($this->mealsPerUser)
+            )
+            ->has(
+                Workout::factory()
+                ->count($this->workoutsPerUser)
             )
             ->count($this->userCount)
             ->create();
