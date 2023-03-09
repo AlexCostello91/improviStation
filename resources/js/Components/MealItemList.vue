@@ -22,20 +22,18 @@ const totalCalories = computed(() => {
         <ul role="list" class="divide-y divide-gray-200">
             <MealItemListItem v-for="item in props.meal.meal_items" :key="item.id" :meal_item="item"></MealItemListItem>
             <li>
-                <a class="block hover:bg-gray-50">
-                    <div class="flex items-center px-4 py-4 px-6">
-                        <div class="flex min-w-0 flex-1 items-center">
-                            <div class="min-w-0 flex-1 px-4 grid grid-cols-2 gap-4">
-                                <div class="flex items-center">
-                                    {{ 'Total Calories:' }}
-                                </div>
-                                <div class="flex items-center justify-center">
-                                    {{ totalCalories }} Calories
-                                </div>
+                <div class="flex items-center px-4 py-4 px-6">
+                    <div class="flex min-w-0 flex-1 items-center">
+                        <div class="min-w-0 flex-1 px-4 grid grid-cols-2 gap-4">
+                            <div class="flex items-center">
+                                {{ 'Total Calories:' }}
+                            </div>
+                            <div class="flex items-center justify-center">
+                                {{ totalCalories }} Calories
                             </div>
                         </div>
                     </div>
-                </a>
+                </div>
             </li>
         </ul>
     </div>

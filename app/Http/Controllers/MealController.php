@@ -7,13 +7,18 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 
+
 class MealController extends Controller
 {
-    /**
-     * Default Paging Size for Meal collections
-     */
-    protected const DEFAULT_PAGE_SIZE = 10;
+    protected int $defaultPageSize = 10;
 
+    protected function getPageSize(int $requestPageSize){
+        if($requestPageSize != 0){
+            return min($requestPageSize, 50);
+        } else {
+            return $this->defaultPageSize;
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,11 +26,18 @@ class MealController extends Controller
      */
     public function index(Request $request)
     {
+
+        $pageSize = $this->getPageSize($request->integer('page_size'));
         $meals = Meal::with('user:id,name')
             ->where('public', true)
             ->orWhere('user_id', auth()->user()->id)
             ->latest()
-            ->paginate(self::DEFAULT_PAGE_SIZE);
+            ->paginate($pageSize);
+
+        //Use page_size param for non-default page size
+        if($pageSize!=$this->defaultPageSize){
+            $meals->appends('page_size', $pageSize);
+        }
 
         return Inertia::render('Meals/Index', [
             'meals' => $meals

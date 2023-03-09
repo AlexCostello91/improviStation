@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
     protected $mealsPerUser = 90;
     protected $mealItemsPerMeal = 3;
     protected $macrosPerMealItem = 4;
-    protected $workoutsPerUser = 40;
+    protected $workoutsPerUser = 10;
 
 
     /**

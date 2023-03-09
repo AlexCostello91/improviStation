@@ -9,7 +9,7 @@ const props = defineProps(['mealStats']);
 <template>
     <div class="mt-6 px-8">
       <h3 class="text-lg font-semibold leading-6 text-gray-900">Last 30 days...</h3>
-      <dl class="mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow md:grid-cols-3 md:divide-y-0 md:divide-x">
+      <dl class="mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow md:grid-cols-4 md:divide-y-0 md:divide-x">
         <div v-for="item in mealStats" :key="item.name" class="px-4 py-5 sm:p-6">
           <dt class="text-base font-normal text-gray-900">{{ item.name }}</dt>
           <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
