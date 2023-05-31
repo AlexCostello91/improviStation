@@ -6,7 +6,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - .:/workspaces/laravel
+      - .:/workspaces/laravel:z
   php-fpm:
     build: ./docker/php-fpm
     user: 1000:1000
@@ -16,7 +16,7 @@ services:
       - DB_PASSWORD=$DB_PASSWORD
       - DB_PORT=3306
     volumes:
-      - .:/workspaces/laravel
+      - .:/workspaces/laravel:z
   mariadb:
     image: mariadb:10.10.2
     environment:
@@ -40,7 +40,7 @@ services:
     ports:
       - 5173:5173
     volumes:
-      - .:/workspaces/laravel
+      - .:/workspaces/laravel:z
     command: /bin/sh -c "npm install && npm run dev --host"
   mailhog:
     image: mailhog/mailhog
