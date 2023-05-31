@@ -4,9 +4,13 @@ This is a laravel project, utilizing VScode's devcontainer features. It requires
 
 ## TO RUN LOCALLY
 Generate SSL certs for nginx and place them in /docker/nginx/ssl/
+
 Copy .env.example to .env
+
 Open in VScode, install the devcontainers extension and use the "Reopen in Devcontainer" command.
+
 When presented with terminal, run: 
+
 > composer install 
 
 > php artisan migrate --seed
