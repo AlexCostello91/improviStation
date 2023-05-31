@@ -17,7 +17,7 @@ When presented with terminal, run:
 
 > npm run dev
 
-Note that you may need to click the link provided by Vite in the terminal, as your browser might ocmplain about the self-sgned certs. After doing that, the app should be funning on `localhost`
+Note that you may need to click the link provided by Vite in the terminal, as your browser might complain about the self-sgned certs. After doing that, the app should be funning on `localhost`
 
 
 Also note that using Docker Desktop is not recommended, as it has many inconsistencies between host platforms and it raises configuration issues.
