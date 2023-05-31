@@ -1,4 +1,4 @@
-#Appname
+# Appname
 
 This is a laravel project, utilizing VScode's devcontainer features. It requires docker to run locally.
 
