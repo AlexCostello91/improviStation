@@ -1,13 +1,14 @@
-This is a laravel project, utilizing VScode's devcontainer features.
+#Appname
+This is a laravel project, utilizing VScode's devcontainer features. It requires docker to run locally.
 
-Local Development Requirements:
-Docker
-
-To run:
+## TO RUN LOCALLY
 Generate SSL certs for nginx and place them in /docker/nginx/ssl/
+Copy .env.example to .env
 Open in VScode, install the devcontainers extension and use the "Reopen in Devcontainer" command.
+When presented with terminal, run: 
+> composer install 
+> php artisan migrate --seed
+> npm run dev
 
 
-Note, for best results use with the command like version of docker. Docker Desktop has many inconsistencies between host platforms and it raises configuration issues.
-
-Also, note that this project folder will need 1000/1000 permissions on the host, as well as SELinux permissions if applicable. Otherwise your project will be unreachable for the containers.1
+Note, using DOcket Desktop is not recommended, as it has many inconsistencies between host platforms and it raises configuration issues.
