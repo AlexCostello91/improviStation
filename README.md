@@ -1,4 +1,5 @@
 #Appname
+
 This is a laravel project, utilizing VScode's devcontainer features. It requires docker to run locally.
 
 ## TO RUN LOCALLY
@@ -7,7 +8,9 @@ Copy .env.example to .env
 Open in VScode, install the devcontainers extension and use the "Reopen in Devcontainer" command.
 When presented with terminal, run: 
 > composer install 
+
 > php artisan migrate --seed
+
 > npm run dev
 
 
