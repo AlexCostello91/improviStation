@@ -3,19 +3,18 @@
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/vue/20/solid'
 import { computed } from '@vue/reactivity';
 
-const props = defineProps(['mealStats']);
+const props = defineProps(['mealStats','mealStatsNew']);
 </script>
 
 <template>
     <div class="mt-6 px-8">
-      <h3 class="text-lg font-semibold leading-6 text-gray-900">Last 30 days...</h3>
+      <h3 class="text-lg font-semibold leading-6 text-gray-900">Week by week...</h3>
       <dl class="mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow md:grid-cols-4 md:divide-y-0 md:divide-x">
         <div v-for="item in mealStats" :key="item.name" class="px-4 py-5 sm:p-6">
           <dt class="text-base font-normal text-gray-900">{{ item.name }}</dt>
           <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
             <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
               {{ item.stat }}
-              <span class="ml-2 text-sm font-medium text-gray-500">from {{ item.previousStat }}</span>
             </div>
 
             <div :class="[item.changeType === 'increase' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800', 'inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
@@ -27,5 +26,8 @@ const props = defineProps(['mealStats']);
           </dd>
         </div>
       </dl>
+    </div>
+    <div class="mt-6 px-8">
+        {{ mealStatsNew }}
     </div>
   </template>

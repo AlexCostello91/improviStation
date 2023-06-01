@@ -57,4 +57,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(Workout::class);
     }
+
+    public function mealsFromLastXDays(int $days){
+        return $this->meals()
+        ->where('created_at', '>=', now()->subDays($days))
+        ->orderBy('created_at', 'asc')
+        ->get();
+    }
+
+    public function mealsInDateRange(\DateTime $start, \DateTime $end)
+    {
+        return $this->meals()
+        ->where('created_at', '>=', $start)
+        ->where('created_at', '<=', $end)
+        ->orderBy('created_at', 'asc')
+        ->get();
+    }
 }

@@ -27,7 +27,7 @@ class MealFactory extends Factory
             'user_id' => User::all()->random()->id,
             'type' => Arr::random(['breakfast', 'brunch', 'lunch', 'dinner', 'snack']),
             'public' => $faker->boolean(),
-            'created_at' => $faker->dateTimeInInterval('-14 days', '+14 days')
+            'created_at' => $faker->dateTimeInInterval('-90 days', '+90 days')
         ];
     }
 }

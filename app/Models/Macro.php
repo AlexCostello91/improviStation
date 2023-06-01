@@ -14,4 +14,20 @@ class Macro extends Model
     {
         return $this->belongsTo(MealItem::class);
     }
+
+    //Pull all macro lists from 1 source
+    public static function macroList()
+    {
+        return ["calories", "carbs", "fat", "fiber", "protein", "sodium", "sugar"];
+    }
+
+    public static function statsContainer()
+    {
+        $stats = [];
+        $macros = Macro::macroList();
+        foreach($macros as $macro){
+            $stats[$macro] = 0;
+        }
+        return $stats;
+    }
 }
