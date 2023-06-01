@@ -2,7 +2,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import DashboardStats from '@/Components/DashboardStats.vue';
-let props = defineProps(['mealStats','mealStatsNew']);
+import DashboardGraph from '@/Components/DashboardGraph.vue';
+let props = defineProps(['mealStats']);
 
 </script>
 
@@ -16,6 +17,9 @@ let props = defineProps(['mealStats','mealStatsNew']);
         <p>{{ meals }}</p>
         <div class="max-w-7xl mx-auto items-center">
             <DashboardStats :mealStats="mealStats" :mealStatsNew="mealStatsNew"/>
+        </div>
+        <div class="max-w-7xl mx-auto items-center">
+            <DashboardGraph />
         </div>
     </AuthenticatedLayout>
 </template>

@@ -1,9 +1,18 @@
-
 <script setup>
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/vue/20/solid'
-import { computed } from '@vue/reactivity';
+import { computed, onMounted } from 'vue';
 
-const props = defineProps(['mealStats','mealStatsNew']);
+const props = defineProps(['mealStats', 'mealStatsNew']);
+
+onMounted(() => {
+  // Delay the fading in of elements by 1 second
+  setTimeout(() => {
+    document.querySelectorAll('.fade-in-bg').forEach(element => {
+      element.classList.remove('opacity-0');
+      element.classList.add('opacity-100');
+    });
+  }, 300);
+});
 </script>
 
 <template>
@@ -17,17 +26,31 @@ const props = defineProps(['mealStats','mealStatsNew']);
               {{ item.stat }}
             </div>
 
-            <div :class="[item.changeType === 'increase' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800', 'inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0']">
-              <ArrowUpIcon v-if="item.changeType === 'increase'" class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
-              <ArrowDownIcon v-else class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-red-500" aria-hidden="true" />
-              <span class="sr-only"> {{ item.changeType === 'increase' ? 'Increased' : 'Decreased' }} by </span>
-              {{ item.change }}
+            <div :class="[item.changeType === 'increase' ? 'bg-green-100' : 'bg-red-100', 'inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0 fade-in-bg opacity-0']">
+              <template v-if="item.changeType === 'increase'">
+                <ArrowUpIcon class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500" aria-hidden="true" />
+                <span class="sr-only">Increased by </span>
+              </template>
+              <template v-else>
+                <ArrowDownIcon class="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-red-500" aria-hidden="true" />
+                <span class="sr-only">Decreased by </span>
+              </template>
+              <span>{{ item.change }}</span>
             </div>
           </dd>
         </div>
       </dl>
     </div>
     <div class="mt-6 px-8">
+      <div class="fade-in opacity-0">
         {{ mealStatsNew }}
+      </div>
     </div>
   </template>
+
+
+<style scoped>
+.fade-in-bg {
+  transition: opacity 1s ease-in-out;
+}
+</style>
