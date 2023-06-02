@@ -1,233 +1,448 @@
-<script setup>
-import { Head, Link } from '@inertiajs/vue3';
 
+<script setup>
+import { ref } from 'vue'
+import { Head, Link } from '@inertiajs/vue3';
+import { Dialog, DialogPanel } from '@headlessui/vue'
+import {
+    ArrowPathIcon,
+    Bars3Icon,
+    CloudArrowUpIcon,
+    FingerPrintIcon,
+    LockClosedIcon,
+    XMarkIcon,
+} from '@heroicons/vue/24/outline'
+import { CheckIcon } from '@heroicons/vue/20/solid'
 defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
-    laravelVersion: String,
-    phpVersion: String,
 });
+
+const navigation = [
+    { name: 'Diet', href: '#' },
+    { name: 'Exercise', href: '#' },
+    { name: 'Statistics', href: '#' },
+]
+const features = [
+    {
+        name: 'Push to deploy',
+        description:
+            'Morbi viverra dui mi arcu sed. Tellus semper adipiscing suspendisse semper morbi. Odio urna massa nunc massa.',
+        icon: CloudArrowUpIcon,
+    },
+    {
+        name: 'SSL certificates',
+        description:
+            'Sit quis amet rutrum tellus ullamcorper ultricies libero dolor eget. Sem sodales gravida quam turpis enim lacus amet.',
+        icon: LockClosedIcon,
+    },
+    {
+        name: 'Simple queues',
+        description:
+            'Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.',
+        icon: ArrowPathIcon,
+    },
+    {
+        name: 'Advanced security',
+        description:
+            'Arcu egestas dolor vel iaculis in ipsum mauris. Tincidunt mattis aliquet hac quis. Id hac maecenas ac donec pharetra eget.',
+        icon: FingerPrintIcon,
+    },
+]
+const tiers = [
+    {
+        name: 'Freelancer',
+        id: 'tier-freelancer',
+        href: '#',
+        priceMonthly: '$24',
+        description: 'The essentials to provide your best work for clients.',
+        features: ['5 products', 'Up to 1,000 subscribers', 'Basic analytics', '48-hour support response time'],
+        mostPopular: false,
+    },
+    {
+        name: 'Startup',
+        id: 'tier-startup',
+        href: '#',
+        priceMonthly: '$32',
+        description: 'A plan that scales with your rapidly growing business.',
+        features: [
+            '25 products',
+            'Up to 10,000 subscribers',
+            'Advanced analytics',
+            '24-hour support response time',
+            'Marketing automations',
+        ],
+        mostPopular: true,
+    },
+    {
+        name: 'Enterprise',
+        id: 'tier-enterprise',
+        href: '#',
+        priceMonthly: '$48',
+        description: 'Dedicated support and infrastructure for your company.',
+        features: [
+            'Unlimited products',
+            'Unlimited subscribers',
+            'Advanced analytics',
+            '1-hour, dedicated support response time',
+            'Marketing automations',
+        ],
+        mostPopular: false,
+    },
+]
+const faqs = [
+    {
+        id: 1,
+        question: "What's the best thing about Switzerland?",
+        answer:
+            "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+    },
+    // More questions...
+]
+const footerNavigation = {
+    solutions: [
+        { name: 'Hosting', href: '#' },
+        { name: 'Data Services', href: '#' },
+        { name: 'Uptime Monitoring', href: '#' },
+        { name: 'Enterprise Services', href: '#' },
+    ],
+    support: [
+        { name: 'Pricing', href: '#' },
+        { name: 'Documentation', href: '#' },
+        { name: 'Guides', href: '#' },
+        { name: 'API Reference', href: '#' },
+    ],
+    company: [
+        { name: 'About', href: '#' },
+        { name: 'Blog', href: '#' },
+        { name: 'Jobs', href: '#' },
+        { name: 'Press', href: '#' },
+        { name: 'Partners', href: '#' },
+    ],
+    legal: [
+        { name: 'Claim', href: '#' },
+        { name: 'Privacy', href: '#' },
+        { name: 'Terms', href: '#' },
+    ],
+}
+
+const mobileMenuOpen = ref(false)
 </script>
 
 <template>
-    <Head title="Welcome" />
+    <Head title="ImproviStation - Improve your life!" />
+    <div class="bg-white">
+        <!-- Header -->
+        <header class="absolute inset-x-0 top-0 z-50">
+            <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+                <div class="flex lg:flex-1">
+                    <a href="#" class="-m-1.5 p-1.5">
+                        <span class="sr-only">Your Company</span>
+                        <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                            alt="" />
+                    </a>
+                </div>
+                <div class="flex lg:hidden">
+                    <button type="button"
+                        class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+                        @click="mobileMenuOpen = true">
+                        <span class="sr-only">Open main menu</span>
+                        <Bars3Icon class="h-6 w-6" aria-hidden="true" />
+                    </button>
+                </div>
+                <div class="hidden lg:flex lg:gap-x-12">
+                    <a v-for="item in navigation" :key="item.name" :href="item.href"
+                        class="text-sm font-semibold leading-6 text-gray-900">{{ item.name }}</a>
+                </div>
+                <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+                    <div v-if="canLogin" class="hidden px-6 py-4 sm:block">
+                        <Link v-if="$page.props.auth.user" :href="route('dashboard')" class="text-sm text-gray-700">
+                        Dashboard</Link>
+                        <template v-else>
+                            <Link :href="route('login')" class="text-sm text-gray-900 font-semibold">Log in
+                            </Link>
 
-    <div
-        class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0"
-    >
-        <div v-if="canLogin" class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-            <Link
-                v-if="$page.props.auth.user"
-                :href="route('dashboard')"
-                class="text-sm text-gray-700 dark:text-gray-500 underline"
-                >Dashboard</Link
-            >
+                            <Link v-if="canRegister" :href="route('register')"
+                                class="ml-4 text-sm text-gray-900 font-semibold">Register <span
+                                aria-hidden="true">&rarr;</span></Link>
+                        </template>
+                    </div>
+                </div>
+            </nav>
+            <Dialog as="div" class="lg:hidden" @close="mobileMenuOpen = false" :open="mobileMenuOpen">
+                <div class="fixed inset-0 z-50" />
+                <DialogPanel
+                    class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+                    <div class="flex items-center justify-between">
+                        <a href="#" class="-m-1.5 p-1.5">
+                            <span class="sr-only">Your Company</span>
+                            <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                                alt="" />
+                        </a>
+                        <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = false">
+                            <span class="sr-only">Close menu</span>
+                            <XMarkIcon class="h-6 w-6" aria-hidden="true" />
+                        </button>
+                    </div>
+                    <div class="mt-6 flow-root">
+                        <div class="-my-6 divide-y divide-gray-500/10">
+                            <div class="space-y-2 py-6">
+                                <a v-for="item in navigation" :key="item.name" :href="item.href"
+                                    class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">{{
+                                        item.name }}</a>
+                            </div>
+                            <div class="py-6">
+                                <div v-if="canLogin" class="sm:block">
+                                    <Link v-if="$page.props.auth.user" :href="route('dashboard')"
+                                        class="text-sm text-gray-700">Dashboard</Link>
+                                    <template v-else>
+                                        <Link :href="route('login')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log in
+                                        </Link>
 
-            <template v-else>
-                <Link :href="route('login')" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</Link>
+                                        <Link v-if="canRegister" :href="route('register')"
+                                            class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Register <span
+                                            aria-hidden="true">&rarr;</span></Link>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </DialogPanel>
+            </Dialog>
+        </header>
 
-                <Link
-                    v-if="canRegister"
-                    :href="route('register')"
-                    class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline"
-                    >Register</Link
-                >
-            </template>
+        <main class="isolate">
+            <!-- Hero section -->
+            <div class="relative pt-14">
+                <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+                    aria-hidden="true">
+                    <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+                        style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)" />
+                </div>
+                <div class="py-24 sm:py-32">
+                    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                        <div class="mx-auto max-w-2xl text-center">
+                            <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Improve your life with ImproviStation</h1>
+                            <p class="mt-6 text-lg leading-8 text-gray-600">Stay on top of your health and wellness by tracking, analyzing and adapting your diet and exercise</p>
+                            <div class="mt-10 flex items-center justify-center gap-x-6">
+                                <Link v-if="canRegister" :href="route('register')"
+                                            class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get Started <span
+                                            aria-hidden="true">&rarr;</span></Link>
+
+                                <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Learn more <span
+                                        aria-hidden="true">→</span></a>
+                            </div>
+                        </div>
+                        <div class="mt-16 flow-root sm:mt-24">
+                            <div
+                                class="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+                                <img src="/images/homepage/screenshot.webp"
+                                    alt="App screenshot" width="2432" height="1442"
+                                    class="rounded-md shadow-2xl ring-1 ring-gray-900/10" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
+                    aria-hidden="true">
+                    <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
+                        style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)" />
+                </div>
+            </div>
+
+            <!-- Feature section -->
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                <div class="mx-auto max-w-2xl lg:text-center">
+                    <h2 class="text-base font-semibold leading-7 text-indigo-600">Improvise!</h2>
+                    <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Your health, your way.</p>
+                    <p class="mt-6 text-lg leading-8 text-gray-600">Whether its walking, weightlifting, surfing, or strolling, ImproviStation lets you keep track of it all! Combine all sorts of exercises and diets, any way you like! See all of your combined progress on our dashboard!</p>
+                </div>
+                <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
+                    <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
+                        <div v-for="feature in features" :key="feature.name" class="relative pl-16">
+                            <dt class="text-base font-semibold leading-7 text-gray-900">
+                                <div
+                                    class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+                                    <component :is="feature.icon" class="h-6 w-6 text-white" aria-hidden="true" />
+                                </div>
+                                {{ feature.name }}
+                            </dt>
+                            <dd class="mt-2 text-base leading-7 text-gray-600">{{ feature.description }}</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+
+            <!-- Testimonial section -->
+            <div class="mx-auto mt-32 max-w-7xl sm:mt-56 sm:px-6 lg:px-8">
+                <div
+                    class="relative overflow-hidden bg-gray-900 px-6 py-20 shadow-xl sm:rounded-3xl sm:px-10 sm:py-24 md:px-12 lg:px-20">
+                    <img class="absolute inset-0 h-full w-full object-cover brightness-150 saturate-0"
+                        src="https://images.unsplash.com/photo-1601381718415-a05fb0a261f3?ixid=MXwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8ODl8fHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1216&q=80"
+                        alt="" />
+                    <div class="absolute inset-0 bg-gray-900/90 mix-blend-multiply" />
+                    <div class="absolute -left-80 -top-56 transform-gpu blur-3xl" aria-hidden="true">
+                        <div class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-r from-[#ff4694] to-[#776fff] opacity-[0.45]"
+                            style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)" />
+                    </div>
+                    <div class="hidden md:absolute md:bottom-16 md:left-[50rem] md:block md:transform-gpu md:blur-3xl"
+                        aria-hidden="true">
+                        <div class="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-r from-[#ff4694] to-[#776fff] opacity-25"
+                            style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)" />
+                    </div>
+                    <div class="relative mx-auto max-w-2xl lg:mx-0">
+                        <img class="h-12 w-auto" src="https://tailwindui.com/img/logos/workcation-logo-white.svg" alt="" />
+                        <figure>
+                            <blockquote class="mt-6 text-lg font-semibold text-white sm:text-xl sm:leading-8">
+                                <p>“Amet amet eget scelerisque tellus sit neque faucibus non eleifend. Integer eu praesent
+                                    at a. Ornare arcu gravida natoque erat et cursus tortor consequat at. Vulputate gravida
+                                    sociis enim nullam ultricies habitant malesuada lorem ac.”</p>
+                            </blockquote>
+                            <figcaption class="mt-6 text-base text-white">
+                                <div class="font-semibold">Judith Black</div>
+                                <div class="mt-1">CEO of Tuple</div>
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing section -->
+            <div class="py-24 sm:pt-48">
+                <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                    <div class="mx-auto max-w-4xl text-center">
+                        <h2 class="text-base font-semibold leading-7 text-indigo-600">Pricing</h2>
+                        <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Pricing plans for teams
+                            of&nbsp;all&nbsp;sizes</p>
+                    </div>
+                    <p class="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600">Distinctio et nulla eum
+                        soluta et neque labore quibusdam. Saepe et quasi iusto modi velit ut non voluptas in. Explicabo id
+                        ut laborum.</p>
+                    <div
+                        class="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                        <div v-for="(tier, tierIdx) in tiers" :key="tier.id"
+                            :class="[tier.mostPopular ? 'lg:z-10 lg:rounded-b-none' : 'lg:mt-8', tierIdx === 0 ? 'lg:rounded-r-none' : '', tierIdx === tiers.length - 1 ? 'lg:rounded-l-none' : '', 'flex flex-col justify-between rounded-3xl bg-white p-8 ring-1 ring-gray-200 xl:p-10']">
+                            <div>
+                                <div class="flex items-center justify-between gap-x-4">
+                                    <h3 :id="tier.id"
+                                        :class="[tier.mostPopular ? 'text-indigo-600' : 'text-gray-900', 'text-lg font-semibold leading-8']">
+                                        {{ tier.name }}</h3>
+                                    <p v-if="tier.mostPopular"
+                                        class="rounded-full bg-indigo-600/10 px-2.5 py-1 text-xs font-semibold leading-5 text-indigo-600">
+                                        Most popular</p>
+                                </div>
+                                <p class="mt-4 text-sm leading-6 text-gray-600">{{ tier.description }}</p>
+                                <p class="mt-6 flex items-baseline gap-x-1">
+                                    <span class="text-4xl font-bold tracking-tight text-gray-900">{{ tier.priceMonthly
+                                    }}</span>
+                                    <span class="text-sm font-semibold leading-6 text-gray-600">/month</span>
+                                </p>
+                                <ul role="list" class="mt-8 space-y-3 text-sm leading-6 text-gray-600">
+                                    <li v-for="feature in tier.features" :key="feature" class="flex gap-x-3">
+                                        <CheckIcon class="h-6 w-5 flex-none text-indigo-600" aria-hidden="true" />
+                                        {{ feature }}
+                                    </li>
+                                </ul>
+                            </div>
+                            <a :href="tier.href" :aria-describedby="tier.id"
+                                :class="[tier.mostPopular ? 'bg-indigo-600 text-white shadow-sm hover:bg-indigo-500' : 'text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300', 'mt-8 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600']">Buy
+                                plan</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQs -->
+            <div
+                class="mx-auto max-w-2xl divide-y divide-gray-900/10 px-6 pb-8 sm:pb-24 sm:pt-12 lg:max-w-7xl lg:px-8 lg:pb-32">
+                <h2 class="text-2xl font-bold leading-10 tracking-tight text-gray-900">Frequently asked questions</h2>
+                <dl class="mt-10 space-y-8 divide-y divide-gray-900/10">
+                    <div v-for="faq in faqs" :key="faq.id" class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
+                        <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">{{ faq.question }}</dt>
+                        <dd class="mt-4 lg:col-span-7 lg:mt-0">
+                            <p class="text-base leading-7 text-gray-600">{{ faq.answer }}</p>
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+
+            <!-- CTA section -->
+            <div class="relative -z-10 mt-32 px-6 lg:px-8">
+                <div class="absolute inset-x-0 top-1/2 -z-10 flex -translate-y-1/2 transform-gpu justify-center overflow-hidden blur-3xl sm:bottom-0 sm:right-[calc(50%-6rem)] sm:top-auto sm:translate-y-0 sm:transform-gpu sm:justify-end"
+                    aria-hidden="true">
+                    <div class="aspect-[1108/632] w-[69.25rem] flex-none bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-25"
+                        style="clip-path: polygon(73.6% 48.6%, 91.7% 88.5%, 100% 53.9%, 97.4% 18.1%, 92.5% 15.4%, 75.7% 36.3%, 55.3% 52.8%, 46.5% 50.9%, 45% 37.4%, 50.3% 13.1%, 21.3% 36.2%, 0.1% 0.1%, 5.4% 49.1%, 21.4% 36.4%, 58.9% 100%, 73.6% 48.6%)" />
+                </div>
+                <div class="mx-auto max-w-2xl text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Boost your
+                        productivity.<br />Start using our app today.</h2>
+                    <p class="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-600">Incididunt sint fugiat pariatur
+                        cupidatat consectetur sit cillum anim id veniam aliqua proident excepteur commodo do ea.</p>
+                    <div class="mt-10 flex items-center justify-center gap-x-6">
+                        <a href="#"
+                            class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get
+                            started</a>
+                        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Learn more <span
+                                aria-hidden="true">→</span></a>
+                    </div>
+                </div>
+                <div class="absolute left-1/2 right-0 top-full -z-10 hidden -translate-y-1/2 transform-gpu overflow-hidden blur-3xl sm:block"
+                    aria-hidden="true">
+                    <div class="aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
+                        style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)" />
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <div class="mx-auto mt-32 max-w-7xl px-6 lg:px-8">
+            <footer aria-labelledby="footer-heading" class="relative border-t border-gray-900/10 py-24 sm:mt-56 sm:py-32">
+                <h2 id="footer-heading" class="sr-only">Footer</h2>
+                <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+                    <img class="h-7" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                        alt="Company name" />
+                    <div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
+                        <div class="md:grid md:grid-cols-2 md:gap-8">
+                            <div>
+                                <h3 class="text-sm font-semibold leading-6 text-gray-900">Solutions</h3>
+                                <ul role="list" class="mt-6 space-y-4">
+                                    <li v-for="item in footerNavigation.solutions" :key="item.name">
+                                        <a :href="item.href" class="text-sm leading-6 text-gray-600 hover:text-gray-900">{{
+                                            item.name }}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="mt-10 md:mt-0">
+                                <h3 class="text-sm font-semibold leading-6 text-gray-900">Support</h3>
+                                <ul role="list" class="mt-6 space-y-4">
+                                    <li v-for="item in footerNavigation.support" :key="item.name">
+                                        <a :href="item.href" class="text-sm leading-6 text-gray-600 hover:text-gray-900">{{
+                                            item.name }}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="md:grid md:grid-cols-2 md:gap-8">
+                            <div>
+                                <h3 class="text-sm font-semibold leading-6 text-gray-900">Company</h3>
+                                <ul role="list" class="mt-6 space-y-4">
+                                    <li v-for="item in footerNavigation.company" :key="item.name">
+                                        <a :href="item.href" class="text-sm leading-6 text-gray-600 hover:text-gray-900">{{
+                                            item.name }}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="mt-10 md:mt-0">
+                                <h3 class="text-sm font-semibold leading-6 text-gray-900">Legal</h3>
+                                <ul role="list" class="mt-6 space-y-4">
+                                    <li v-for="item in footerNavigation.legal" :key="item.name">
+                                        <a :href="item.href" class="text-sm leading-6 text-gray-600 hover:text-gray-900">{{
+                                            item.name }}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
-
-        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-                <svg
-                    viewBox="0 0 651 192"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-16 w-auto text-gray-700 sm:h-20"
-                >
-                    <g clip-path="url(#clip0)" fill="#EF3B2D">
-                        <path
-                            d="M248.032 44.676h-16.466v100.23h47.394v-14.748h-30.928V44.676zM337.091 87.202c-2.101-3.341-5.083-5.965-8.949-7.875-3.865-1.909-7.756-2.864-11.669-2.864-5.062 0-9.69.931-13.89 2.792-4.201 1.861-7.804 4.417-10.811 7.661-3.007 3.246-5.347 6.993-7.016 11.239-1.672 4.249-2.506 8.713-2.506 13.389 0 4.774.834 9.26 2.506 13.459 1.669 4.202 4.009 7.925 7.016 11.169 3.007 3.246 6.609 5.799 10.811 7.66 4.199 1.861 8.828 2.792 13.89 2.792 3.913 0 7.804-.955 11.669-2.863 3.866-1.908 6.849-4.533 8.949-7.875v9.021h15.607V78.182h-15.607v9.02zm-1.431 32.503c-.955 2.578-2.291 4.821-4.009 6.73-1.719 1.91-3.795 3.437-6.229 4.582-2.435 1.146-5.133 1.718-8.091 1.718-2.96 0-5.633-.572-8.019-1.718-2.387-1.146-4.438-2.672-6.156-4.582-1.719-1.909-3.032-4.152-3.938-6.73-.909-2.577-1.36-5.298-1.36-8.161 0-2.864.451-5.585 1.36-8.162.905-2.577 2.219-4.819 3.938-6.729 1.718-1.908 3.77-3.437 6.156-4.582 2.386-1.146 5.059-1.718 8.019-1.718 2.958 0 5.656.572 8.091 1.718 2.434 1.146 4.51 2.674 6.229 4.582 1.718 1.91 3.054 4.152 4.009 6.729.953 2.577 1.432 5.298 1.432 8.162-.001 2.863-.479 5.584-1.432 8.161zM463.954 87.202c-2.101-3.341-5.083-5.965-8.949-7.875-3.865-1.909-7.756-2.864-11.669-2.864-5.062 0-9.69.931-13.89 2.792-4.201 1.861-7.804 4.417-10.811 7.661-3.007 3.246-5.347 6.993-7.016 11.239-1.672 4.249-2.506 8.713-2.506 13.389 0 4.774.834 9.26 2.506 13.459 1.669 4.202 4.009 7.925 7.016 11.169 3.007 3.246 6.609 5.799 10.811 7.66 4.199 1.861 8.828 2.792 13.89 2.792 3.913 0 7.804-.955 11.669-2.863 3.866-1.908 6.849-4.533 8.949-7.875v9.021h15.607V78.182h-15.607v9.02zm-1.432 32.503c-.955 2.578-2.291 4.821-4.009 6.73-1.719 1.91-3.795 3.437-6.229 4.582-2.435 1.146-5.133 1.718-8.091 1.718-2.96 0-5.633-.572-8.019-1.718-2.387-1.146-4.438-2.672-6.156-4.582-1.719-1.909-3.032-4.152-3.938-6.73-.909-2.577-1.36-5.298-1.36-8.161 0-2.864.451-5.585 1.36-8.162.905-2.577 2.219-4.819 3.938-6.729 1.718-1.908 3.77-3.437 6.156-4.582 2.386-1.146 5.059-1.718 8.019-1.718 2.958 0 5.656.572 8.091 1.718 2.434 1.146 4.51 2.674 6.229 4.582 1.718 1.91 3.054 4.152 4.009 6.729.953 2.577 1.432 5.298 1.432 8.162 0 2.863-.479 5.584-1.432 8.161zM650.772 44.676h-15.606v100.23h15.606V44.676zM365.013 144.906h15.607V93.538h26.776V78.182h-42.383v66.724zM542.133 78.182l-19.616 51.096-19.616-51.096h-15.808l25.617 66.724h19.614l25.617-66.724h-15.808zM591.98 76.466c-19.112 0-34.239 15.706-34.239 35.079 0 21.416 14.641 35.079 36.239 35.079 12.088 0 19.806-4.622 29.234-14.688l-10.544-8.158c-.006.008-7.958 10.449-19.832 10.449-13.802 0-19.612-11.127-19.612-16.884h51.777c2.72-22.043-11.772-40.877-33.023-40.877zm-18.713 29.28c.12-1.284 1.917-16.884 18.589-16.884 16.671 0 18.697 15.598 18.813 16.884h-37.402zM184.068 43.892c-.024-.088-.073-.165-.104-.25-.058-.157-.108-.316-.191-.46-.056-.097-.137-.176-.203-.265-.087-.117-.161-.242-.265-.345-.085-.086-.194-.148-.29-.223-.109-.085-.206-.182-.327-.252l-.002-.001-.002-.002-35.648-20.524a2.971 2.971 0 00-2.964 0l-35.647 20.522-.002.002-.002.001c-.121.07-.219.167-.327.252-.096.075-.205.138-.29.223-.103.103-.178.228-.265.345-.066.089-.147.169-.203.265-.083.144-.133.304-.191.46-.031.085-.08.162-.104.25-.067.249-.103.51-.103.776v38.979l-29.706 17.103V24.493a3 3 0 00-.103-.776c-.024-.088-.073-.165-.104-.25-.058-.157-.108-.316-.191-.46-.056-.097-.137-.176-.203-.265-.087-.117-.161-.242-.265-.345-.085-.086-.194-.148-.29-.223-.109-.085-.206-.182-.327-.252l-.002-.001-.002-.002L40.098 1.396a2.971 2.971 0 00-2.964 0L1.487 21.919l-.002.002-.002.001c-.121.07-.219.167-.327.252-.096.075-.205.138-.29.223-.103.103-.178.228-.265.345-.066.089-.147.169-.203.265-.083.144-.133.304-.191.46-.031.085-.08.162-.104.25-.067.249-.103.51-.103.776v122.09c0 1.063.568 2.044 1.489 2.575l71.293 41.045c.156.089.324.143.49.202.078.028.15.074.23.095a2.98 2.98 0 001.524 0c.069-.018.132-.059.2-.083.176-.061.354-.119.519-.214l71.293-41.045a2.971 2.971 0 001.489-2.575v-38.979l34.158-19.666a2.971 2.971 0 001.489-2.575V44.666a3.075 3.075 0 00-.106-.774zM74.255 143.167l-29.648-16.779 31.136-17.926.001-.001 34.164-19.669 29.674 17.084-21.772 12.428-43.555 24.863zm68.329-76.259v33.841l-12.475-7.182-17.231-9.92V49.806l12.475 7.182 17.231 9.92zm2.97-39.335l29.693 17.095-29.693 17.095-29.693-17.095 29.693-17.095zM54.06 114.089l-12.475 7.182V46.733l17.231-9.92 12.475-7.182v74.537l-17.231 9.921zM38.614 7.398l29.693 17.095-29.693 17.095L8.921 24.493 38.614 7.398zM5.938 29.632l12.475 7.182 17.231 9.92v79.676l.001.005-.001.006c0 .114.032.221.045.333.017.146.021.294.059.434l.002.007c.032.117.094.222.14.334.051.124.088.255.156.371a.036.036 0 00.004.009c.061.105.149.191.222.288.081.105.149.22.244.314l.008.01c.084.083.19.142.284.215.106.083.202.178.32.247l.013.005.011.008 34.139 19.321v34.175L5.939 144.867V29.632h-.001zm136.646 115.235l-65.352 37.625V148.31l48.399-27.628 16.953-9.677v33.862zm35.646-61.22l-29.706 17.102V66.908l17.231-9.92 12.475-7.182v33.841z"
-                        />
-                    </g>
-                </svg>
-            </div>
-
-            <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
-                <div class="grid grid-cols-1 md:grid-cols-2">
-                    <div class="p-6">
-                        <div class="flex items-center">
-                            <svg
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                class="w-8 h-8 text-gray-500"
-                            >
-                                <path
-                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                                ></path>
-                            </svg>
-                            <div class="ml-4 text-lg leading-7 font-semibold">
-                                <a href="https://laravel.com/docs" class="underline text-gray-900 dark:text-white"
-                                    >Documentation</a
-                                >
-                            </div>
-                        </div>
-
-                        <div class="ml-12">
-                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                Laravel has wonderful, thorough documentation covering every aspect of the framework.
-                                Whether you are new to the framework or have previous experience with Laravel, we
-                                recommend reading all of the documentation from beginning to end.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
-                        <div class="flex items-center">
-                            <svg
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                class="w-8 h-8 text-gray-500"
-                            >
-                                <path
-                                    d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-                                ></path>
-                                <path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            </svg>
-                            <div class="ml-4 text-lg leading-7 font-semibold">
-                                <a href="https://laracasts.com" class="underline text-gray-900 dark:text-white"
-                                    >Laracasts</a
-                                >
-                            </div>
-                        </div>
-
-                        <div class="ml-12">
-                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript
-                                development. Check them out, see for yourself, and massively level up your development
-                                skills in the process.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="p-6 border-t border-gray-200 dark:border-gray-700">
-                        <div class="flex items-center">
-                            <svg
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                class="w-8 h-8 text-gray-500"
-                            >
-                                <path
-                                    d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
-                                ></path>
-                            </svg>
-                            <div class="ml-4 text-lg leading-7 font-semibold">
-                                <a href="https://laravel-news.com/" class="underline text-gray-900 dark:text-white"
-                                    >Laravel News</a
-                                >
-                            </div>
-                        </div>
-
-                        <div class="ml-12">
-                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                Laravel News is a community driven portal and newsletter aggregating all of the latest
-                                and most important news in the Laravel ecosystem, including new package releases and
-                                tutorials.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
-                        <div class="flex items-center">
-                            <svg
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                class="w-8 h-8 text-gray-500"
-                            >
-                                <path
-                                    d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                ></path>
-                            </svg>
-                            <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">
-                                Vibrant Ecosystem
-                            </div>
-                        </div>
-
-                        <div class="ml-12">
-                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                Laravel's robust library of first-party tools and libraries, such as
-                                <a href="https://forge.laravel.com" class="underline">Forge</a>,
-                                <a href="https://vapor.laravel.com" class="underline">Vapor</a>,
-                                <a href="https://nova.laravel.com" class="underline">Nova</a>, and
-                                <a href="https://envoyer.io" class="underline">Envoyer</a> help you take your projects
-                                to the next level. Pair them with powerful open source libraries like
-                                <a href="https://laravel.com/docs/billing" class="underline">Cashier</a>,
-                                <a href="https://laravel.com/docs/dusk" class="underline">Dusk</a>,
-                                <a href="https://laravel.com/docs/broadcasting" class="underline">Echo</a>,
-                                <a href="https://laravel.com/docs/horizon" class="underline">Horizon</a>,
-                                <a href="https://laravel.com/docs/sanctum" class="underline">Sanctum</a>,
-                                <a href="https://laravel.com/docs/telescope" class="underline">Telescope</a>, and more.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex justify-center mt-4 sm:items-center sm:justify-between">
-                <div class="text-center text-sm text-gray-500 sm:text-left">
-                    <div class="flex items-center">
-                        <svg
-                            fill="none"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            class="-mt-px w-5 h-5 text-gray-400"
-                        >
-                            <path
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                            ></path>
-                        </svg>
-
-                        <a href="https://laravel.bigcartel.com" class="ml-1 underline"> Shop </a>
-
-                        <svg
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            viewBox="0 0 24 24"
-                            class="ml-4 -mt-px w-5 h-5 text-gray-400"
-                        >
-                            <path
-                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                            ></path>
-                        </svg>
-
-                        <a href="https://github.com/sponsors/taylorotwell" class="ml-1 underline"> Sponsor </a>
-                    </div>
-                </div>
-
-                <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
-                    Laravel v{{ laravelVersion }} (PHP v{{ phpVersion }})
-                </div>
-            </div>
-        </div>
-    </div>
-</template>
+    </div></template>
