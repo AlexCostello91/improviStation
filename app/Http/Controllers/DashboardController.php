@@ -17,7 +17,7 @@ class DashboardController extends Controller
     public function index()
     {
         $thisWeeksMeals = auth()->user()
-        ->mealsInDateRange(new \DateTime('-7 days'), new \DateTime())
+        ->mealsInDateRange(now()->subDays(7), now())
         ->map(function ($meal) {
             return $meal->withMacros();
         });
@@ -35,7 +35,7 @@ class DashboardController extends Controller
         }, $stats);
 
         $lastWeeksStats = auth()->user()
-            ->mealsInDateRange(new \DateTime('-14 days'), new \DateTime('-7 days'))
+            ->mealsInDateRange(now()->subDays(14), now()->subDays(7))
             ->map(function ($meal) {
                 return $meal->withMacros();
             });
@@ -118,6 +118,7 @@ class DashboardController extends Controller
 
         return Inertia::render('Dashboard', [
             'mealStats' => $mealStats,
+            'dailyValues' => auth()->user()->getDailyTotalStats(30)
         ]);
     }
 }
