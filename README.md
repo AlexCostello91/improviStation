@@ -1,6 +1,6 @@
-# Appname
+# ImproviStation
 
-This is a laravel project, utilizing VScode's devcontainer features. It requires docker to run locally.
+This is a simple Laravel/Vue project, utilizing VScode's devcontainer features. It requires docker to run locally.
 
 ## TO RUN LOCALLY
 Generate SSL certs for nginx and place them in /docker/nginx/ssl/
