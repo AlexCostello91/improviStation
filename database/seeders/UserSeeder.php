@@ -43,6 +43,9 @@ class UserSeeder extends Seeder
                                     ['name' => 'fat'],
                                     ['name' => 'calories'],
                                     ['name' => 'sodium'],
+                                    ['name' => 'fiber'],
+                                    ['name' => 'carbs'],
+                                    ['name' => 'sugar'],
                                 )
                             )
                             ->count($this->mealItemsPerMeal)

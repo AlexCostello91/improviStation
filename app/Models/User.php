@@ -82,10 +82,10 @@ class User extends Authenticatable
         //Create container for last 30 days
         $stats = [];
         $statsCont = Macro::statsContainer();
-        for ($i = 0; $i < 30; $i++) {
+        for ($i = 30; $i >= 0; $i--) {
             $date = Carbon::now()->subDays($i);
+            $tmp = $statsCont;
             $tmp['date'] = $date->toDateString();
-            $tmp['stats'] = $statsCont;
             $stats[] = $tmp;
         }
 
@@ -101,7 +101,7 @@ class User extends Authenticatable
         foreach ($meals as $meal) {
             $date = new Carbon($meal['created_at']);
             $index = $this->findArrayIndexByValue($stats, 'date', $date->format('Y-m-d'));
-            $stats[$index]['stats'] = $this->mergeMacros($stats[$index]['stats'], $meal['stats']);
+            $stats[$index] = $this->mergeMacros($stats[$index], $meal['stats']);
         }
 
         return $stats;

@@ -32,11 +32,10 @@ export default {
         const renderChart = () => {
             const stats = Object.keys(props.dailyValues[0]); // Get the available stats dynamically
             const datasets = stats
-                .filter(stat => stat !== 'date') // Exclude 'date' from the stats
+                .filter(stat => !['date', 'sugar', 'fiber', 'sodium'].includes(stat)) // Exclude fields from the stats
                 .map((stat, index) => ({
                     label: stat.charAt(0).toUpperCase() + stat.slice(1), // Capitalize the stat name
                     data: props.dailyValues.map(value => value[stat]),
-                    yAxisID: `y-axis-${index}`, // Assign unique y-axis ID for each stat
                     borderColor: getRandomColor(),
                     backgroundColor: 'transparent',
                     fill: false
@@ -60,10 +59,6 @@ export default {
                 scales: {
                     x: {
                         display: true,
-                        title: {
-                            display: true,
-                            text: 'Date'
-                        },
                         ticks: {
                             autoSkip: false,
                             maxRotation: 0,
@@ -77,7 +72,8 @@ export default {
                         }
                     },
                     y: {}
-                }
+                },
+
             };
 
             // Dynamically define the y-axis scales based on datasets
@@ -105,13 +101,21 @@ export default {
             });
         };
 
-        const getRandomColor = () => {
-            const colors = ['#4f46e5', '#48e56f', '#e548e5', '#9648e5', '#e54848'];
-            let colorIndex = Math.floor(Math.random() * colors.length);
-            let color = colors[colorIndex];
-            colors.splice(colorIndex, 1); // Remove the chosen color from the array
-            return color;
-        };
+        const getRandomColor = (() => {
+            const colors = ['#4f46e5', '#48e56f', '#e548e5', '#9648e5', '#e54848']; //Colors to choose from for line graph
+
+            return () => {
+                if (colors.length === 0) {
+                    console.warn('No more colors available.');
+                    return null;
+                }
+
+                const colorIndex = Math.floor(Math.random() * colors.length);
+                const color = colors[colorIndex];
+                colors.splice(colorIndex, 1); // Remove the chosen color from the array
+                return color;
+            };
+        })();
 
         return {
             chartCanvas,
