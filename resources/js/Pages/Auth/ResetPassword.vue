@@ -31,7 +31,7 @@ const submit = () => {
         <template #title>
             <Head title="Reset Password" />
         </template>
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-32">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
             <form @submit.prevent="submit">
                 <div>
                     <InputLabel for="email" value="Email" />
