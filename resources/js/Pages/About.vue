@@ -7,7 +7,40 @@ defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
 });
+const values = [
 
+
+  {
+    name: 'Healthy Diet',
+    description:
+      'We believe a healthy diet is the key to healthy habits in all areas of your life. We practice what we preach.',
+  },
+  {
+    name: 'Exercise',
+    description:
+      'Regularly exercising has all sorts of benefits, from mental health to physical health. We believe fit individuals are more fulfilled individuals.',
+  },
+  {
+    name: 'Passion',
+    description:
+      'We at ImproviStation found it a huge pain tring to balances various apps and services to track diet and exercise, and thus we created an all-in-one solutions that we use ourselves.',
+  },
+  {
+    name: 'Be supportive',
+    description:
+      'Nobody is perfect. We know that it is hard to build and maintain health habits. By habitually tracking your meals and exercise you can at least start to identify areas where you can improve.',
+  },
+  {
+    name: 'Take responsibility',
+    description:
+      'All your data is at your fingertips. We strongly believe that providing easy to understand statistics helps keep people dedicated to their goals in the long run.',
+  },
+  {
+    name: 'Share the love',
+    description:
+      'Even though ImproviStation was developed for personal use, we feel it was too helpful to keep to ourselves. Try it out, and it if helps you, we\'d love for you to recommend it to your friends and loved ones.',
+  },
+]
 const mobileMenuOpen = ref(false)
 </script>
 
@@ -34,7 +67,7 @@ const mobileMenuOpen = ref(false)
             <div class="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
               <div class="w-full max-w-xl lg:shrink-0 xl:max-w-2xl">
                 <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Manage your diet and exercise.</h1>
-                <p class="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">Stay motivated and disciplined. It can be hard changing and maintaining a healthy lifestyle. Here at ImproviStation, we try to make it as easy as possible for you to keep track of all of your food and exercise choices, so that you can find what works for you.</p>
+                <p class="relative mt-6 text-lg leading-8 text-gray-600 sm:max-w-md lg:max-w-none">Stay motivated and disciplined. It can be hard to develop and maintain a healthy lifestyle. Here at ImproviStation, we try to make it as easy as possible for you to keep track of all of your food and exercise choices, so that you can find what works for you.</p>
               </div>
               <div class="mt-14 flex justify-end gap-8 sm:-mt-44 sm:justify-start sm:pl-20 lg:mt-0 lg:pl-0">
                 <div class="ml-auto w-44 flex-none space-y-8 pt-32 sm:ml-0 sm:pt-80 lg:order-last lg:pt-36 xl:order-none xl:pt-80">
@@ -67,6 +100,19 @@ const mobileMenuOpen = ref(false)
             </div>
           </div>
         </div>
+      </div>
+      <!-- Values section -->
+      <div class="mx-auto mt-32 max-w-7xl px-6 sm:mt-40 lg:px-8">
+        <div class="mx-auto max-w-2xl lg:mx-0">
+          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Our values</h2>
+          <p class="mt-6 text-lg leading-8 text-gray-600">We believe in healthy diets, exercise, and you!</p>
+        </div>
+        <dl class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 text-base leading-7 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+          <div v-for="value in values" :key="value.name">
+            <dt class="font-semibold text-gray-900">{{ value.name }}</dt>
+            <dd class="mt-1 text-gray-600">{{ value.description }}</dd>
+          </div>
+        </dl>
       </div>
     </GuestLayout>
 </template>

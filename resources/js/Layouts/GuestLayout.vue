@@ -46,7 +46,7 @@ const mobileMenuOpen = ref(false)
     <div class="bg-white">
         <!-- Header -->
         <header class="absolute inset-x-0 top-0 z-50">
-            <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
+            <nav class="flex items-center justify-between p-6 lg:px-8" style="min-height: 104px" aria-label="Global">
                 <div class="flex lg:flex-1">
                     <a href="/" class="-m-1.5 p-1.5">
                         <span class="sr-only">ImproviStation</span>
@@ -74,7 +74,6 @@ const mobileMenuOpen = ref(false)
                         <template v-else>
                             <Link :href="route('login')" class="text-sm text-gray-900 font-semibold lg:hover:underline">Log in
                             </Link>
-
                             <Link v-if="canRegister" :href="route('register')"
                                 class="ml-4 text-sm text-gray-900 font-semibold lg:hover:underline">Register <span
                                 aria-hidden="true">&rarr;</span></Link>
@@ -130,7 +129,7 @@ const mobileMenuOpen = ref(false)
             </Dialog>
         </header>
 
-        <main>
+        <main class="pt-24 px-2 sm:pt-0 sm:px-4">
             <slot></slot>
         </main>
 
