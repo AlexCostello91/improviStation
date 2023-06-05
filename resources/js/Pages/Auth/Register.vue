@@ -23,7 +23,10 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Register" />
+        <template #title>
+            <Head title="Register" />
+        </template>
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
 
         <form @submit.prevent="submit">
             <div>
@@ -100,5 +103,6 @@ const submit = () => {
                 </PrimaryButton>
             </div>
         </form>
+        </div>
     </GuestLayout>
 </template>

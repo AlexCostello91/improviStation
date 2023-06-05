@@ -28,7 +28,16 @@ Route::get('/', function ()
         'canRegister' => Route::has('register'),
 
     ]);
-});
+})->name('home');
+
+Route::get('/about', function ()
+{
+    return Inertia::render('About', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+
+    ]);
+})->name('about');
 
 Route::get(
     '/dashboard',
