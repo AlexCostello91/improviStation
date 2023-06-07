@@ -37,6 +37,9 @@ const showingNavigationDropdown = ref(false);
 
 <template>
     <div>
+        <slot name="title">
+            <Head title="ImproviStation - Improve your life!" />
+        </slot>
         <div class="min-h-screen bg-gray-100">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
@@ -164,7 +167,7 @@ const showingNavigationDropdown = ref(false);
             </header>
 
             <!-- Page Content -->
-            <main>
+            <main class="mx-auto mt-8 max-w-7xl min-h-[55vh]">
                 <slot />
             </main>
 

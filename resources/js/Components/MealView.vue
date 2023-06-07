@@ -1,24 +1,71 @@
 <script setup>
-import MealItemList from '@/Components/MealItemList.vue';
+// import MealItemList from './MealItemList.vue';
 import { Link } from '@inertiajs/vue3';
+import { PaperClipIcon } from '@heroicons/vue/20/solid'
 
 defineProps(['meal']);
 </script>
 <template>
-    <div class="container mx-auto">
-        <div
-            class="block mt-6 max-w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <h1 class="p-3 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                <Link :href="route('meals.index')" class="hover:underline">
-                Meals
-                </Link><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-6 h-6 ml-2 mb-1 inline">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-                </svg>
-                {{ meal.name }}
-            </h1>
-
-            <MealItemList :meal="meal" />
+    <div class="bg-white rounded p-2">
+        <div class="p-4">
+            <h3 class="text-base font-semibold leading-7 text-gray-900">{{ meal.name }}</h3>
         </div>
-    </div>
-</template>
+        <div class="">
+            <dl class="grid grid-cols-1 sm:grid-cols-2 px-4 pb-4">
+                <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
+                    <dt class="text-sm font-medium leading-6 text-gray-900">Full name</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">Margot Foster</dd>
+                </div>
+                <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
+                    <dt class="text-sm font-medium leading-6 text-gray-900">Application for</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">Backend Developer</dd>
+                </div>
+                <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
+                    <dt class="text-sm font-medium leading-6 text-gray-900">Email address</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">margotfoster@example.com</dd>
+                </div>
+                <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
+                    <dt class="text-sm font-medium leading-6 text-gray-900">Salary expectation</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">$120,000</dd>
+                </div>
+                <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
+                    <dt class="text-sm font-medium leading-6 text-gray-900">About</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">Fugiat ipsum ipsum deserunt culpa aute sint do
+                        nostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint. Sit id
+                        mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing
+                        reprehenderit deserunt qui eu.</dd>
+                </div>
+                <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
+                    <dt class="text-sm font-medium leading-6 text-gray-900">Attachments</dt>
+                    <dd class="mt-2 text-sm text-gray-900">
+                        <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
+                            <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                                <div class="flex w-0 flex-1 items-center">
+                                    <PaperClipIcon class="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                    <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                                        <span class="truncate font-medium">resume_back_end_developer.pdf</span>
+                                        <span class="flex-shrink-0 text-gray-400">2.4mb</span>
+                                    </div>
+                                </div>
+                                <div class="ml-4 flex-shrink-0">
+                                    <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
+                                </div>
+                            </li>
+                            <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                                <div class="flex w-0 flex-1 items-center">
+                                    <PaperClipIcon class="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                    <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                                        <span class="truncate font-medium">coverletter_back_end_developer.pdf</span>
+                                        <span class="flex-shrink-0 text-gray-400">4.5mb</span>
+                                    </div>
+                                </div>
+                                <div class="ml-4 flex-shrink-0">
+                                    <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div></template>

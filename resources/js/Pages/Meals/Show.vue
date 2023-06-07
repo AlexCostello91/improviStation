@@ -6,8 +6,10 @@ defineProps(['meal']);
 </script>
 
 <template>
-    <Head title="Meals" />
     <AuthenticatedLayout>
+        <template #title>
+            <Head title="Meals" />
+        </template>
         <MealView :meal="meal"/>
     </AuthenticatedLayout>
 </template>

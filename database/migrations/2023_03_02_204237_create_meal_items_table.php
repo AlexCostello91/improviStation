@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('meal_id')->constrained()->cascadeOnDelete();
             $table->string('name');
+            $table->text('desc')->nullable();
             $table->integer('quantity');
             $table->timestamps();
         });

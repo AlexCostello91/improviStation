@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('type',['breakfast', 'brunch', 'lunch', 'dinner', 'snack']);
             $table->boolean('public')->default(true);
             $table->string('name');
+            $table->text('desc')->nullable();
             $table->timestamps();
         });
     }

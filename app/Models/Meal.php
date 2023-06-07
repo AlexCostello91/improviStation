@@ -17,7 +17,8 @@ class Meal extends Model
 
     protected $fillable = [
         'name',
-        'public'
+        'public',
+        'desc'
     ];
 
     public function user(): BelongsTo

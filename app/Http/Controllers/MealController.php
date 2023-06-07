@@ -14,7 +14,7 @@ class MealController extends Controller
 
     protected function getPageSize(int $requestPageSize){
         if($requestPageSize != 0){
-            return min($requestPageSize, 50);
+            return min($requestPageSize, 50); //limit custom page size to 50
         } else {
             return $this->defaultPageSize;
         }
