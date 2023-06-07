@@ -1,9 +1,21 @@
 <script setup>
-// import MealItemList from './MealItemList.vue';
 import { Link } from '@inertiajs/vue3';
+import { ref, onMounted } from 'vue';
 import { PaperClipIcon } from '@heroicons/vue/20/solid'
+import dayjs from 'dayjs';
+const props = defineProps(['meal']);
 
-defineProps(['meal']);
+const originalType = ref(props.meal.type);
+const capitalizedType = ref("");
+
+const capitalizeFirstLetter = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+onMounted(() => {
+  capitalizedType.value = capitalizeFirstLetter(originalType.value);
+});
+
 </script>
 <template>
     <div class="bg-white rounded p-2">
@@ -13,27 +25,24 @@ defineProps(['meal']);
         <div class="">
             <dl class="grid grid-cols-1 sm:grid-cols-2 px-4 pb-4">
                 <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
-                    <dt class="text-sm font-medium leading-6 text-gray-900">Full name</dt>
-                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">Margot Foster</dd>
+                    <dt class="text-sm font-medium leading-6 text-gray-900">Created By</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{ meal.user.name }}</dd>
                 </div>
                 <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
-                    <dt class="text-sm font-medium leading-6 text-gray-900">Application for</dt>
-                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">Backend Developer</dd>
+                    <dt class="text-sm font-medium leading-6 text-gray-900">Type</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{ capitalizedType }}</dd>
                 </div>
                 <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
-                    <dt class="text-sm font-medium leading-6 text-gray-900">Email address</dt>
-                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">margotfoster@example.com</dd>
+                    <dt class="text-sm font-medium leading-6 text-gray-900">Consumed at</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{ dayjs(meal.created_at).format('h:m A ddd, MMM D YYYY') }}</dd>
                 </div>
                 <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
-                    <dt class="text-sm font-medium leading-6 text-gray-900">Salary expectation</dt>
-                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">$120,000</dd>
+                    <dt class="text-sm font-medium leading-6 text-gray-900">Visibility</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{ meal.public ? 'Public' : 'Private' }}</dd>
                 </div>
                 <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
                     <dt class="text-sm font-medium leading-6 text-gray-900">About</dt>
-                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">Fugiat ipsum ipsum deserunt culpa aute sint do
-                        nostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint. Sit id
-                        mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing
-                        reprehenderit deserunt qui eu.</dd>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{ meal.desc }}</dd>
                 </div>
                 <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
                     <dt class="text-sm font-medium leading-6 text-gray-900">Attachments</dt>
@@ -68,4 +77,5 @@ defineProps(['meal']);
                 </div>
             </dl>
         </div>
-    </div></template>
+    </div>
+</template>
