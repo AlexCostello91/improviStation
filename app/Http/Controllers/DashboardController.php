@@ -110,8 +110,8 @@ class DashboardController extends Controller
 
         $mealStats[] = [
             'name' => "Avg Workout Intensity",
-            'stat' => number_format(($thisWeekTotalIntensity / count($thisWeeksWorkouts)), 1),
-            'previousStat' => number_format(($lastWeekTotalIntensity / count($lastWeeksWorkouts)), 1),
+            'stat' => number_format(($thisWeekTotalIntensity / max(count($thisWeeksWorkouts),1)), 1),
+            'previousStat' => number_format(($lastWeekTotalIntensity / max(count($lastWeeksWorkouts),1)), 1),
             'change' => number_format(abs($intensityChange), 1) . '%',
             'changeType' => $intensityChangeDir
         ];
