@@ -20,4 +20,4 @@ tasks:
     - run: uptime  
 
 after:
-  deploy:failed: deploy:unloc
+  deploy:failed: deploy:unlock
