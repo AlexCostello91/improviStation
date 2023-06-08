@@ -1,0 +1,23 @@
+import: 
+  - recipe/laravel.php
+
+config:
+  repository: 'git@github.com:AlexCostello91/improviStation.git'
+
+hosts:
+  137.184.51.109:
+    remote_user: deployer
+    deploy_path: '~/ImproviStation'
+    domain: 'improvistation.co'
+    public_path: 'public'
+    php_version: 8.1
+    db_type: mariadb
+    db_user: deployer
+    db_name: 'improvistation'
+
+tasks:
+  build:
+    - run: uptime  
+
+after:
+  deploy:failed: deploy:unlock
