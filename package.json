@@ -2,7 +2,7 @@
     "private": true,
     "scripts": {
         "dev": "vite --host",
-        "build": "vite build"
+        "build": "vite --config vite.config.prod.js build"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",
