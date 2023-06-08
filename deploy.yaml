@@ -1,4 +1,4 @@
-import: 
+import:
   - recipe/laravel.php
 
 config:
@@ -17,7 +17,8 @@ hosts:
 
 tasks:
   build:
-    - run: uptime  
+    - cd: "{{release_path}}"
+    - run: "npm run build"
 
 after:
   deploy:failed: deploy:unlock
