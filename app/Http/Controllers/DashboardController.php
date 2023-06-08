@@ -96,7 +96,7 @@ class DashboardController extends Controller
         (int) $intensityChange = (
             (
                 ($thisWeekTotalIntensity / count($thisWeeksWorkouts)) /
-                (($lastWeekTotalIntensity == 0 ? 1 : $lastWeekTotalIntensity) / count($lastWeeksWorkouts))
+                (max(count($lastWeekTotalIntensity,1)) / max(count($lastWeeksWorkouts),1))
             ) - 1) * 100;
         $intensityChangeDir = $intensityChange <= 0 ? 'descrease' : 'increase';
 
