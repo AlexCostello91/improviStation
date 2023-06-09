@@ -94,7 +94,7 @@ class User extends Authenticatable
         $meals = auth()->user()
             ->mealsInDateRange(now()->subDays(30), now())
             ->map(function ($meal) {
-                return $meal->withMacros();
+                return $meal->withMacroSummary();
             });
 
         //Aggregate them for a daily total

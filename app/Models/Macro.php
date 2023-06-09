@@ -21,6 +21,19 @@ class Macro extends Model
         return ["calories", "carbs", "fat", "fiber", "protein", "sodium", "sugar"];
     }
 
+    public static function defaultDisplayUnits()
+    {
+        return [
+            "calories" => null,
+            "carbs" => 'g',
+            "fat" => 'g',
+            "fiber"=> 'g',
+            "protein"=> 'g',
+            "sodium"=> 'mg',
+            "sugar"=> 'g'
+        ];
+    }
+
     public static function statsContainer()
     {
         $stats = [];

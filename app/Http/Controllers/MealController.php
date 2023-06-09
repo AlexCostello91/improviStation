@@ -76,7 +76,7 @@ class MealController extends Controller
         $this->authorize('view', $meal);
 
         return Inertia::render('Meals/Show', [
-            'meal' => $meal->loadMissing('mealItems.macros')->loadMissing('user')
+            'meal' => $meal->loadMissing('mealItems.macros')->loadMissing('user')->withMacroSummary(true)
         ]);
     }
 

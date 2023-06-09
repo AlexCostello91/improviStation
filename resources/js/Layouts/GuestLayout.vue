@@ -129,7 +129,7 @@ const mobileMenuOpen = ref(false)
             </Dialog>
         </header>
 
-        <main class="pt-24 px-2 sm:pt-0 sm:px-4">
+        <main class="isolate pt-24 px-2 sm:pt-0 sm:px-4">
             <slot></slot>
         </main>
 

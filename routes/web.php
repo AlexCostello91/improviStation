@@ -63,8 +63,4 @@ Route::resource('meals', MealController::class)
     ->only(['index', 'show'])
     ->middleware(['auth', 'verified']);
 
-Route::resource('mealItems', MealItemController::class)
-    ->only(['show'])
-    ->middleware(['auth', 'verified']);
-
 require __DIR__ . '/auth.php';

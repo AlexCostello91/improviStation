@@ -31,24 +31,40 @@ class Meal extends Model
         return $this->hasMany(MealItem::class);
     }
 
-    public function withMacros(string $selection = 'none')
+    public function withMacroSummary(bool $withDisplayUnit = false)
     {
         $stats=[];
         $macros = Macro::macroList();
+        $defaultDisplayUnits = Macro::defaultDisplayUnits();
         foreach($macros as $macro){
-            $stats[$macro] = 0;
+            $stats[] = [
+                'name' => $macro,
+                'display_unit' => $defaultDisplayUnits[$macro],
+                'value'=> 0
+            ];
         }
+
 
         foreach($this->mealItems()->with('macros')->get() as $mealItem){
             foreach($mealItem['macros'] as $macro){
-                $stats[$macro['name']]+=$macro['value'];
+                $index = null;
+                $searchValue = $macro['name'];
+                array_walk($stats, function ($value, $key) use ($searchValue, &$index) {
+                    if ($value['name'] === $searchValue) {
+                        $index = $key;
+                    }
+                });
+                if(!is_null($index)){
+                    $amountToAdd = $macro['value'] * $mealItem['quantity'];
+                    if($macro['display_unit']==='mg' &&  $stats[$index]['display_unit']==='g'){
+                        $amountToAdd/=1000;
+                    }
+                    $stats[$index]['value']+=$amountToAdd;
+                }
             }
         }
 
-        if($selection!='none' && array_key_exists($selection, $stats)){
-            return [$selection => $stats[$selection]];
-        }
-        $this['stats'] = $stats;
+        $this['macroSummary'] = $stats;
 
         return $this;
     }

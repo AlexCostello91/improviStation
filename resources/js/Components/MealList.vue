@@ -3,16 +3,7 @@ import { Link } from '@inertiajs/vue3';
 import PaginationPane from "./PaginationPane.vue";
 import dayjs from "dayjs";
 let props = defineProps(['meals']);
-const people = [
-
-
-  { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-  { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-  { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-  { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-
-  // More people...
-]
+import {capitalizeFirstLetter} from '@/Composables/formatHelper.js';
 </script>
 <template>
     <div class="px-4 sm:px-6 lg:p-8 bg-white rounded">
@@ -38,7 +29,7 @@ const people = [
           <tbody class="divide-y divide-gray-200 bg-white">
             <tr v-for="(meal, index) in meals.data" :key="meal.id">
               <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ meal.name }}</td>
-              <td class="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ meal.type }}</td>
+              <td class="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ capitalizeFirstLetter(meal.type) }}</td>
               <td class="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 lg:table-cell">{{ meal.user.name }}</td>
               <td class="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 lg:table-cell">{{ dayjs(meal.created_at).format('h:m A ddd, MMM D YYYY') }}</td>
               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ 200 }}</td>

@@ -19,13 +19,13 @@ class DashboardController extends Controller
         $thisWeeksMeals = auth()->user()
         ->mealsInDateRange(now()->subDays(7), now())
         ->map(function ($meal) {
-            return $meal->withMacros();
+            return $meal->withMacroSummary();
         });
 
         $stats = Macro::statsContainer();
 
         foreach ($thisWeeksMeals as $meal) {
-            foreach ($meal['stats'] as $macro => $val) {
+            foreach ($meal['macroSummary'] as $macro => $val) {
                 $stats[$macro] += $val;
             }
         }
@@ -37,13 +37,13 @@ class DashboardController extends Controller
         $lastWeeksStats = auth()->user()
             ->mealsInDateRange(now()->subDays(14), now()->subDays(7))
             ->map(function ($meal) {
-                return $meal->withMacros();
+                return $meal->withMacroSummary();
             });
 
         $stats = Macro::statsContainer();
 
         foreach ($lastWeeksStats as $meal) {
-            foreach ($meal['stats'] as $macro => $val) {
+            foreach ($meal['macroSummary'] as $macro => $val) {
                 $stats[$macro] += $val;
             }
         }
