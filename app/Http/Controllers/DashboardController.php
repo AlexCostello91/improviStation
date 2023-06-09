@@ -25,8 +25,8 @@ class DashboardController extends Controller
         $stats = Macro::statsContainer();
 
         foreach ($thisWeeksMeals as $meal) {
-            foreach ($meal['macroSummary'] as $macro => $val) {
-                $stats[$macro] += $val;
+            foreach ($meal['macroSummary'] as $macro) {
+                $stats[$macro['name']] += $macro['value'];
             }
         }
 
@@ -43,8 +43,8 @@ class DashboardController extends Controller
         $stats = Macro::statsContainer();
 
         foreach ($lastWeeksStats as $meal) {
-            foreach ($meal['macroSummary'] as $macro => $val) {
-                $stats[$macro] += $val;
+            foreach ($meal['macroSummary'] as $macro) {
+                $stats[$macro['name']] += $macro['value'];
             }
         }
 

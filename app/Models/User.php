@@ -77,6 +77,7 @@ class User extends Authenticatable
             ->get();
     }
 
+    //TODO fix daily stats for graph, factor in mg to G conversion
     public function getDailyTotalStats(int $days)
     {
         //Create container for last 30 days
@@ -101,7 +102,7 @@ class User extends Authenticatable
         foreach ($meals as $meal) {
             $date = new Carbon($meal['created_at']);
             $index = $this->findArrayIndexByValue($stats, 'date', $date->format('Y-m-d'));
-            $stats[$index] = $this->mergeMacros($stats[$index], $meal['stats']);
+            $stats[$index] = $this->mergeMacros($stats[$index], $meal['macroSummary']);
         }
 
         return $stats;
@@ -114,7 +115,9 @@ class User extends Authenticatable
     {
         $keys = Macro::macroList();
         foreach($keys as $key){
-            $container[$key]+=$toBeMerged[$key];
+            if(array_key_exists($key,$toBeMerged)){
+                $container[$key]+=$toBeMerged[$key]['value'];
+            }
         }
         return $container;
     }
