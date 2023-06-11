@@ -90,7 +90,6 @@ class User extends Authenticatable
             $stats[] = $tmp;
         }
 
-
         //Get all meals for last 30 days
         $meals = auth()->user()
             ->mealsInDateRange(now()->subDays(30), now())
@@ -102,7 +101,9 @@ class User extends Authenticatable
         foreach ($meals as $meal) {
             $date = new Carbon($meal['created_at']);
             $index = $this->findArrayIndexByValue($stats, 'date', $date->format('Y-m-d'));
-            $stats[$index] = $this->mergeMacros($stats[$index], $meal['macroSummary']);
+            if(!is_null($index)){
+                $stats[$index] = $this->mergeMacros($stats[$index], $meal['macroSummary']);
+            }
         }
 
         return $stats;
@@ -114,9 +115,11 @@ class User extends Authenticatable
     protected function mergeMacros(array $container, array $toBeMerged)
     {
         $keys = Macro::macroList();
+
         foreach($keys as $key){
-            if(array_key_exists($key,$toBeMerged)){
-                $container[$key]+=$toBeMerged[$key]['value'];
+            $index = $this->findArrayIndexByValue($toBeMerged, 'name', $key);
+            if(!is_null($index)){
+                $container[$key]+=$toBeMerged[$index]['value'];
             }
         }
         return $container;
