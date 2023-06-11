@@ -44,14 +44,14 @@ const isOpen = ref({});
                     <dt class="text-sm font-medium leading-6 text-gray-900">Items</dt>
                     <dd class="text-sm text-gray-900">
                         <dl class="grid grid-cols-1 sm:grid-cols-2 pb-4">
-                            <div class="border-gray-100 px-4 py-2 sm:col-span-2 sm:px-0">
+                            <div class="border-gray-100 sm:px-4 py-2 sm:col-span-2 sm:px-0">
                                 <dd class="mt-2 text-sm text-gray-900">
                                     <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
                                         <template v-for="meal_item in meal.meal_items" :key="meal_item.id">
                                             <li
                                                 :class="[
                                                     isOpen[meal_item.id] ? 'bg-indigo-600 text-white text-semibold': '',
-                                                    'relative flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6'
+                                                    'relative flex items-center justify-between py-4 sm:pl-4 pr-5 text-sm leading-6'
                                                     ]">
                                                 <div class="flex w-0 flex-1 items-center">
                                                     <div class="ml-4 flex min-w-0 flex-1 gap-2">
@@ -60,7 +60,7 @@ const isOpen = ref({});
                                                             'truncate'
                                                         ]">{{ meal_item.name }}</span>
                                                     </div>
-                                                    <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                                                    <div class="ml-4 flex shrink sm:shrink-0 sm:min-w-0 sm:flex-1 gap-2">
                                                         <span :class="[
                                                             isOpen[meal_item.id] ? 'font-bold': 'font-semibold',
                                                             'truncate'
