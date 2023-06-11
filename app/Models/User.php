@@ -118,6 +118,7 @@ class User extends Authenticatable
 
         foreach($keys as $key){
             $index = $this->findArrayIndexByValue($toBeMerged, 'name', $key);
+
             if(!is_null($index)){
                 $container[$key]+=$toBeMerged[$index]['value'];
             }

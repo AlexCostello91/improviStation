@@ -13,11 +13,9 @@
                 "eamodio.gitlens",
                 "EditorConfig.EditorConfig",
                 "mikestead.dotenv",
-                "onecentlin.laravel-blade",
-                "Vue.volar",
 			    "onecentlin.laravel5-snippets",
                 "phiter.phpstorm-snippets",
-                "sdras.vue-vscode-extensionpack",
+                "Vue.volar"
 			]
 		}
 	}

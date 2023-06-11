@@ -5,12 +5,9 @@ import MacroList from './MacroList.vue';
 import dayjs from 'dayjs';
 import {capitalizeFirstLetter} from '@/Composables/formatHelper.js';
 const props = defineProps(['meal']);
-console.log(props.meal);
 const toggleDropdown = (itemId) => {
     isOpen.value[itemId] = !isOpen.value[itemId];
 };
-
-
 
 const isOpen = ref({});
 
