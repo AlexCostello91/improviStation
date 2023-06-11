@@ -3,25 +3,15 @@ import { Link } from '@inertiajs/vue3';
 import PaginationPane from "./PaginationPane.vue";
 import dayjs from "dayjs";
 import { capitalizeFirstLetter } from '@/Composables/formatHelper.js';
-import MealFormModal from '@/Components/MealFormModal.vue';
-import { ref } from 'vue';
 
 let props = defineProps(['meals']);
 
-const open = ref(false);
-
-const closeModal = () =>{
-    open.value = false;
-}
 </script>
 <template>
-    <MealFormModal :open="open" @closeModal="closeModal"></MealFormModal>
     <div class="px-4 sm:px-6 lg:p-8 bg-white rounded">
         <div class="sm:flex sm:items-center float-right">
             <div class="mt-4 sm:ml-16 sm:flex-none lg:mt-0">
-                <button @click="open = true"
-                    class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add
-                    meal</button>
+                <Link :href="route('meals.create')" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add Meal</Link>
             </div>
         </div>
         <div class="-mx-4 mt-8 sm:-mx-0">

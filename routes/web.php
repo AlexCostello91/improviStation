@@ -60,7 +60,7 @@ Route::resource('workouts', WorkoutController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('meals', MealController::class)
-    ->only(['index', 'show'])
+    ->only(['index', 'show', 'create'])
     ->middleware(['auth', 'verified']);
 
 require __DIR__ . '/auth.php';
