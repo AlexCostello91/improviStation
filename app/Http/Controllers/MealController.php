@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Validation\Rule;
 class MealController extends Controller
 {
     protected int $defaultPageSize = 10;
@@ -64,7 +64,13 @@ class MealController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:64',
+            'desc' => 'required|string|max:255',
+            'public'=>'required|boolean',
+            'type'=>['required',Rule::in(Meal::TYPES)]
+        ]);
+        dd($validated);
     }
 
     /**

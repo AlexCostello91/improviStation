@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('meals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->enum('type',['breakfast', 'brunch', 'lunch', 'dinner', 'snack']);
+            $table->enum('type',\App\Models\Meal::TYPES);
             $table->boolean('public')->default(true);
             $table->string('name');
             $table->text('desc')->nullable();

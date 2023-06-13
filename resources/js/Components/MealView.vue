@@ -33,7 +33,7 @@ const isOpen = ref({});
                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{ meal.public ? 'Public' : 'Private' }}</dd>
                 </div>
                 <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
-                    <dt class="text-sm font-medium leading-6 text-gray-900">About</dt>
+                    <dt class="text-sm font-medium leading-6 text-gray-900">Description</dt>
                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{ meal.desc }}</dd>
                 </div>
                 <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">

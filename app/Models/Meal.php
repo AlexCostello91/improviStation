@@ -15,6 +15,8 @@ class Meal extends Model
 {
     use HasFactory;
 
+    public const TYPES = ['breakfast', 'brunch', 'lunch', 'dinner', 'snack'];
+
     protected $fillable = [
         'name',
         'public',
