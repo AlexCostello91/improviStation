@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean('public')->default(true);
             $table->string('name');
             $table->text('desc')->nullable();
+            $table->timestamp('consumed_at')->default(now());
             $table->timestamps();
         });
     }

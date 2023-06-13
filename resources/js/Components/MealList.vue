@@ -42,7 +42,7 @@ let props = defineProps(['meals']);
                         <td class="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 lg:table-cell">{{ meal.user.name
                         }}</td>
                         <td class="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 lg:table-cell">{{
-                            dayjs(meal.created_at).format('h:m A ddd, MMM D YYYY') }}</td>
+                            dayjs(meal.consumed_at).format('h:m A ddd, MMM D YYYY') }}</td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ 200 }}</td>
                         <td class="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                             <Link :href="route('meals.show', meal.id)" class="text-indigo-600 hover:text-indigo-900">

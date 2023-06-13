@@ -6,7 +6,7 @@ use App\Models\Meal;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Auth;
 
 class MealController extends Controller
 {
@@ -51,7 +51,9 @@ class MealController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Meals/Create');
+        return Inertia::render('Meals/Create',[
+            'user_id'=>Auth::id()
+        ]);
     }
 
     /**

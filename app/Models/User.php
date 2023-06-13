@@ -63,17 +63,17 @@ class User extends Authenticatable
     public function mealsFromLastXDays(int $days)
     {
         return $this->meals()
-            ->where('created_at', '>=', now()->subDays($days))
-            ->orderBy('created_at', 'asc')
+            ->where('consumed_at', '>=', now()->subDays($days))
+            ->orderBy('consumed_at', 'asc')
             ->get();
     }
 
     public function mealsInDateRange(Carbon $start, Carbon $end)
     {
         return $this->meals()
-            ->where('created_at', '>=', $start)
-            ->where('created_at', '<=', $end)
-            ->orderBy('created_at', 'asc')
+            ->where('consumed_at', '>=', $start)
+            ->where('consumed_at', '<=', $end)
+            ->orderBy('consumed_at', 'asc')
             ->get();
     }
 
@@ -99,7 +99,7 @@ class User extends Authenticatable
 
         //Aggregate them for a daily total
         foreach ($meals as $meal) {
-            $date = new Carbon($meal['created_at']);
+            $date = new Carbon($meal['consumed_at']);
             $index = $this->findArrayIndexByValue($stats, 'date', $date->format('Y-m-d'));
             if(!is_null($index)){
                 $stats[$index] = $this->mergeMacros($stats[$index], $meal['macroSummary']);

@@ -12,23 +12,20 @@ const isOpen = ref({});
 
 </script>
 <template>
-    <div class="bg-white rounded p-2">
-        <div class="p-4">
-            <h3 class="text-base font-semibold leading-7 text-gray-900">{{ meal.name }}</h3>
-        </div>
+    <div class="bg-white rounded px-4">
         <div class="">
             <dl class="grid grid-cols-1 sm:grid-cols-2 px-4 pb-4">
-                <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
+                <div class="border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
                     <dt class="text-sm font-medium leading-6 text-gray-900">Created By</dt>
                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{ meal.user.name }}</dd>
                 </div>
-                <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
+                <div class="border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
                     <dt class="text-sm font-medium leading-6 text-gray-900">Type</dt>
                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{ capitalizeFirstLetter(meal.type) }}</dd>
                 </div>
                 <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
                     <dt class="text-sm font-medium leading-6 text-gray-900">Consumed at</dt>
-                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{ dayjs(meal.created_at).format("h:m A ddd, " +
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{ dayjs(meal.consumed_at).format("h:m A ddd, " +
                         "MMM D YYYY") }}</dd>
                 </div>
                 <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
