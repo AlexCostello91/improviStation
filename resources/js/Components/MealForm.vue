@@ -3,9 +3,9 @@ import { useForm } from '@inertiajs/vue3';
 import { ExclamationCircleIcon } from '@heroicons/vue/20/solid'
 import { Switch } from '@headlessui/vue'
 import { ref } from 'vue';
-import dayjs from 'dayjs';
 import { DatePicker } from 'v-calendar';
 import 'v-calendar/style.css';
+
 const props = defineProps(['user_id']);
 const form = useForm({
     name: null,
@@ -16,9 +16,18 @@ const form = useForm({
     public: ref(false)
 });
 
+const handleSubmit = () => {
+    //Convert date to string before submitting form
+    form.consumed_at = form.consumed_at.toISOString();
+    console.log(form.consumed_at);
+
+    form.post('/meals');
+    console.log(form);
+}
+
 </script>
 <template>
-    <form @submit.prevent="form.post('/meals')">
+    <form @submit.prevent="handleSubmit">
         <div class="space-y-12">
             <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
                 <div>
@@ -109,7 +118,7 @@ const form = useForm({
                         class="block text-sm font-medium font-semibold leading-6 text-gray-900">Consumed</label>
                     <div class="mealDatePicker">
                         <DatePicker class="appearance-none" id="consumed_at" name="consumed_at" mode="dateTime"
-                            color="indigo" v-model="form.consumed_at" />
+                            color="indigo" v-model="form.consumed_at"/>
                     </div>
                 </div>
             </div>

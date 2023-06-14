@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use App\Rules\UtcDateTime;
 class MealController extends Controller
 {
     protected int $defaultPageSize = 10;
@@ -68,7 +69,8 @@ class MealController extends Controller
             'name' => 'required|string|max:64',
             'desc' => 'required|string|max:255',
             'public'=>'required|boolean',
-            'type'=>['required',Rule::in(Meal::TYPES)]
+            'type'=>['required',Rule::in(Meal::TYPES)],
+            'consumed_at' => ['required', 'date', new UtcDateTime]
         ]);
         dd($validated);
     }
