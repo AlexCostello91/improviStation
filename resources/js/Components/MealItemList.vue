@@ -1,40 +1,82 @@
 <script setup>
-import MealItemListItem from "@/Components/MealItemListItem.vue";
-import { propsToAttrMap } from "@vue/shared";
-import { computed } from 'vue';
+import { ref } from 'vue';
+import MacroList from './MacroList.vue';
 
-const props = defineProps(['meal']);
+const props = defineProps({
+    meal_items: {
+        type: Array,
+        default: []
+    },
+    header_active: {
+        type: String,
+        default: 'bg-indigo-600 text-white text-semibold'
+    },
+    header_inactive: {
+        type: String,
+        default: ''
+    },
+    content_active: {
+        type: String,
+        default: 'py-4 px-8 bg-indigo-100'
+    },
+    view_link_active: {
+        type: String,
+        default: 'font-bold text-white'
+    },
+    view_link_inactive: {
+        type: String,
+        default: 'font-semilbold text-indigo-600 hover:text-indigo-500'
+    }
 
-const totalCalories = computed(() => {
-    let totalCalories = 0;
-    props.meal.meal_items.forEach(meal_item => {
-        meal_item.macros.forEach(macro => {
-            if (macro.name === 'calories') {
-                totalCalories += (macro.value * meal_item.quantity);
-            }
-        });
-    });
-    return totalCalories;
-})
+});
+
+
+const toggleDropdown = (itemId) => {
+    isOpen.value[itemId] = !isOpen.value[itemId];
+};
+
+const isOpen = ref({});
 </script>
 <template>
-    <div class="mx-auto px-4 overflow-hidden bg-white shadow rounded-b-md">
-        <ul role="list" class="divide-y divide-gray-200">
-            <MealItemListItem v-for="item in props.meal.meal_items" :key="item.id" :meal_item="item"></MealItemListItem>
-            <li>
-                <div class="flex items-center px-4 py-4 px-6">
-                    <div class="flex min-w-0 flex-1 items-center">
-                        <div class="min-w-0 flex-1 px-4 grid grid-cols-2 gap-4">
-                            <div class="flex items-center">
-                                {{ 'Total Calories:' }}
+    <dl class="grid grid-cols-1 sm:grid-cols-2 pb-4">
+        <div class="border-gray-100 sm:px-4 py-2 sm:col-span-2 sm:px-0">
+            <dd class="mt-2 text-sm text-gray-900">
+                <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
+                    <template v-for="meal_item in meal_items" :key="meal_item.id">
+                        <li :class="[
+                            isOpen[meal_item.id] ? header_active
+                                : header_inactive,
+                            'relative flex items-center justify-between py-4 sm:pl-4 pr-5 text-sm leading-6'
+                        ]">
+                            <div class="flex w-0 flex-1 items-center">
+                                <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                                    <span :class="[
+                                        isOpen[meal_item.id] ? 'font-bold' : 'font-semibold',
+                                        'truncate'
+                                    ]">{{ meal_item.name }}</span>
+                                </div>
+                                <div class="ml-4 flex shrink sm:shrink-0 sm:min-w-0 sm:flex-1 gap-2">
+                                    <span :class="[
+                                        isOpen[meal_item.id] ? 'font-bold' : 'font-semibold',
+                                        'truncate'
+                                    ]"> x {{ meal_item.quantity
+}}</span>
+                                </div>
                             </div>
-                            <div class="flex items-center justify-center">
-                                {{ totalCalories }} Calories
+                            <div class="ml-4 flex-shrink-0">
+                                <a :class="[
+                                        isOpen[meal_item.id] ? view_link_active : view_link_inactive,
+                                        'hover:underline cursor-pointer'
+                                    ]" @click="toggleDropdown(meal_item.id)">View</a>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
+                        </li>
+                        <li v-if="isOpen[meal_item.id]" :key="`dropdown-${meal_item.id}`" :class="content_active">
+                            <p class="p-2">{{ meal_item.desc }}</p>
+                            <MacroList :macros="meal_item.macros" :quantity="meal_item.quantity" />
+                        </li>
+                    </template>
+                </ul>
+            </dd>
+        </div>
+    </dl>
 </template>

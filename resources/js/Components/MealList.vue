@@ -6,6 +6,18 @@ import { capitalizeFirstLetter } from '@/Composables/formatHelper.js';
 
 let props = defineProps(['meals']);
 
+
+
+function getCalories(meal) {
+    let calories = 0;
+    meal.macroSummary.forEach(macro => {
+        if(macro.name=="calories"){
+            calories = macro.value;
+        }
+    });
+    return calories;
+};
+
 </script>
 <template>
     <div class="px-4 sm:px-6 lg:p-8 bg-white rounded">
@@ -43,7 +55,7 @@ let props = defineProps(['meals']);
                         }}</td>
                         <td class="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 lg:table-cell">{{
                             dayjs(meal.consumed_at).format('h:m A ddd, MMM D YYYY') }}</td>
-                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ 200 }}</td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ getCalories(meal) }}</td>
                         <td class="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                             <Link :href="route('meals.show', meal.id)" class="text-indigo-600 hover:text-indigo-900">
                             View<span class="sr-only">, {{ meal.name }}</span></Link>

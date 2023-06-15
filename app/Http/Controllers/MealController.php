@@ -9,12 +9,15 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use App\Rules\UtcDateTime;
+use Carbon\Carbon;
+
 class MealController extends Controller
 {
     protected int $defaultPageSize = 10;
 
-    protected function getPageSize(int $requestPageSize){
-        if($requestPageSize != 0){
+    protected function getPageSize(int $requestPageSize)
+    {
+        if ($requestPageSize != 0) {
             return min($requestPageSize, 50); //limit custom page size to 50
         } else {
             return $this->defaultPageSize;
@@ -32,11 +35,14 @@ class MealController extends Controller
         $meals = Meal::with('user:id,name')
             ->where('public', true)
             ->orWhere('user_id', auth()->user()->id)
-            ->latest()
+            ->orderBy('consumed_at', 'desc')
             ->paginate($pageSize);
+        $meals->map(function ($meal) {
+            return $meal->withMacroSummary();
+        });
 
         //Use page_size param for non-default page size
-        if($pageSize!=$this->defaultPageSize){
+        if ($pageSize != $this->defaultPageSize) {
             $meals->appends('page_size', $pageSize);
         }
 
@@ -52,8 +58,8 @@ class MealController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Meals/Create',[
-            'user_id'=>Auth::id()
+        return Inertia::render('Meals/Create', [
+            'user_id' => Auth::id()
         ]);
     }
 
@@ -68,11 +74,16 @@ class MealController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:64',
             'desc' => 'required|string|max:255',
-            'public'=>'required|boolean',
-            'type'=>['required',Rule::in(Meal::TYPES)],
+            'public' => 'required|boolean',
+            'type' => ['required', Rule::in(Meal::TYPES)],
             'consumed_at' => ['required', 'date', new UtcDateTime]
         ]);
-        dd($validated);
+
+        $validated['consumed_at'] = new Carbon($validated['consumed_at']);
+
+        $request->user()->meals()->create($validated);
+
+        return redirect(route('meals.index'));
     }
 
     /**

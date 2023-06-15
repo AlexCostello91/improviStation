@@ -44,6 +44,11 @@ Route::get(
     [DashboardController::class, 'index']
 )->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get(
+    '/meal-items/search',
+    [MealItemController::class, 'search']
+)->middleware(['auth', 'verified'])->name('meal-items/search');
+
 Route::middleware('auth')->group(function ()
 {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

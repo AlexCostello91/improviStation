@@ -25,6 +25,7 @@
         "dayjs": "^1.11.7",
         "nvm": "^0.0.4",
         "v-calendar": "^3.0.3",
+        "vue-content-loader": "^2.0.1",
         "yarn": "^1.22.19"
     }
 }
