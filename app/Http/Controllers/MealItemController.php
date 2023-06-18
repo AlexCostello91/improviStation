@@ -39,11 +39,13 @@ class MealItemController extends Controller
             'q' => 'string|max:255|regex:/^[a-zA-Z0-9\s]+$/'
         ]);
         $searchTerm = '';
-        if(array_key_exists('q',$validated)){
+        if (array_key_exists('q', $validated)) {
             $searchTerm = $validated['q'];
         }
-        $mealItems = MealItem::where('name', 'like', '%' . $searchTerm . '%')->with('macros')
-        ->paginate(10);
+        $mealItems = MealItem::where('name', 'like', '%' . $searchTerm . '%')
+            ->with('macros')
+            ->paginate(10);
+
         return response()->json($mealItems);
     }
 

@@ -8,3 +8,6 @@ export function formatDecimal(number, decimalPlaces = 2){
         return Number(number).toFixed(decimalPlaces);
     }
 };
+export function isInteger(str) {
+    return Number.isInteger(parseInt(str, 10)) && !isNaN(parseInt(str, 10));
+}

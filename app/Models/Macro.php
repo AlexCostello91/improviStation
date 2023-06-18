@@ -10,15 +10,12 @@ class Macro extends Model
 {
     use HasFactory;
 
+    public const TYPES = ["calories", "carbs", "fat", "fiber", "protein", "sodium", "sugar"];
+    public const DISPLAY_UNIT_OPTIONS = ['g','mg'];
+
     public function mealItem(): BelongsTo
     {
         return $this->belongsTo(MealItem::class);
-    }
-
-    //Pull all macro lists from 1 source
-    public static function macroList()
-    {
-        return ["calories", "carbs", "fat", "fiber", "protein", "sodium", "sugar"];
     }
 
     public static function defaultDisplayUnits()
@@ -37,7 +34,7 @@ class Macro extends Model
     public static function statsContainer()
     {
         $stats = [];
-        $macros = Macro::macroList();
+        $macros = Macro::TYPES;
         foreach($macros as $macro){
             $stats[$macro] = 0;
         }

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreMealRequest;
 use App\Models\Meal;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
-use App\Rules\UtcDateTime;
+
 use Carbon\Carbon;
 
 class MealController extends Controller
@@ -37,7 +37,7 @@ class MealController extends Controller
             ->orWhere('user_id', auth()->user()->id)
             ->orderBy('consumed_at', 'desc')
             ->paginate($pageSize);
-        $meals->map(function ($meal) {
+        $meals->getCollection()->transform(function ($meal){
             return $meal->withMacroSummary();
         });
 
@@ -66,22 +66,18 @@ class MealController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreMealRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMealRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:64',
-            'desc' => 'required|string|max:255',
-            'public' => 'required|boolean',
-            'type' => ['required', Rule::in(Meal::TYPES)],
-            'consumed_at' => ['required', 'date', new UtcDateTime]
-        ]);
+
+        dd($request->validated());
 
         $validated['consumed_at'] = new Carbon($validated['consumed_at']);
 
         $request->user()->meals()->create($validated);
+
 
         return redirect(route('meals.index'));
     }

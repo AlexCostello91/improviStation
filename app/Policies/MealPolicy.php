@@ -37,12 +37,11 @@ class MealPolicy
      * Determine whether the user can create models.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Meal  $meal
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user, Meal $meal)
+    public function create(User $user)
     {
-        return $meal->user()->is($user);
+        //
     }
 
     /**

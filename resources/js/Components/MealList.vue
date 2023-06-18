@@ -63,7 +63,7 @@ function getCalories(meal) {
                     </tr>
                 </tbody>
             </table>
-            <div class="flex items-center justify-center p-4">
+            <div>
                 <PaginationPane :links="meals.links" :pageSize="meals.per_page" />
             </div>
         </div>

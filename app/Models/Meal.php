@@ -37,7 +37,7 @@ class Meal extends Model
     public function withMacroSummary(bool $withDisplayUnit = false)
     {
         $stats=[];
-        $macros = Macro::macroList();
+        $macros = Macro::TYPES;
         $defaultDisplayUnits = Macro::defaultDisplayUnits();
         foreach($macros as $macro){
             $stats[] = [

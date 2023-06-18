@@ -114,7 +114,7 @@ class User extends Authenticatable
 
     protected function mergeMacros(array $container, array $toBeMerged)
     {
-        $keys = Macro::macroList();
+        $keys = Macro::TYPES;
 
         foreach($keys as $key){
             $index = $this->findArrayIndexByValue($toBeMerged, 'name', $key);

@@ -1,12 +1,11 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3';
+import { useForm, Link } from '@inertiajs/vue3';
 import { ExclamationCircleIcon } from '@heroicons/vue/20/solid'
 import { Switch } from '@headlessui/vue'
 import { ref } from 'vue';
 import { DatePicker } from 'v-calendar';
 import MealItemSearch from './MealItemSearch.vue';
 import MealItemList from './MealItemList.vue';
-
 import 'v-calendar/style.css';
 
 const props = defineProps(['user_id']);
@@ -16,18 +15,26 @@ const form = useForm({
     consumed_at: ref(new Date()),
     user_id: props.user_id,
     type: 'snack',
-    public: ref(false)
+    public: ref(false),
+    meal_items: ref([])
 });
-
-const meal_items = ref([]);
 
 const handleSubmit = () => {
     form.post('/meals');
 }
 
 function addMealItem(meal_item){
-    meal_items.value.push(meal_item);
-    console.log(meal_items);
+    let found = false;
+    form.meal_items.forEach(meal_item_el => {
+        if(meal_item_el.id == meal_item.id){
+            found  =true;
+            meal_item_el.quantity+=1;
+        }
+    });
+    if(!found){
+        meal_item.quantity = 1;
+        form.meal_items.push(meal_item);
+    }
 }
 
 </script>
@@ -40,6 +47,7 @@ function addMealItem(meal_item){
                     <p class="mt-1 text-sm leading-6 text-gray-600">This information will be displayed publicly if you so
                         choose, so be
                         careful what you share.</p>
+                        {{ form.errors }}
                 </div>
 
                 <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
@@ -129,8 +137,8 @@ function addMealItem(meal_item){
                         <label for="consumed_at"
                             class="block text-sm font-medium font-semibold leading-6 text-gray-900">Date/Time Consumed</label>
                         <div class="mealDatePicker mt-2">
-                            <DatePicker class="appearance-none" id="consumed_at" name="consumed_at" mode="dateTime"
-                                color="indigo" v-model.string="form.consumed_at" />
+                            <DatePicker id="consumed_at" name="consumed_at" mode="dateTime"
+                                color="indigo" v-model="form.consumed_at" />
                         </div>
                     </div>
                 </div>
@@ -139,7 +147,7 @@ function addMealItem(meal_item){
                 <div class="col-span-1">
                     <dt class="text-sm font-medium leading-6 text-gray-900 font-semibold">Items</dt>
                     <dd class="text-sm text-gray-900">
-                        <MealItemList :meal_items="meal_items" header_inactive="bg-white rounded rounded-md"/>
+                        <MealItemList :meal_items="form.meal_items" header_inactive="bg-white rounded rounded-md"/>
                     </dd>
                 </div>
                 <div class="col-span-1">
@@ -153,7 +161,7 @@ function addMealItem(meal_item){
         </div>
 
         <div class="mt-6 flex items-center justify-end gap-x-6">
-            <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
+            <Link class="text-sm font-semibold leading-6 text-gray-900" :href="route('meals.index')">Cancel</Link>
             <button type="submit"
                 class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
         </div>

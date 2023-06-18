@@ -24,7 +24,7 @@ class MacroFactory extends Factory
     {
         $faker = \Faker\Factory::create();
         return [
-            'name' => $faker->unique()->randomElement(Macro::macroList()),
+            'name' => $faker->unique()->randomElement(Macro::TYPES),
             'meal_item_id' => MealItem::all()->random()->id,
             'value' => $faker->numberBetween(1, 50),
             'display_unit' => $faker->randomElement(['g', 'mg'])
