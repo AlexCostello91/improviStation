@@ -26,14 +26,15 @@ const handleSubmit = () => {
 function addMealItem(meal_item){
     let found = false;
     form.meal_items.forEach(meal_item_el => {
-        if(meal_item_el.id == meal_item.id){
+        if(meal_item_el.id == meal_item.id && meal_item_el.name == meal_item.name){
             found  =true;
             meal_item_el.quantity+=1;
         }
     });
     if(!found){
-        meal_item.quantity = 1;
-        form.meal_items.push(meal_item);
+        //Create new object so that
+        const newMealItem = {...meal_item,quantity:1};
+        form.meal_items.push(newMealItem);
     }
 }
 
@@ -147,7 +148,7 @@ function addMealItem(meal_item){
                 <div class="col-span-1">
                     <dt class="text-sm font-medium leading-6 text-gray-900 font-semibold">Items</dt>
                     <dd class="text-sm text-gray-900">
-                        <MealItemList :meal_items="form.meal_items" header_inactive="bg-white rounded rounded-md"/>
+                        <MealItemList :meal_items="form.meal_items" header_inactive="bg-white rounded rounded-md" :allow-editing="true"/>
                     </dd>
                 </div>
                 <div class="col-span-1">
