@@ -60,13 +60,13 @@ function addMealItem(meal_item){
                                     form.errors.name && !form.name ? 'border-2 border-rose-500' : 'border-0',
                                     'block w-full rounded-md py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                                 ]" />
-                                <div v-if="form.errors.name && !form.name"
+                                <div v-if="form.errors.name"
                                     class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                                     <ExclamationCircleIcon class="h-5 w-5 text-red-500" aria-hidden="true" />
                                 </div>
                             </div>
                         </div>
-                        <p v-if="form.errors.name && !form.name" class="mt-2 text-sm text-red-600" id="name-error">{{
+                        <p v-if="form.errors.name" class="mt-2 text-sm text-red-600" id="name-error">{{
                             form.errors.name }}</p>
                     </div>
 
@@ -76,10 +76,10 @@ function addMealItem(meal_item){
                         <div class="mt-2">
                             <div class="relative mt-2 rounded-md shadow-sm">
                                 <textarea v-model="form.desc" id="desc" name="desc" rows="3" :class="[
-                                    form.errors.desc && !form.desc ? 'border-2 border-rose-500' : 'border-0',
+                                    form.errors.desc ? 'border-2 border-rose-500' : 'border-0',
                                     'block w-full rounded-md py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6']
                                     " />
-                                <div v-if="form.errors.desc && !form.desc"
+                                <div v-if="form.errors.desc"
                                     class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                                     <ExclamationCircleIcon class="h-5 w-5 text-red-500" aria-hidden="true" />
                                 </div>

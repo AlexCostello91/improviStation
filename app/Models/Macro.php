@@ -13,6 +13,12 @@ class Macro extends Model
     public const TYPES = ["calories", "carbs", "fat", "fiber", "protein", "sodium", "sugar"];
     public const DISPLAY_UNIT_OPTIONS = ['g','mg'];
 
+    protected $fillable = [
+        'name',
+        'value',
+        'display_unit'
+    ];
+
     public function mealItem(): BelongsTo
     {
         return $this->belongsTo(MealItem::class);

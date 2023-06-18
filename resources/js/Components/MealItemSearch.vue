@@ -14,7 +14,6 @@ const page = ref(1);
 const search = debounce(async () => {
     try {
         isLoading.value = true;
-        console.log(page.value);
         const response = await axios.get('/meal-items/search', { params: { q: searchTerm.value, page: page.value } });
         searchResults.value = response.data;
         page.value = response.data.current_page;

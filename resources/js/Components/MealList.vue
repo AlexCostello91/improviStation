@@ -3,15 +3,14 @@ import { Link } from '@inertiajs/vue3';
 import PaginationPane from "./PaginationPane.vue";
 import dayjs from "dayjs";
 import { capitalizeFirstLetter } from '@/Composables/formatHelper.js';
+import { useLocalTime } from '@/Composables/useLocalTime.js';
 
 let props = defineProps(['meals']);
-
-
 
 function getCalories(meal) {
     let calories = 0;
     meal.macroSummary.forEach(macro => {
-        if(macro.name=="calories"){
+        if (macro.name == "calories") {
             calories = macro.value;
         }
     });
@@ -23,7 +22,9 @@ function getCalories(meal) {
     <div class="px-4 sm:px-6 lg:p-8 bg-white rounded">
         <div class="sm:flex sm:items-center float-right">
             <div class="mt-4 sm:ml-16 sm:flex-none lg:mt-0">
-                <Link :href="route('meals.create')" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add Meal</Link>
+                <Link :href="route('meals.create')"
+                    class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                Add Meal</Link>
             </div>
         </div>
         <div class="-mx-4 mt-8 sm:-mx-0">
@@ -54,7 +55,7 @@ function getCalories(meal) {
                         <td class="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 lg:table-cell">{{ meal.user.name
                         }}</td>
                         <td class="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 lg:table-cell">{{
-                            dayjs(meal.consumed_at).format('h:m A ddd, MMM D YYYY') }}</td>
+                            useLocalTime(meal.consumed_at, 'h:m A ddd, MMM D YYYY') }}</td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ getCalories(meal) }}</td>
                         <td class="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                             <Link :href="route('meals.show', meal.id)" class="text-indigo-600 hover:text-indigo-900">

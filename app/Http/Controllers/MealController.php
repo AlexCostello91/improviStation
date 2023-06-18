@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMealRequest;
 use App\Models\Meal;
+use App\Models\MealItem;
+use App\Models\Macro;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
 class MealController extends Controller
@@ -37,7 +39,7 @@ class MealController extends Controller
             ->orWhere('user_id', auth()->user()->id)
             ->orderBy('consumed_at', 'desc')
             ->paginate($pageSize);
-        $meals->getCollection()->transform(function ($meal){
+        $meals->getCollection()->transform(function ($meal) {
             return $meal->withMacroSummary();
         });
 
@@ -72,12 +74,32 @@ class MealController extends Controller
     public function store(StoreMealRequest $request)
     {
 
-        dd($request->validated());
-
+        $validated = $request->validated();
+        //Let cabon handle date
         $validated['consumed_at'] = new Carbon($validated['consumed_at']);
 
-        $request->user()->meals()->create($validated);
+        // dd($validated);
+        DB::beginTransaction();
+        try {
 
+            $meal = new Meal($validated);
+            Auth::user()->meals()->save($meal);
+
+            foreach ($validated['meal_items'] as $meal_item) {
+                $meal_item_obj = new MealItem($meal_item);
+                $meal->mealItems()->save($meal_item_obj);
+
+                foreach ($meal_item['macros'] as $macro) {
+                    $macro_obj = new Macro($macro);
+                    $meal_item_obj->macros()->save($macro_obj);
+                }
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error('Error occured when trying to create a new meal: ' . $e->getMessage());
+        }
 
         return redirect(route('meals.index'));
     }

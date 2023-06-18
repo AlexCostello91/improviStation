@@ -21,7 +21,8 @@ class Meal extends Model
         'name',
         'public',
         'desc',
-        'consumed_at'
+        'consumed_at',
+        'type'
     ];
 
     public function user(): BelongsTo

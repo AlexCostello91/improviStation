@@ -38,4 +38,15 @@ class StoreMealRequest extends FormRequest
             'meal_items.*' => [new MealItemValidator]
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'You must enter a name for your meal.',
+            'name.max' => 'Sorry, name is too long. Please choose a name under 64 characters.',
+            'desc.required' => 'You must enter a description.',
+            'desc.max' => 'Sorry, your description is too long. Please limit it to 255 characters',
+            'meal_items.required' => 'New meals must contain at least 1 item.'
+        ];
+    }
 }

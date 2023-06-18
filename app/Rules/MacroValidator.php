@@ -10,6 +10,8 @@ use App\Rules\DisplayUnitValidator;
 
 class MacroValidator implements Rule
 {
+    private String $message = 'The :attribute must be a valid macro.';
+
     /**
      * Create a new rule instance.
      *
@@ -43,10 +45,29 @@ class MacroValidator implements Rule
                     'display_unit' => [new DisplayUnitValidator]
                 ]
             );
-            return !$validator->fails();
+            if($validator->fails()){
+                $errors = $validator->errors();
+                $failedField = array_keys($errors->messages())[0];
+                $failedRule = $errors->first($failedField);
+
+
+                $this->setMessage("{$failedField}: {$failedRule}");
+                return false;
+            }
+            return $validator->passes();
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+     /**
+     * Set the validation error message.
+     *
+     * @param string $message
+     */
+    private function setMessage($message)
+    {
+        $this->message = $message;
     }
 
     /**
@@ -56,6 +77,6 @@ class MacroValidator implements Rule
      */
     public function message()
     {
-        return 'The :attribute must be a valid macro.';
+        return $this->message;
     }
 }

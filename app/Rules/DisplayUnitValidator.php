@@ -27,11 +27,12 @@ class DisplayUnitValidator implements Rule
      */
     public function passes($attribute, $value)
     {
+        $valid = false;
         if(in_array($value,Macro::DISPLAY_UNIT_OPTIONS) || is_null($value) || $value==''){
             $valid = true;
         }
 
-        return false;
+        return $valid;
     }
 
     /**
@@ -41,6 +42,6 @@ class DisplayUnitValidator implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return ':attribute has an invalid display_unit value.';
     }
 }
