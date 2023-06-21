@@ -14,6 +14,8 @@ class Workout extends Model
         'name',
         'intensity',
         'duration',
+        'started_at',
+        'calories'
     ];
 
     public function user(): BelongsTo

@@ -27,7 +27,7 @@ services:
     ports:
       - 3306:3306
   redis:
-    image: redis:7.0.8-alpine
+    image: redis:7.0.11-alpine
   cli:
     build: ./docker/cli
     volumes:
@@ -43,7 +43,7 @@ services:
       - 5173:5173
     volumes:
       - .:/workspaces/laravel:z
-    command: /bin/sh -c "npm install && npm run dev --host"
+    command: /bin/sh -c "npm install && npm run dev"
   mailhog:
     image: mailhog/mailhog
     ports:

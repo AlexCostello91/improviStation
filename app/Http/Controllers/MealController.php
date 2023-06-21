@@ -15,14 +15,14 @@ use Carbon\Carbon;
 
 class MealController extends Controller
 {
-    protected int $defaultPageSize = 10;
+    protected const DEFAULT_PAGE_SIZE = 10;
 
     protected function getPageSize(int $requestPageSize)
     {
         if ($requestPageSize != 0) {
             return min($requestPageSize, 50); //limit custom page size to 50
         } else {
-            return $this->defaultPageSize;
+            return self::DEFAULT_PAGE_SIZE;
         }
     }
     /**
@@ -44,7 +44,7 @@ class MealController extends Controller
         });
 
         //Use page_size param for non-default page size
-        if ($pageSize != $this->defaultPageSize) {
+        if ($pageSize != self::DEFAULT_PAGE_SIZE) {
             $meals->appends('page_size', $pageSize);
         }
 
@@ -61,7 +61,8 @@ class MealController extends Controller
     public function create()
     {
         return Inertia::render('Meals/Create', [
-            'user_id' => Auth::id()
+            'user_id' => Auth::id(),
+            'macroList'=> Macro::TYPES
         ]);
     }
 

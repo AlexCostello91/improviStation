@@ -34,7 +34,8 @@ class WorkoutFactory extends Factory
             'calories' => $faker->numberBetween(100,750),
             'intensity' => $faker->numberBetween(1,10),
             'duration' => $faker->numberBetween(15,120),
-            'created_at' => $faker->dateTimeInInterval('-14 days', '+14 days')
+            'created_at' => $faker->dateTimeInInterval('-14 days', '+14 days'),
+            'started_at' => $faker->dateTimeInInterval('-30 days', '+30 days')
         ];
     }
 }

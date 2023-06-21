@@ -36,7 +36,7 @@ function getMacro(meal_item, macroName) {
 
 const updateResultPage = (newPage) => {
     if(isInteger(newPage)){
-        page.value = MAth.max(Number(newPage),1);
+        page.value = Math.max(Number(newPage),1);
     } else if (page.value > 0 && newPage.startsWith('N')){
         page.value+=1;
     } else if (page.value > 0 && newPage.startsWith('P')){

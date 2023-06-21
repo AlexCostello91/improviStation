@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('calories');
             $table->integer('intensity');
             $table->integer('duration');
+            $table->timestamp('started_at')->default(now());
             $table->timestamps();
         });
     }

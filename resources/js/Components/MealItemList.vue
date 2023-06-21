@@ -30,6 +30,9 @@ const props = defineProps({
     allowEditing:{
         type: Boolean,
         default: false
+    },
+    macroList:{
+        type: Array
     }
 
 });
@@ -37,6 +40,9 @@ const props = defineProps({
 
 const toggleDropdown = (itemId) => {
     isOpen.value[itemId] = !isOpen.value[itemId];
+    if(!isOpen.value[itemId]){
+        editing.value[itemId]=false;
+    }
 };
 
 const toggleEdit = (itemId) => {
@@ -52,7 +58,7 @@ const editing = ref({});
         <div class="border-gray-100 sm:px-4 py-2 sm:col-span-2 sm:px-0">
             <dd class="mt-2 text-sm text-gray-900">
                 <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
-                    <template v-for="meal_item in meal_items" :key="meal_item.id+meal_item.name">
+                    <template v-for="meal_item in meal_items" :key="meal_item.id">
                         <li :class="[
                             isOpen[meal_item.id] ? header_active
                                 : header_inactive,
@@ -60,7 +66,7 @@ const editing = ref({});
                         ]">
                             <div class="flex w-0 flex-1 items-center">
                                 <div v-if="editing[meal_item.id]  && allowEditing" class="ml-4 flex min-w-0 flex-1 gap-2">
-                                    <input v-model="meal_item.name" type="text" class="rounded-md text-black text-sm">
+                                    <input ref="" v-model="meal_item.name" type="text" class="rounded-md text-black text-sm" />
                                 </div>
                                 <div v-else class="ml-4 flex min-w-0 flex-1 gap-2">
                                     <span :class="[
@@ -74,7 +80,7 @@ const editing = ref({});
                                         isOpen[meal_item.id] ? 'font-bold' : 'font-semibold',
                                         'truncate'
                                     ]"> x </span>
-                                    <input v-model="meal_item.quantity" type="number" class="rounded-md text-black text-sm max-w-xs">
+                                    <input v-model="meal_item.quantity" type="number" class="rounded-md text-black text-sm max-w-[4rem]">
                                 </div>
                                 <div v-else class="ml-4 flex shrink sm:shrink-0 sm:min-w-0 sm:flex-1 gap-2">
                                     <span :class="[
@@ -94,13 +100,13 @@ const editing = ref({});
                                 <a :class="[
                                         isOpen[meal_item.id] ? view_link_active : view_link_inactive,
                                         'hover:underline cursor-pointer'
-                                    ]" @click="toggleDropdown(meal_item.id)">View</a>
+                                    ]" @click="toggleDropdown(meal_item.id)">{{ isOpen[meal_item.id]?'Hide':'Show'}}</a>
                             </div>
 
                         </li>
                         <li v-if="isOpen[meal_item.id]" :key="`dropdown-${meal_item.id}`" :class="content_active">
                             <p class="p-2">{{ meal_item.desc }}</p>
-                            <MacroList allow-editing="true" :editing="editing[meal_item.id]" :macros="meal_item.macros" :quantity="meal_item.quantity" />
+                            <MacroList :allow-editing="true" :editing="editing[meal_item.id]" :macros="meal_item.macros" :quantity="meal_item.quantity" :macro-list="macroList" />
                         </li>
                     </template>
                 </ul>
