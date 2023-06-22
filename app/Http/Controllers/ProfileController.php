@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use Carbon\Carbon;
 
 class ProfileController extends Controller
 {
@@ -18,9 +19,23 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
+
+
+        $timezones = \DateTimeZone::listIdentifiers();
+        $tzList = [];
+        foreach($timezones as $timezone){
+            $date = new \DateTime('now', new \DateTimeZone($timezone));
+            $offset = $date->format('P');
+            $tzList[]=[
+                'name'=>$timezone,
+                'offset'=>'UTC '.$offset
+            ];
+        }
+
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
+            'timezones' => $tzList
         ]);
     }
 

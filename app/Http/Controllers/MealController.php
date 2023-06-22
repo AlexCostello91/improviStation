@@ -32,11 +32,13 @@ class MealController extends Controller
      */
     public function index(Request $request)
     {
-
+        $showAll = $request->boolean('show_all');
         $pageSize = $this->getPageSize($request->integer('page_size'));
         $meals = Meal::with('user:id,name')
-            ->where('public', true)
-            ->orWhere('user_id', auth()->user()->id)
+            ->where('user_id', auth()->user()->id)
+            ->when($showAll, function ($query) {
+                return $query->orWhere('public', true);
+            })
             ->orderBy('consumed_at', 'desc')
             ->paginate($pageSize);
         $meals->getCollection()->transform(function ($meal) {
@@ -49,7 +51,8 @@ class MealController extends Controller
         }
 
         return Inertia::render('Meals/Index', [
-            'meals' => $meals
+            'meals' => $meals,
+            'showAllMeals' => $showAll
         ]);
     }
 

@@ -1,9 +1,10 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3';
 import PaginationPane from "./PaginationPane.vue";
 import dayjs from "dayjs";
 import { capitalizeFirstLetter } from '@/Composables/formatHelper.js';
-import { useLocalTime } from '@/Composables/useLocalTime.js';
+import { convertFromUtc } from '@/Composables/convertFromUtc.js';
+const user = usePage().props.auth.user;
 
 let props = defineProps(['workouts']);
 </script>
@@ -41,7 +42,7 @@ let props = defineProps(['workouts']);
                         <td class="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 lg:table-cell">{{ workout.intensity
                         }}</td>
                         <td class="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 lg:table-cell">{{
-                            useLocalTime(workout.started_at, 'h:m A ddd, MMM D YYYY') }}</td>
+                            convertFromUtc(workout.started_at, user.timezone, 'h:m A ddd, MMM D YYYY') }}</td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ workout.calories }}</td>
 
                     </tr>

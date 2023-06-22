@@ -5,6 +5,6 @@ import timezonePlugin from 'dayjs/plugin/timezone';
 dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);
 
-export function useLocalTime(timeString, format = '') {
-    return dayjs.utc(timeString).local().format(format)
+export function convertFromUtc(timeString, timezone, format = '') {
+    return dayjs.utc(timeString).tz(timezone).format(format)
 }

@@ -1,6 +1,7 @@
 <script setup>
 import LineChart from './LineChart.vue';
 let props = defineProps(['dailyValues']);
+console.log(props.dailyValues);
 </script>
 
 <template>

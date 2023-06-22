@@ -1,11 +1,21 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, router, usePage } from '@inertiajs/vue3';
 import PaginationPane from "./PaginationPane.vue";
-import dayjs from "dayjs";
+import { Switch } from '@headlessui/vue'
 import { capitalizeFirstLetter } from '@/Composables/formatHelper.js';
-import { useLocalTime } from '@/Composables/useLocalTime.js';
-
-let props = defineProps(['meals']);
+import { convertFromUtc } from '@/Composables/convertFromUtc.js';
+import { ref } from 'vue';
+const user = usePage().props.auth.user;
+let props = defineProps({
+    meals:{
+        type: Object,
+        default: {}
+    },
+    showAllMeals:{
+        type: Boolean,
+        default: false
+    }
+});
 
 function getCalories(meal) {
     let calories = 0;
@@ -16,12 +26,30 @@ function getCalories(meal) {
     });
     return calories;
 };
+const showAllMeals =  ref(props.showAllMeals);
+
+function toggleShowAll(){
+    router.reload({
+        data: {
+            show_all: !showAllMeals.value,
+        }
+    });
+}
 
 </script>
 <template>
     <div class="px-4 sm:px-6 lg:p-8 bg-white rounded">
-        <div class="sm:flex sm:items-center float-right">
-            <div class="mt-4 sm:ml-16 sm:flex-none lg:mt-0">
+
+        <div class="flex justify-between items-center">
+            <div class="flex">
+                <div class="px-2"><span>My Meals</span></div>
+                <Switch v-model="showAllMeals" @click="toggleShowAll" :class="[showAllMeals ? 'bg-indigo-600' : 'bg-gray-200', 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2']">
+                    <span class="sr-only">Show All Meals</span>
+                    <span aria-hidden="true" :class="[showAllMeals ? 'translate-x-5' : 'translate-x-0', 'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out']" />
+                </Switch>
+                <div class="px-2"><span>All Meals</span></div>
+            </div>
+            <div class="flex">
                 <Link :href="route('meals.create')"
                     class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                 Add Meal</Link>
@@ -55,7 +83,7 @@ function getCalories(meal) {
                         <td class="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 lg:table-cell">{{ meal.user.name
                         }}</td>
                         <td class="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500 lg:table-cell">{{
-                            useLocalTime(meal.consumed_at, 'h:m A ddd, MMM D YYYY') }}</td>
+                            convertFromUtc(meal.consumed_at, user.timezone ,'h:m A ddd, MMM D YYYY') }}</td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ getCalories(meal) }}</td>
                         <td class="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                             <Link :href="route('meals.show', meal.id)" class="text-indigo-600 hover:text-indigo-900">

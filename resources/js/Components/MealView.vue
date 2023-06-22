@@ -1,11 +1,12 @@
 <script setup>
 import MacroList from './MacroList.vue';
-
-import {capitalizeFirstLetter} from '@/Composables/formatHelper.js';
-import {useLocalTime} from '@/Composables/useLocalTime.js';
+import { usePage } from '@inertiajs/vue3';
+import { capitalizeFirstLetter } from '@/Composables/formatHelper.js';
+import { convertFromUtc } from '@/Composables/convertFromUtc.js';
 import MealItemList from './MealItemList.vue';
 
 const props = defineProps(['meal']);
+const user = usePage().props.auth.user;
 
 
 </script>
@@ -23,7 +24,8 @@ const props = defineProps(['meal']);
                 </div>
                 <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
                     <dt class="text-sm font-medium leading-6 text-gray-900">Consumed at</dt>
-                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{ useLocalTime(meal.consumed_at,"h:m A ddd, MMM D YYYY") }}</dd>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{
+                        convertFromUtc(meal.consumed_at, user.timezone, "h:m A ddd, MMM D YYYY") }}</dd>
                 </div>
                 <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
                     <dt class="text-sm font-medium leading-6 text-gray-900">Visibility</dt>
@@ -41,7 +43,7 @@ const props = defineProps(['meal']);
                 </div>
                 <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
                     <dt class="text-sm font-medium leading-6 text-gray-900">Nutrition Summary</dt>
-                    <MacroList :macros="meal.macroSummary" :quantity="1"/>
+                    <MacroList :macros="meal.macroSummary" :quantity="1" />
                 </div>
             </dl>
         </div>

@@ -23,7 +23,7 @@ const props = defineProps({
         ]
     },
     pageSize: {
-        type: String,
+        type: Number,
         default: ref(10)
     }
 });
