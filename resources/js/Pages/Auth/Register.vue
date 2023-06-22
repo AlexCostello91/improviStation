@@ -5,6 +5,12 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import dayjs from 'dayjs';
+import utcPlugin from 'dayjs/plugin/utc';
+import timezonePlugin from 'dayjs/plugin/timezone';
+
+dayjs.extend(utcPlugin);
+dayjs.extend(timezonePlugin);
 
 const form = useForm({
     name: '',
@@ -12,6 +18,7 @@ const form = useForm({
     password: '',
     password_confirmation: '',
     terms: false,
+    timezone: dayjs.tz.guess()
 });
 
 const submit = () => {
