@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Workout extends Model
 {
+    public const TYPES =[
+        'Walking',
+        'Running',
+        'Cycling',
+        'Swimming',
+        'Weight Lifting'
+    ];
+
     use HasFactory;
 
     protected $fillable = [
@@ -15,7 +23,8 @@ class Workout extends Model
         'intensity',
         'duration',
         'started_at',
-        'calories'
+        'calories',
+        'desc'
     ];
 
     public function user(): BelongsTo

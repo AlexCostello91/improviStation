@@ -17,10 +17,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->string('calories');
-            $table->integer('intensity');
+            $table->string('calories')->nullable();
+            $table->integer('intensity')->nullable();
             $table->integer('duration');
             $table->timestamp('started_at')->default(now());
+            $table->text('desc')->nullable();
             $table->timestamps();
         });
     }

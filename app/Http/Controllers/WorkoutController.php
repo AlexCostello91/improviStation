@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Workout;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-
+use App\Http\Requests\StoreWorkoutRequest;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 class WorkoutController extends Controller
 {
     /**
@@ -53,7 +57,7 @@ class WorkoutController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Workouts/Create');
     }
 
     /**
@@ -62,9 +66,23 @@ class WorkoutController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreWorkoutRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $validated['started_at'] = new Carbon($validated['started_at']);
+        // dd($validated);
+        DB::beginTransaction();
+
+        try {
+            $workout = new Workout($validated);
+            Auth::user()->workouts()->save($workout);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error('Error occured when trying to create a new meal: ' . $e->getMessage());
+        }
+
+        return redirect(route('workouts.index'));
     }
 
     /**

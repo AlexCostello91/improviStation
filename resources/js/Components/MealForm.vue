@@ -1,5 +1,5 @@
 <script setup>
-import { useForm, Link } from '@inertiajs/vue3';
+import { useForm, Link, usePage } from '@inertiajs/vue3';
 import { ExclamationCircleIcon } from '@heroicons/vue/20/solid'
 import { Switch } from '@headlessui/vue'
 import { ref } from 'vue';
@@ -8,6 +8,8 @@ import { DatePicker } from 'v-calendar';
 import MealItemSearch from './MealItemSearch.vue';
 import MealItemList from './MealItemList.vue';
 import 'v-calendar/style.css';
+
+const user = usePage().props.auth.user;
 
 const props = defineProps({
     user_id: {
@@ -149,7 +151,7 @@ function addMealItem(meal_item) {
                             Consumed</label>
                         <div class="mealDatePicker mt-2">
                             <DatePicker id="consumed_at" name="consumed_at" mode="dateTime" color="indigo"
-                                v-model="form.consumed_at" />
+                                v-model="form.consumed_at" :timezone="user.timezone"/>
                         </div>
                     </div>
                 </div>

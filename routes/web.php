@@ -6,7 +6,9 @@ use App\Http\Controllers\MealItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WorkoutController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Requests\StoreWorkoutRequest;
 use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -21,8 +23,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function ()
-{
+Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -30,8 +31,7 @@ Route::get('/', function ()
     ]);
 })->name('home');
 
-Route::get('/about', function ()
-{
+Route::get('/about', function () {
     return Inertia::render('About', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -49,8 +49,7 @@ Route::get(
     [MealItemController::class, 'search']
 )->middleware(['auth', 'verified'])->name('meal-items/search');
 
-Route::middleware('auth')->group(function ()
-{
+Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -61,8 +60,11 @@ Route::resource('chirps', ChirpController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('workouts', WorkoutController::class)
-    ->only(['index', 'show'])
+    ->only(['index', 'show', 'create'])
     ->middleware(['auth', 'verified']);
+
+// Use Precognition for new workout form
+Route::post('/workouts', [WorkoutController::class, 'store'])->middleware(['auth', 'verified', HandlePrecognitiveRequests::class]);
 
 Route::resource('meals', MealController::class)
     ->only(['index', 'show', 'create', 'store'])

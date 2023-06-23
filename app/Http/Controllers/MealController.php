@@ -82,7 +82,6 @@ class MealController extends Controller
         //Let cabon handle date
         $validated['consumed_at'] = new Carbon($validated['consumed_at']);
 
-        // dd($validated);
         DB::beginTransaction();
         try {
 

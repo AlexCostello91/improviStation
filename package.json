@@ -24,6 +24,7 @@
         "@popperjs/core": "^2.11.8",
         "chart.js": "^4.3.0",
         "dayjs": "^1.11.7",
+        "laravel-precognition-vue-inertia": "^0.3.2",
         "nvm": "^0.0.4",
         "v-calendar": "^3.0.3",
         "vue-content-loader": "^2.0.1",
