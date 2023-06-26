@@ -39,11 +39,22 @@ const features = [
 const faqs = [
     {
         id: 1,
-        question: "What's the best thing about Switzerland?",
+        question: "What is ImproviStation?",
         answer:
-            "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+            "Improvistation is a tool to help better your life. It enabels you to track your meals and workouts, and see detailed statistics that will help you determine the best ways to hit your goals.",
     },
-    // More questions...
+    {
+        id: 2,
+        question: "Why use ImproviStation instead of other similar tools?",
+        answer:
+            "We believe that everyone is different. There is no one size fits all solution to diet or exercise. It's all about finding what works for you, and we aim to help you find it.",
+    },
+    {
+        id: 3,
+        question: "How much does a subscription cost?",
+        answer:
+            "Nothing! ImproviStation is free, and open source. We believe in empowering users to take control of their own diet and exercise!",
+    }
 ]
 </script>
 
@@ -148,15 +159,16 @@ const faqs = [
 
         <!-- FAQs -->
         <div
-            class="mx-auto max-w-2xl divide-y divide-gray-900/10 px-6 pb-8 sm:pb-24 sm:pt-12 lg:max-w-7xl lg:px-8 lg:pb-32">
-        <h2 class="text-2xl font-bold leading-10 tracking-tight text-gray-900">Frequently asked questions</h2>
-        <dl class="mt-10 space-y-8 divide-y divide-gray-900/10">
-            <div v-for="faq in faqs" :key="faq.id" class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
-                <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">{{ faq.question }}</dt>
-                <dd class="mt-4 lg:col-span-7 lg:mt-0">
-                    <p class="text-base leading-7 text-gray-600">{{ faq.answer }}</p>
-                </dd>
-            </div>
-        </dl>
-    </div>
-</GuestLayout></template>
+            class="pt-12 mx-auto max-w-2xl divide-y divide-gray-900/10 px-6 pb-8 sm:pb-24 sm:pt-12 lg:max-w-7xl lg:px-8 lg:pb-32">
+            <h2 class="text-2xl font-bold leading-10 tracking-tight text-gray-900">Frequently asked questions</h2>
+            <dl class="mt-10 space-y-8 divide-y divide-gray-900/10">
+                <div v-for="faq in faqs" :key="faq.id" class="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
+                    <dt class="text-base font-semibold leading-7 text-gray-900 lg:col-span-5">{{ faq.question }}</dt>
+                    <dd class="mt-4 lg:col-span-7 lg:mt-0">
+                        <p class="text-base leading-7 text-gray-600">{{ faq.answer }}</p>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </GuestLayout>
+</template>

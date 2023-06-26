@@ -43,7 +43,7 @@ export default {
 
             const chartData = {
                 labels: props.dailyValues.map((value, index) => {
-                    if (index % 5 === 0) {
+                    if (index % 10 === 0) {
                         return value.date;
                     } else {
                         return '';
@@ -63,7 +63,7 @@ export default {
                             autoSkip: false,
                             maxRotation: 0,
                             callback: (value, index) => {
-                                if (index % 5 === 0) {
+                                if (index % 10 === 0) {
                                     return props.dailyValues[index].date;
                                 } else {
                                     return '';

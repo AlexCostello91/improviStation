@@ -13,9 +13,7 @@ let props = defineProps(['mealStats','dailyValues']);
         <template #title>
             <Head title="Dashboard" />
         </template>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
-        </template>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight p-4 sm:p-8 bg-indigo-200 sm:hidden">Dashboard</h2>
         <div class="max-w-7xl mx-auto items-center">
             <DashboardStats :mealStats="mealStats"/>
         </div>

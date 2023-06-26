@@ -29,7 +29,7 @@ class StoreWorkoutRequest extends FormRequest
             'desc' => 'string|max:255|nullable',
             'duration' => 'required|integer|min:0|max:604800',
             'intensity' => 'integer|min:1|max:10|nullable',
-            'calories' => 'integer|nullable',
+            'calories' => 'integer|nullable|min:1',
             'started_at' => ['required', 'date', new UtcDateTime],
         ];
     }

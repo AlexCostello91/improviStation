@@ -163,7 +163,7 @@ const showingNavigationDropdown = ref(false);
             </header>
 
             <!-- Page Content -->
-            <main class="mx-auto mt-8 max-w-7xl min-h-[55vh]  px-4 sm:px-6">
+            <main class="mx-auto max-w-7xl min-h-[55vh]">
                 <slot />
             </main>
 

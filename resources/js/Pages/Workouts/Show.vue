@@ -1,14 +1,15 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import MealList from '@/Components/MealList.vue';
 import { Head } from '@inertiajs/vue3';
-defineProps(['meals']);
+import WorkoutView from '@/Components/WorkoutView.vue'
+defineProps(['workout']);
 </script>
+
 <template>
     <AuthenticatedLayout>
         <template #title>
-            <Head title="Meals" />
+            <Head :title="workout.name" />
         </template>
-        <MealList :meals="meals"/>
+        <WorkoutView :workout="workout"/>
     </AuthenticatedLayout>
 </template>

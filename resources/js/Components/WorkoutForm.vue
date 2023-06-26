@@ -3,18 +3,22 @@ import { useForm } from 'laravel-precognition-vue-inertia';
 import { usePage, Link } from '@inertiajs/vue3';
 import { DatePicker } from 'v-calendar';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-
-
 import 'v-calendar/style.css';
 import CancelButton from './CancelButton.vue';
+// const props = defineProps['workout'];
+const props = defineProps({
+    workout:{
+        type: Object
+    }
+});
 const user = usePage().props.auth.user;
 const form = useForm('post', '/workouts', {
-    name: '',
-    calories: null,
-    intensity: null,
-    duration: 0,
+    name: props.workout.name?props.workout.name:'',
+    calories: props.workout.calories? props.workout.calories: null,
+    intensity: props.workout.intensity? props.workout.intensity: null,
+    duration: props.workout.duration? props.workout.duration: 30,
     started_at: new Date(),
-    desc: ''
+    desc: props.workout.desc?props.workout.desc:''
 });
 
 form.setValidationTimeout(1000);
@@ -23,7 +27,11 @@ const submit = () => form.submit();
 
 </script>
 <template>
-    <div class="p-4 sm:p-6 lg:p-8 bg-white rounded">
+    <div class="px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="flex justify-center">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight p-4">New Workout</h2>
+
+        </div>
         <form @submit.prevent="submit">
             <div class="grid grid-cols-2 gap-y-6 gap-x-6 mx-auto max-w-screen-sm">
                 <div class="col-span-2 justify-center pt-2 pb-1">

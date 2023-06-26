@@ -11,38 +11,41 @@ const user = usePage().props.auth.user;
 
 </script>
 <template>
-    <div class="bg-white rounded px-4">
-        <div class="">
-            <dl class="grid grid-cols-1 sm:grid-cols-2 px-4 pb-4">
-                <div class="border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
-                    <dt class="text-sm font-medium leading-6 text-gray-900">Created By</dt>
+    <div class="bg-white ">
+        <div class="flex justify-center">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight p-4 sm:p-8 break-all">{{ meal.name }}</h2>
+        </div>
+        <div class="px-4 sm:px-8">
+            <dl class="grid grid-cols-1 sm:grid-cols-2 pb-4">
+                <div class="border-t border-gray-100 py-6 sm:col-span-1 sm:px-0">
+                    <dt class="text-sm font-semibold leading-6 text-gray-900">Created By</dt>
                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{ meal.user.name }}</dd>
                 </div>
-                <div class="border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
-                    <dt class="text-sm font-medium leading-6 text-gray-900">Type</dt>
+                <div class="border-t border-gray-100 py-6 sm:col-span-1 sm:px-0">
+                    <dt class="text-sm font-semibold leading-6 text-gray-900">Type</dt>
                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{ capitalizeFirstLetter(meal.type) }}</dd>
                 </div>
-                <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
-                    <dt class="text-sm font-medium leading-6 text-gray-900">Consumed at</dt>
+                <div class="border-t border-gray-100 py-6 sm:col-span-1 sm:px-0">
+                    <dt class="text-sm font-semibold leading-6 text-gray-900">Consumed at</dt>
                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{
-                        convertFromUtc(meal.consumed_at, user.timezone, "h:m A ddd, MMM D YYYY") }}</dd>
+                        convertFromUtc(meal.consumed_at, user.timezone, "h:mm A ddd, MMM D YYYY") }}</dd>
                 </div>
-                <div class="border-t border-gray-100 px-4 py-6 sm:col-span-1 sm:px-0">
-                    <dt class="text-sm font-medium leading-6 text-gray-900">Visibility</dt>
+                <div class="border-t border-gray-100 py-6 sm:col-span-1 sm:px-0">
+                    <dt class="text-sm font-semibold leading-6 text-gray-900">Visibility</dt>
                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{ meal.public ? 'Public' : 'Private' }}</dd>
                 </div>
-                <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
-                    <dt class="text-sm font-medium leading-6 text-gray-900">Description</dt>
+                <div class="border-t border-gray-100 py-6 sm:col-span-2 sm:px-0">
+                    <dt class="text-sm font-semibold leading-6 text-gray-900">Description</dt>
                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{ meal.desc }}</dd>
                 </div>
-                <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
-                    <dt class="text-sm font-medium leading-6 text-gray-900">Items</dt>
+                <div class="border-t border-gray-100 py-6 sm:col-span-2 sm:px-0">
+                    <dt class="text-sm font-semibold leading-6 text-gray-900">Items</dt>
                     <dd class="text-sm text-gray-900">
                         <MealItemList :meal_items="meal.meal_items" />
                     </dd>
                 </div>
                 <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
-                    <dt class="text-sm font-medium leading-6 text-gray-900">Nutrition Summary</dt>
+                    <dt class="text-sm font-semibold leading-6 text-gray-900">Nutrition Summary</dt>
                     <MacroList :macros="meal.macroSummary" :quantity="1" />
                 </div>
             </dl>

@@ -10,9 +10,6 @@ const props = defineProps(['meal']);
         <template #title>
             <Head title="Meals" />
         </template>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{meal.name}}</h2>
-        </template>
         <MealView :meal="meal"/>
     </AuthenticatedLayout>
 </template>

@@ -7,9 +7,12 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Requests\StoreWorkoutRequest;
 use Carbon\Carbon;
+use App\Exceptions\UserNotAuthorizedException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+
 class WorkoutController extends Controller
 {
     /**
@@ -37,7 +40,7 @@ class WorkoutController extends Controller
     {
         $pageSize = $this->getPageSize($request->integer('page_size'));
         $workouts = Workout::with('user:id,name')
-        ->where('user_id', auth()->user()->id)
+            ->where('user_id', auth()->user()->id)
             ->orderBy('started_at', 'desc')
             ->paginate($pageSize);
         //Use page_size param for non-default page size
@@ -55,9 +58,32 @@ class WorkoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return Inertia::render('Workouts/Create');
+        $validated = $request->validate([
+            'copy_id' => 'integer'
+        ]);
+        $workout = new Workout();
+
+        //Make sure user has authorization to copy selected workout
+        if (array_key_exists('copy_id', $validated) && !empty($validated['copy_id'])) {
+            try {
+                $workout = Workout::findorFail($validated['copy_id']);
+                if (Auth::user()->id != $workout->user_id) {
+                    throw new UserNotAuthorizedException('User not authorized to access workout: user=' . Auth::user()->id . ' workout=' . $workout->id);
+                }
+            } catch (UserNotAuthorizedException $e) {
+                $workout = new Workout();
+                Log::info($e->getMessage());
+            } catch (\Exception $e) {
+                Log::info('Error copying workout: ' . $e->getMessage());
+            }
+
+        }
+
+        return Inertia::render('Workouts/Create', [
+            'workout' => $workout
+        ]);
     }
 
     /**
