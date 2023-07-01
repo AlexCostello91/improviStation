@@ -4,8 +4,8 @@ import { usePage } from '@inertiajs/vue3';
 import { capitalizeFirstLetter } from '@/Composables/formatHelper.js';
 import { convertFromUtc } from '@/Composables/convertFromUtc.js';
 import MealItemList from './MealItemList.vue';
-
-const props = defineProps(['meal']);
+import {computeMealMacroSummary} from '@/Composables/computeMealMacroSumary.js';
+const props = defineProps(['meal','macroList']);
 const user = usePage().props.auth.user;
 
 
@@ -19,7 +19,7 @@ const user = usePage().props.auth.user;
             <dl class="grid grid-cols-1 sm:grid-cols-2 pb-4">
                 <div class="border-t border-gray-100 py-6 sm:col-span-1 sm:px-0">
                     <dt class="text-sm font-semibold leading-6 text-gray-900">Created By</dt>
-                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{ meal.user.name }}</dd>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{ user.name }}</dd>
                 </div>
                 <div class="border-t border-gray-100 py-6 sm:col-span-1 sm:px-0">
                     <dt class="text-sm font-semibold leading-6 text-gray-900">Type</dt>
@@ -46,7 +46,7 @@ const user = usePage().props.auth.user;
                 </div>
                 <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
                     <dt class="text-sm font-semibold leading-6 text-gray-900">Nutrition Summary</dt>
-                    <MacroList :macros="meal.macroSummary" :quantity="1" />
+                    <MacroList :macros="meal.macroSummary?meal.macroSummary:computeMealMacroSummary(meal)" :quantity="1" />
                 </div>
             </dl>
         </div>

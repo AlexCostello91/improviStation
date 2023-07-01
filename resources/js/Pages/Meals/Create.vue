@@ -2,13 +2,10 @@
 import {Head} from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import MealForm from '@/Components/MealForm.vue';
-import {isInteger} from '@/Composables/formatHelper.js';
-
 
 const props = defineProps({
-    user_id: {
-        type: Number,
-        validator: (value) => isInteger(value),
+    recent_meal_items:{
+        type: Array
     },
     macroList:{
         type: Array
@@ -20,9 +17,6 @@ const props = defineProps({
         <template #title>
             <Head title="New Meal" />
         </template>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">New Meal</h2>
-        </template>
-        <MealForm :user_id="user_id" :macro-list="macroList"/>
+        <MealForm :recent_meal_items="recent_meal_items" :macro-list="macroList"/>
     </AuthenticatedLayout>
 </template >

@@ -5,7 +5,6 @@ import { DatePicker } from 'v-calendar';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import 'v-calendar/style.css';
 import CancelButton from './CancelButton.vue';
-// const props = defineProps['workout'];
 const props = defineProps({
     workout:{
         type: Object
@@ -30,7 +29,6 @@ const submit = () => form.submit();
     <div class="px-4 sm:px-6 lg:px-8 bg-white">
         <div class="flex justify-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight p-4">New Workout</h2>
-
         </div>
         <form @submit.prevent="submit">
             <div class="grid grid-cols-2 gap-y-6 gap-x-6 mx-auto max-w-screen-sm">

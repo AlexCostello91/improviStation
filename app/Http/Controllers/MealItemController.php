@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\MealItem;
+use App\Models\User;
+
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class MealItemController extends Controller
 {
@@ -38,13 +42,14 @@ class MealItemController extends Controller
         $validated = $request->validate([
             'q' => 'string|max:255|regex:/^[a-zA-Z0-9\s]+$/'
         ]);
+        $itemsPerPage = 10;
         $searchTerm = '';
         if (array_key_exists('q', $validated)) {
             $searchTerm = $validated['q'];
         }
         $mealItems = MealItem::where('name', 'like', '%' . $searchTerm . '%')
             ->with('macros')
-            ->paginate(10);
+            ->paginate($itemsPerPage);
 
         return response()->json($mealItems);
     }

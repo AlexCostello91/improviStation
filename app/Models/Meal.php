@@ -48,7 +48,6 @@ class Meal extends Model
             ];
         }
 
-
         foreach($this->mealItems()->with('macros')->get() as $mealItem){
             foreach($mealItem['macros'] as $macro){
                 $index = null;
@@ -62,6 +61,9 @@ class Meal extends Model
                     $amountToAdd = $macro['value'] * $mealItem['quantity'];
                     if($macro['display_unit']==='mg' &&  $stats[$index]['display_unit']==='g'){
                         $amountToAdd/=1000;
+                    }
+                    if($macro['display_unit']==='g' &&  $stats[$index]['display_unit']==='mg'){
+                        $amountToAdd*=1000;
                     }
                     $stats[$index]['value']+=$amountToAdd;
                 }

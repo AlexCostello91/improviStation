@@ -13,10 +13,10 @@ add('writable_dirs', []);
 
 // Hosts
 
-host('192.168.254.170')
+host('improvistation.co')
     ->set('remote_user', 'deployer')
     ->set('deploy_path', '~/ImproviStation')
-    ->set('domain', '192.168.254.170')
+    ->set('domain', 'improvistation.co')
     ->set('public_path','public')
     ->set('php_version', 8.1)
     ->set('db_type', 'mariadb')

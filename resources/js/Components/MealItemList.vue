@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { PlusCircleIcon, ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
 import MacroList from './MacroList.vue';
 
 const props = defineProps({
@@ -27,11 +28,11 @@ const props = defineProps({
         type: String,
         default: 'font-semilbold text-indigo-600 hover:text-indigo-500'
     },
-    allowEditing:{
+    allowEditing: {
         type: Boolean,
         default: false
     },
-    macroList:{
+    macroList: {
         type: Array
     }
 
@@ -40,13 +41,21 @@ const props = defineProps({
 
 const toggleDropdown = (itemId) => {
     isOpen.value[itemId] = !isOpen.value[itemId];
-    if(!isOpen.value[itemId]){
-        editing.value[itemId]=false;
+    if (!isOpen.value[itemId]) {
+        editing.value[itemId] = false;
     }
 };
 
 const toggleEdit = (itemId) => {
     editing.value[itemId] = !editing.value[itemId];
+}
+function getNewMealItem() {
+    return {
+        name: 'New Meal Item',
+        desc: '',
+        macros: [],
+        quantity: 1
+    };
 }
 
 const isOpen = ref({});
@@ -58,15 +67,17 @@ const editing = ref({});
         <div class="border-gray-100 sm:px-4 py-2 sm:col-span-2 sm:px-0">
             <dd class="mt-2 text-sm text-gray-900">
                 <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
-                    <template v-for="meal_item in meal_items" :key="meal_item.id">
+                    <template v-for="(meal_item, index) in meal_items" :key="meal_item.id">
                         <li :class="[
                             isOpen[meal_item.id] ? header_active
                                 : header_inactive,
+                                index==0?'rounded-t-md':'',
                             'relative flex items-center justify-between py-4 sm:pl-4 pr-5 text-sm leading-6'
                         ]">
                             <div class="flex w-0 flex-1 items-center">
-                                <div v-if="editing[meal_item.id]  && allowEditing" class="ml-4 flex min-w-0 flex-1 gap-2">
-                                    <input ref="" v-model="meal_item.name" type="text" class="rounded-md text-black text-sm" />
+                                <div v-if="editing[meal_item.id] && allowEditing" class="ml-4 flex min-w-0 flex-1 gap-2">
+                                    <input ref="" v-model="meal_item.name" type="text"
+                                        class="rounded-md text-black text-sm" />
                                 </div>
                                 <div v-else class="ml-4 flex min-w-0 flex-1 gap-2">
                                     <span :class="[
@@ -75,40 +86,71 @@ const editing = ref({});
                                     ]">{{ meal_item.name }}</span>
                                 </div>
 
-                                <div v-if="editing[meal_item.id]  && allowEditing" class="ml-4 flex shrink sm:shrink-0 sm:min-w-0 sm:flex-1 gap-2">
-                                    <span :class="[
-                                        isOpen[meal_item.id] ? 'font-bold' : 'font-semibold',
-                                        'truncate'
-                                    ]"> x </span>
-                                    <input v-model="meal_item.quantity" type="number" class="rounded-md text-black text-sm max-w-[4rem]">
+                                <div v-if="editing[meal_item.id] && allowEditing">
+                                    <button class="flex justify-between items-center bg-red-600 border border-white text-white rounded-md p-1.5 font-bold hover:bg-red-700" @click.prevent="$emit('removeMealItem', meal_item)">
+                                        <ExclamationTriangleIcon class="text-white w-5 mr-1"/>
+                                        REMOVE ITEM
+                                    </button>
                                 </div>
-                                <div v-else class="ml-4 flex shrink sm:shrink-0 sm:min-w-0 sm:flex-1 gap-2">
+
+                                <div v-if="editing[meal_item.id] && allowEditing"
+                                    class="ml-4 flex shrink sm:shrink-0 sm:min-w-0 gap-2 items-center">
                                     <span :class="[
                                         isOpen[meal_item.id] ? 'font-bold' : 'font-semibold',
                                         'truncate'
-                                    ]"> x {{ meal_item.quantity
-}}</span>
+                                    ]"> Qty: </span>
+                                    <input v-model="meal_item.quantity" type="number"
+                                        class="rounded-md text-black text-sm max-w-[4rem]">
+                                </div>
+                                <div v-else class="ml-4 flex shrink sm:shrink-0 sm:min-w-0 gap-2">
+                                    <span :class="[
+                                        isOpen[meal_item.id] ? 'font-bold' : 'font-semibold',
+                                        'truncate'
+                                    ]"> Qty: {{ meal_item.quantity }}</span>
                                 </div>
                             </div>
                             <div v-if="isOpen[meal_item.id] && allowEditing" class="ml-4 flex-shrink-0">
                                 <a :class="[
-                                        isOpen[meal_item.id] ? view_link_active : view_link_inactive,
-                                        'hover:underline cursor-pointer'
-                                    ]" @click="toggleEdit(meal_item.id)">{{isOpen[meal_item.id] && editing[meal_item.id]?'Save':'Edit'}}</a>
+                                    isOpen[meal_item.id] ? view_link_active : view_link_inactive,
+                                    'hover:underline cursor-pointer'
+                                ]" @click="toggleEdit(meal_item.id)">{{ isOpen[meal_item.id] && editing[meal_item.id] ? 'Save' : 'Edit' }}</a>
                             </div>
                             <div class="ml-4 flex-shrink-0">
                                 <a :class="[
-                                        isOpen[meal_item.id] ? view_link_active : view_link_inactive,
-                                        'hover:underline cursor-pointer'
-                                    ]" @click="toggleDropdown(meal_item.id)">{{ isOpen[meal_item.id]?'Hide':'Show'}}</a>
+                                    isOpen[meal_item.id] ? view_link_active : view_link_inactive,
+                                    'hover:underline cursor-pointer'
+                                ]" @click="toggleDropdown(meal_item.id)">{{isOpen[meal_item.id] ? 'Hide' : 'Show' }}</a>
                             </div>
 
                         </li>
+                        <li></li>
                         <li v-if="isOpen[meal_item.id]" :key="`dropdown-${meal_item.id}`" :class="content_active">
-                            <p class="p-2">{{ meal_item.desc }}</p>
-                            <MacroList :allow-editing="true" :editing="editing[meal_item.id]" :macros="meal_item.macros" :quantity="meal_item.quantity" :macro-list="macroList" />
+                            <div v-if="editing[meal_item.id] && allowEditing">
+                                <div class="mt-2">
+                                    <div class="relative mt-2 rounded-md shadow-sm">
+                                        <textarea v-model="meal_item.desc" rows="3" :class="[
+                                            'block w-full rounded-md py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6']
+                                            " />
+
+                                    </div>
+                                </div>
+                            </div>
+                            <p v-else class="p-2">{{ meal_item.desc }}</p>
+                            <MacroList :allow-editing="true" :editing="editing[meal_item.id]" :macros="meal_item.macros"
+                                :quantity="meal_item.quantity" :macro-list="macroList" />
                         </li>
+
                     </template>
+                    <li v-if="meal_items.length == 0"
+                        class="relative flex items-center justify-between py-4 sm:pl-4 pr-5 text-sm leading-6 bg-red-200 rounded-t-md">
+                        No items yet
+                    </li>
+                    <li v-if="allowEditing" class="relative flex items-center justify-end py-4 sm:pl-4 pr-5 text-sm leading-6">
+                        <button @click.prevent="$emit('addMealItem', getNewMealItem())"
+                            class="flex justify-between bg-indigo-400 p-2 rounded text-white font-semibold hover:bg-indigo-500">
+                            <PlusCircleIcon stroke="bg-gray-100" class="w-6 mr-2"/>New  Item
+                        </button>
+                    </li>
                 </ul>
             </dd>
         </div>

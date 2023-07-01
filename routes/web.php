@@ -44,10 +44,15 @@ Route::get(
     [DashboardController::class, 'index']
 )->middleware(['auth', 'verified'])->name('dashboard');
 
+// Route::get(
+//     '/meal-items/search',
+//     [MealItemController::class, 'search']
+// )->middleware(['auth', 'verified'])->name('meal-items/search');
+
 Route::get(
-    '/meal-items/search',
-    [MealItemController::class, 'search']
-)->middleware(['auth', 'verified'])->name('meal-items/search');
+    '/meal-items/recent',
+    [MealItemController::class, 'recent']
+)->middleware(['auth', 'verified'])->name('meal-items/recent');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -55,9 +60,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('chirps', ChirpController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
-    ->middleware(['auth', 'verified']);
+// Route::resource('chirps', ChirpController::class)
+//     ->only(['index', 'store', 'update', 'destroy'])
+//     ->middleware(['auth', 'verified']);
 
 Route::resource('workouts', WorkoutController::class)
     ->only(['index', 'show', 'create'])
@@ -67,7 +72,11 @@ Route::resource('workouts', WorkoutController::class)
 Route::post('/workouts', [WorkoutController::class, 'store'])->middleware(['auth', 'verified', HandlePrecognitiveRequests::class]);
 
 Route::resource('meals', MealController::class)
-    ->only(['index', 'show', 'create', 'store'])
+    ->only(['index', 'show', 'create'])
     ->middleware(['auth', 'verified']);
+
+// Use Precognition for new meal form
+Route::post('/meals', [MealController::class, 'store'])->middleware(['auth', 'verified', HandlePrecognitiveRequests::class]);
+
 
 require __DIR__ . '/auth.php';

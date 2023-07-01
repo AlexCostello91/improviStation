@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, watch, nextTick } from 'vue';
+import { PlusCircleIcon, MinusCircleIcon } from '@heroicons/vue/20/solid';
 import { capitalizeFirstLetter, formatDecimal, isInteger } from '@/Composables/formatHelper.js';
 
 const props = defineProps({
@@ -69,13 +70,16 @@ watch(unusedMacros, (newUnusedMacros) => {
                         <tr v-for="macro in macros" :key="macro.name" class="even:bg-gray-50">
                             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
                                 {{ capitalizeFirstLetter(macro.name ? macro.name : '') }}</td>
-                            <td v-if="allowEditing && editing" class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                <input v-model="macro.value" type="number" class="text-black max-w-[4rem]">
-                                <select v-if="macro.name != 'calories'" v-model="macro.display_unit" name="display_units">
+                            <td v-if="allowEditing && editing" class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 flex justify-between max-w-xs">
+                                <input v-model="macro.value" type="number" class="text-black max-w-[4rem] rounded-md">
+                                <select v-if="macro.name != 'calories'" v-model="macro.display_unit" name="display_units" class="rounded-md">
                                     <option value="g">g</option>
                                     <option value="mg">mg</option>
                                 </select>
-                                <button @click.prevent="macros.splice(macros.indexOf(macro), 1)" class="p-2">Delete</button>
+                                <button @click.prevent="macros.splice(macros.indexOf(macro), 1)"
+                                    >
+                                    <MinusCircleIcon  class="p-2 w-12 text-red-500 hover:text-red-600"></MinusCircleIcon>
+                                </button>
 
                             </td>
                             <td v-else class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
@@ -93,19 +97,23 @@ watch(unusedMacros, (newUnusedMacros) => {
                         </tr>
                         <tr v-if="editing && unusedMacros.length > 0" class=" bg-green-100">
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                <select v-model="newMacro.name" name="macro">
+                                <select v-model="newMacro.name" name="macro" class="rounded-md">
                                     <option v-for="(macro, index) in unusedMacros" :selected="index === 0">{{ macro }}
                                     </option>
                                 </select>
                             </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                <input v-model="newMacro.value" type="number" class="text-black max-w-[4rem]">
-                                <select v-model="newMacro.display_unit" name="display_units">
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 flex justify-between max-w-xs">
+                                <input v-model="newMacro.value" type="number" class="text-black max-w-[4rem] rounded-md">
+                                <select v-model="newMacro.display_unit" name="display_units" class="rounded-md">
                                     <option value="g" selected>g</option>
                                     <option value="mg">mg</option>
                                 </select>
-                                <button @click.prevent="macros.push({ ...newMacro });" class="p-2">Add</button>
+                                <button @click.prevent="macros.push({ ...newMacro });"
+                                    >
+                                    <PlusCircleIcon  class="p-2 w-12 text-green-500 hover:text-green-600"></PlusCircleIcon>
+                                </button>
                             </td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>

@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
+use function PHPSTORM_META\map;
+
 class MealController extends Controller
 {
     protected const DEFAULT_PAGE_SIZE = 10;
@@ -63,8 +65,24 @@ class MealController extends Controller
      */
     public function create()
     {
+        $itemsPerPage = 8;
+        $mealItems = Auth::user()
+        ->meals()
+        ->with('mealItems.macros')
+        ->get()->flatMap(function ($meal) {
+                return $meal->mealItems;
+            })
+        ->sortByDesc('created_at')
+        ->unique('name')
+        ->slice(0, $itemsPerPage)
+        ->flatten();
+        $mealItems->map(function ($mealItem){
+            $mealItem['selected']=false;
+            return $mealItem;
+        });
+
         return Inertia::render('Meals/Create', [
-            'user_id' => Auth::id(),
+            'recent_meal_items' => $mealItems,
             'macroList'=> Macro::TYPES
         ]);
     }

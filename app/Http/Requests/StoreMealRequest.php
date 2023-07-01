@@ -17,8 +17,7 @@ class StoreMealRequest extends FormRequest
      */
     public function authorize()
     {
-        //Verify the user for the new Meal is the user making the request
-        return $this->user()->id == $this->input('user_id');
+        return true;
     }
 
     /**
