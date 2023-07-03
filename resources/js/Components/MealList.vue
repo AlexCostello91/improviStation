@@ -38,8 +38,8 @@ function toggleShowAll() {
 
 </script>
 <template>
-    <div class="px-4 sm:px-6 lg:p-8 bg-white">
-        <div class="flex py-4 justify-between items-center sm:justify-end">
+    <div class="p-4 sm:p-6 lg:p-8 bg-white xl:rounded-lg">
+        <div class="flex pb-4 justify-between items-center sm:justify-end">
             <div class="flex sm:hidden">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                     Meals</h2>

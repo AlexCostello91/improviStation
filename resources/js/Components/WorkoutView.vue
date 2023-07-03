@@ -10,9 +10,9 @@ defineProps(['workout']);
 </script>
 <template>
     <div>
-        <div class="bg-white px-4">
+        <div class="bg-white p-6 mx-auto max-w-lg xl:rounded">
             <div class="flex justify-center">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight py-4 px-4 sm:px-0 break-all">{{ workout.name }}
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight pb-6 px-4 sm:px-0 break-all">{{ workout.name }}
                 </h2>
             </div>
             <div class="flex justify-center">
@@ -40,7 +40,7 @@ defineProps(['workout']);
                         <dt class="text-sm font-semibold leading-6 text-gray-900">Description</dt>
                         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{ workout.desc }}</dd>
                     </div>
-                    <div class="flex justify-start border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
+                    <div class="flex justify-start border-t border-gray-100 px-4 pt-6 sm:col-span-2 sm:px-0">
                         <div class="flex justify-between gap-x-4">
                             <CancelButton :href="route('workouts.index')">Back</CancelButton>
                             <PrimaryButtonLink :href="route('workouts.create', { copy_id: workout.id })">Copy to New Workout

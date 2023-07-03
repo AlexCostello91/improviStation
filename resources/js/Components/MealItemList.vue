@@ -18,7 +18,7 @@ const props = defineProps({
     },
     content_active: {
         type: String,
-        default: 'py-4 px-8 bg-indigo-100'
+        default: 'py-4 px-8 bg-indigo-100 border-none'
     },
     view_link_active: {
         type: String,
@@ -66,32 +66,26 @@ const editing = ref({});
     <dl class="grid grid-cols-1 sm:grid-cols-2 pb-4">
         <div class="border-gray-100 sm:px-4 py-2 sm:col-span-2 sm:px-0">
             <dd class="mt-2 text-sm text-gray-900">
-                <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
+                <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-100">
                     <template v-for="(meal_item, index) in meal_items" :key="meal_item.id">
                         <li :class="[
                             isOpen[meal_item.id] ? header_active
                                 : header_inactive,
                                 index==0?'rounded-t-md':'',
-                            'relative flex items-center justify-between py-4 sm:pl-4 pr-5 text-sm leading-6'
+                            'relative flex items-center justify-between py-4 sm:pl-4 px-4 text-sm leading-6 '
                         ]">
                             <div class="flex w-0 flex-1 items-center">
                                 <div v-if="editing[meal_item.id] && allowEditing" class="ml-4 flex min-w-0 flex-1 gap-2">
                                     <input ref="" v-model="meal_item.name" type="text"
-                                        class="rounded-md text-black text-sm" />
+                                        class="rounded-md text-black text-sm max-w-[8rem]" />
                                 </div>
-                                <div v-else class="ml-4 flex min-w-0 flex-1 gap-2">
+                                <div v-else class="flex min-w-0 flex-1 gap-2">
                                     <span :class="[
                                         isOpen[meal_item.id] ? 'font-bold' : 'font-semibold',
                                         'truncate'
                                     ]">{{ meal_item.name }}</span>
                                 </div>
 
-                                <div v-if="editing[meal_item.id] && allowEditing">
-                                    <button class="flex justify-between items-center bg-red-600 border border-white text-white rounded-md p-1.5 font-bold hover:bg-red-700" @click.prevent="$emit('removeMealItem', meal_item)">
-                                        <ExclamationTriangleIcon class="text-white w-5 mr-1"/>
-                                        REMOVE ITEM
-                                    </button>
-                                </div>
 
                                 <div v-if="editing[meal_item.id] && allowEditing"
                                     class="ml-4 flex shrink sm:shrink-0 sm:min-w-0 gap-2 items-center">
@@ -123,11 +117,16 @@ const editing = ref({});
                             </div>
 
                         </li>
-                        <li></li>
+                        <div v-if="editing[meal_item.id] && allowEditing" class="flex justify-center items-center bg-indigo-100 border-none pt-4">
+                                    <button class="flex justify-center bg-red-600 border border-red-900 text-white rounded-md p-1.5 font-bold hover:bg-red-700" @click.prevent="$emit('removeMealItem', meal_item)">
+                                        <ExclamationTriangleIcon class="text-white w-5 mr-1"/>
+                                        REMOVE ITEM
+                                    </button>
+                                </div>
                         <li v-if="isOpen[meal_item.id]" :key="`dropdown-${meal_item.id}`" :class="content_active">
                             <div v-if="editing[meal_item.id] && allowEditing">
-                                <div class="mt-2">
-                                    <div class="relative mt-2 rounded-md shadow-sm">
+                                <div class="">
+                                    <div class="relative rounded-md shadow-sm">
                                         <textarea v-model="meal_item.desc" rows="3" :class="[
                                             'block w-full rounded-md py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6']
                                             " />
@@ -135,7 +134,7 @@ const editing = ref({});
                                     </div>
                                 </div>
                             </div>
-                            <p v-else class="p-2">{{ meal_item.desc }}</p>
+                            <p v-else class="">{{ meal_item.desc }}</p>
                             <MacroList :allow-editing="true" :editing="editing[meal_item.id]" :macros="meal_item.macros"
                                 :quantity="meal_item.quantity" :macro-list="macroList" />
                         </li>

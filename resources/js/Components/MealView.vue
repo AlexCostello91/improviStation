@@ -11,7 +11,7 @@ const user = usePage().props.auth.user;
 
 </script>
 <template>
-    <div class="bg-white ">
+    <div class="bg-white px-4 mx-auto max-w-2xl xl:rounded">
         <div class="flex justify-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight p-4 sm:p-8 break-all">{{ meal.name }}</h2>
         </div>

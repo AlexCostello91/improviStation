@@ -110,7 +110,6 @@ function transitionStep(currentStep, targetStep) {
             form.setError('desc','You must enter a description.');
         }
     }
-    console.log(currentStep);
     if (valid) {
         steps.value[currentStep].active = false;
         steps.value[currentStep].status = 'complete';
@@ -127,7 +126,7 @@ function transitionStep(currentStep, targetStep) {
         <h2 class="font-semibold text-xl text-gray-800 leading-tight p-4">New Meal</h2>
     </div>
 
-    <div class="bg-white px-4 sm:px-6 lg:px-8">
+    <div class="bg-white px-2 sm:px-6 lg:px-8">
         <div class="flex justify-center">
             <StepsDisplay :steps="steps" @goToStep="goToStep" />
         </div>
@@ -257,11 +256,14 @@ function transitionStep(currentStep, targetStep) {
                         </div>
                     </MealFormStep>
                     <MealFormStep :active="steps[4].active">
-                        <dt class="text-sm font-medium leading-6 text-gray-900 font-semibold">Items</dt>
+                        <div class="max-w-2xl mx-auto">
+                            <dt class="text-sm font-medium leading-6 text-gray-900 font-semibold text-center">Items</dt>
                         <dd class="text-sm text-gray-900">
-                            <MealItemList :meal_items="form.meal_items" header_inactive="bg-white rounded rounded-md"
+                            <MealItemList :meal_items="form.meal_items" header_inactive="bg-white"
                                 :allow-editing="true" :macro-list="macroList" @add-meal-item="addMealItem" @remove-meal-item="removeMealItem"/>
                         </dd>
+                        </div>
+
                     </MealFormStep>
 
                     <MealFormStep :active="steps[5].active">

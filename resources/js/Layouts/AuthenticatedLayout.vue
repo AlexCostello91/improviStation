@@ -5,35 +5,9 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
 import {Head} from '@inertiajs/vue3';
+import Footer from '@/Components/Footer.vue';
 
-const footerNavigation = {
-    solutions: [
-        { name: 'Hosting', href: '#' },
-        { name: 'Data Services', href: '#' },
-        { name: 'Uptime Monitoring', href: '#' },
-        { name: 'Enterprise Services', href: '#' },
-    ],
-    support: [
-        { name: 'Pricing', href: '#' },
-        { name: 'Documentation', href: '#' },
-        { name: 'Guides', href: '#' },
-        { name: 'API Reference', href: '#' },
-    ],
-    company: [
-        { name: 'About', href: '#' },
-        { name: 'Blog', href: '#' },
-        { name: 'Jobs', href: '#' },
-        { name: 'Press', href: '#' },
-        { name: 'Partners', href: '#' },
-    ],
-    legal: [
-        { name: 'Claim', href: '#' },
-        { name: 'Privacy', href: '#' },
-        { name: 'Terms', href: '#' },
-    ],
-}
 const showingNavigationDropdown = ref(false);
 </script>
 
@@ -42,7 +16,7 @@ const showingNavigationDropdown = ref(false);
         <slot name="title">
             <Head title="ImproviStation - Improve your life!" />
         </slot>
-        <div class="min-h-screen bg-gray-100">
+        <div class="bg-gray-100">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-6 xl:px-0">
@@ -163,63 +137,13 @@ const showingNavigationDropdown = ref(false);
             </header>
 
             <!-- Page Content -->
-            <main class="mx-auto max-w-7xl min-h-[55vh]">
+            <main class="mx-auto max-w-7xl min-h-screen xl:my-6">
                 <slot />
             </main>
 
             <!-- Page Footer -->
             <!-- Footer -->
-        <div class="mx-auto mt-32 max-w-7xl px-6 lg:px-8">
-            <footer aria-labelledby="footer-heading" class="relative border-t border-gray-900/10 py-24 sm:mt-56 sm:py-32">
-                <h2 id="footer-heading" class="sr-only">Footer</h2>
-                <div class="xl:grid xl:grid-cols-3 xl:gap-8">
-                    <img class="h-7" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                        alt="Company name" />
-                    <div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
-                        <div class="md:grid md:grid-cols-2 md:gap-8">
-                            <div>
-                                <h3 class="text-sm font-semibold leading-6 text-gray-900">Solutions</h3>
-                                <ul role="list" class="mt-6 space-y-4">
-                                    <li v-for="item in footerNavigation.solutions" :key="item.name">
-                                        <a :href="item.href" class="text-sm leading-6 text-gray-600 hover:text-gray-900">{{
-                                            item.name }}</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="mt-10 md:mt-0">
-                                <h3 class="text-sm font-semibold leading-6 text-gray-900">Support</h3>
-                                <ul role="list" class="mt-6 space-y-4">
-                                    <li v-for="item in footerNavigation.support" :key="item.name">
-                                        <a :href="item.href" class="text-sm leading-6 text-gray-600 hover:text-gray-900">{{
-                                            item.name }}</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="md:grid md:grid-cols-2 md:gap-8">
-                            <div>
-                                <h3 class="text-sm font-semibold leading-6 text-gray-900">Company</h3>
-                                <ul role="list" class="mt-6 space-y-4">
-                                    <li v-for="item in footerNavigation.company" :key="item.name">
-                                        <a :href="item.href" class="text-sm leading-6 text-gray-600 hover:text-gray-900">{{
-                                            item.name }}</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="mt-10 md:mt-0">
-                                <h3 class="text-sm font-semibold leading-6 text-gray-900">Legal</h3>
-                                <ul role="list" class="mt-6 space-y-4">
-                                    <li v-for="item in footerNavigation.legal" :key="item.name">
-                                        <a :href="item.href" class="text-sm leading-6 text-gray-600 hover:text-gray-900">{{
-                                            item.name }}</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        </div>
+            <Footer />
         </div>
     </div>
 </template>

@@ -9,8 +9,8 @@ let props = defineProps(['workouts']);
 
 </script>
 <template>
-    <div class="px-4 sm:px-6 lg:px-8 lg:py-4 bg-white border-t border-gray-100">
-        <div class="flex justify-between sm:justify-end items-center py-4 sm:px-0">
+    <div class="p-4 sm:p-6 lg:p-8 bg-white xl:rounded-lg">
+        <div class="flex justify-between sm:justify-end items-center pb-4 sm:px-0">
             <div class="flex sm:hidden">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                     Workouts</h2>
