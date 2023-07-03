@@ -18,7 +18,7 @@ const props = defineProps({
     },
     content_active: {
         type: String,
-        default: 'py-4 px-8 bg-indigo-100 border-none'
+        default: 'p-4 bg-indigo-100 border-none'
     },
     view_link_active: {
         type: String,
