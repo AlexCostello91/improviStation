@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { PlusCircleIcon, ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
 import MacroList from './MacroList.vue';
-
+const emits = defineEmits(['removeMealItem','addMealItem','goToStep']);
 const props = defineProps({
     meal_items: {
         type: Array,
@@ -43,15 +43,28 @@ const toggleDropdown = (itemId) => {
     isOpen.value[itemId] = !isOpen.value[itemId];
     if (!isOpen.value[itemId]) {
         editing.value[itemId] = false;
+        removeZeroQtyItems()
     }
 };
 
 const toggleEdit = (itemId) => {
     editing.value[itemId] = !editing.value[itemId];
+    if(editing.value[itemId]==false){
+        removeZeroQtyItems()
+    }
+}
+
+function removeZeroQtyItems(){
+    props.meal_items.forEach(meal_item=>{
+            if(meal_item.quantity == 0){
+                emits('removeMealItem', meal_item);
+            }
+        })
 }
 function getNewMealItem() {
     return {
         name: 'New Meal Item',
+        id: Date.now(),
         desc: '',
         macros: [],
         quantity: 1
@@ -141,16 +154,18 @@ const editing = ref({});
 
                     </template>
                     <li v-if="meal_items.length == 0"
-                        class="relative flex items-center justify-between py-4 sm:pl-4 pr-5 text-sm leading-6 bg-red-200 rounded-t-md">
-                        No items yet
+                        class="relative flex items-center justify-center align-middle p-4 text-sm leading-6 bg-red-400 text-white font-bold rounded-md">
+                        <ExclamationTriangleIcon class="text-white w-5 mr-1"/>No items added
                     </li>
-                    <li v-if="allowEditing" class="relative flex items-center justify-end py-4 sm:pl-4 pr-5 text-sm leading-6">
+
+
+                </ul>
+                <div v-if="allowEditing" class="relative flex items-center justify-end py-4 sm:pl-4 pr-5 text-sm leading-6">
                         <button @click.prevent="$emit('addMealItem', getNewMealItem())"
                             class="flex justify-between bg-indigo-400 p-2 rounded text-white font-semibold hover:bg-indigo-500">
                             <PlusCircleIcon stroke="bg-gray-100" class="w-6 mr-2"/>New  Item
                         </button>
-                    </li>
-                </ul>
+                    </div>
             </dd>
         </div>
     </dl>

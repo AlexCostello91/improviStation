@@ -44,7 +44,7 @@ const user = usePage().props.auth.user;
                         <MealItemList :meal_items="meal.meal_items" />
                     </dd>
                 </div>
-                <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
+                <div class="sm:col-span-2 sm:px-0">
                     <dt class="text-sm font-semibold leading-6 text-gray-900">Nutrition Summary</dt>
                     <MacroList :macros="meal.macroSummary?meal.macroSummary:computeMealMacroSummary(meal)" :quantity="1" />
                 </div>
