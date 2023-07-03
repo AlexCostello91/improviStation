@@ -93,7 +93,7 @@ const editing = ref({});
                                         isOpen[meal_item.id] ? 'font-bold' : 'font-semibold',
                                         'truncate'
                                     ]"> Qty: </span>
-                                    <input v-model="meal_item.quantity" type="number"
+                                    <input v-model="meal_item.quantity" type="number" min="1" inputmode="numeric"
                                         class="rounded-md text-black text-sm max-w-[4rem]">
                                 </div>
                                 <div v-else class="ml-4 flex shrink sm:shrink-0 sm:min-w-0 gap-2">
