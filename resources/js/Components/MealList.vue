@@ -62,7 +62,7 @@ function toggleShowAll() {
             <div class="px-2"><span>All Meals</span></div>
         </div>
         <div class="mt-2">
-            <table class="divide-y divide-gray-300 table-fixed sm:table-auto">
+            <table class="divide-y divide-gray-300 table-fixed sm:table-auto min-w-full">
                 <thead>
                     <tr>
                         <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Name
