@@ -33,21 +33,18 @@ const unusedMacros = computed(() => {
     });
 });
 
-const newMacro = ref({});
-
+// const newMacro = ref({});
+const newMacro = ref(unusedMacros.value.length > 0 ? { name: unusedMacros.value[0], value: 1, display_unit: 'g' } : {});
 watch(unusedMacros, (newUnusedMacros) => {
-
     if (newUnusedMacros.length > 0) {
-        newMacro.value = { name: newUnusedMacros[0], value: 1, display_unit: 'g' };
-        // Set newMacro.value in the next tick to ensure DOM has updated
-        // This ensures the first option is selected in the UI
-        nextTick(() => {
-            newMacro.value = { name: newUnusedMacros[0], value: 1, display_unit: 'g' };
-        });
+        let du = newUnusedMacros[0] === 'sodium' ? 'mg' : 'g';
+        newMacro.value = { name: newUnusedMacros[0], value: 1, display_unit: du };
     } else {
         newMacro.value = {}; // Handle case when no unused macros available
     }
 });
+
+
 
 </script>
 <template>
@@ -72,7 +69,8 @@ watch(unusedMacros, (newUnusedMacros) => {
                                 {{ capitalizeFirstLetter(macro.name ? macro.name : '') }}</td>
                             <td v-if="allowEditing && editing"
                                 class="whitespace-nowrap py-4 text-sm text-gray-500 flex justify-between max-w-[13rem]">
-                                <input v-model="macro.value" type="number" min="1" class="text-black max-w-[5rem] rounded-md">
+                                <input v-model="macro.value" type="number" min="1"
+                                    class="text-black max-w-[5rem] rounded-md">
                                 <select v-if="macro.name != 'calories'" v-model="macro.display_unit" name="display_units"
                                     class="rounded-md">
                                     <option value="g">g</option>
@@ -104,10 +102,11 @@ watch(unusedMacros, (newUnusedMacros) => {
                                 </select>
                             </td>
                             <td class="whitespace-nowrap py-4 text-sm text-gray-500 flex justify-between max-w-[12rem]">
-                                <input v-model="newMacro.value" type="number" min="1" class="text-black max-w-[5rem] rounded-md">
+                                <input v-model="newMacro.value" type="number" min="1"
+                                    class="text-black max-w-[5rem] rounded-md">
                                 <select v-model="newMacro.display_unit" name="display_units" class="rounded-md">
-                                    <option value="g" selected>g</option>
-                                    <option value="mg">mg</option>
+                                    <option value="g" :selected="newMacro.display_unit=='g'">g</option>
+                                    <option value="mg" :selected="newMacro.display_unit=='mg'">mg</option>
                                 </select>
                                 <button @click.prevent="macros.push({ ...newMacro });">
                                     <PlusCircleIcon class="p-2 w-12 text-green-500 hover:text-green-600"></PlusCircleIcon>

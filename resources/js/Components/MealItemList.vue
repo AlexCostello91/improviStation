@@ -88,7 +88,7 @@ const editing = ref({});
                             'relative flex items-center justify-between py-4 sm:pl-4 px-4 text-sm leading-6 '
                         ]">
                             <div class="flex w-0 flex-1 items-center">
-                                <div v-if="editing[meal_item.id] && allowEditing" class="ml-4 flex min-w-0 flex-1 gap-2">
+                                <div v-if="editing[meal_item.id] && allowEditing" class="flex min-w-0 flex-1 gap-2">
                                     <input ref="" v-model="meal_item.name" type="text"
                                         class="rounded-md text-black text-sm max-w-[8rem]" />
                                 </div>

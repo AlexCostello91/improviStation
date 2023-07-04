@@ -48,10 +48,15 @@ function submit() {
 form.setValidationTimeout(1000);
 
 function removeMealItem(meal_item) {
-    meal_item.selected = false;
     form.meal_items.forEach((meal_item_el, index) => {
         if (meal_item_el.id == meal_item.id && meal_item_el.name == meal_item.name) {
             form.meal_items.splice(index,1);
+        }
+    });
+    //Unselect recent item if removed from meal
+    props.recent_meal_items.forEach((recent_meal_item, index)=>{
+        if(meal_item.id == recent_meal_item.id){
+            recent_meal_item.selected = false;
         }
     });
 
@@ -256,7 +261,7 @@ function transitionStep(currentStep, targetStep) {
                         </div>
                     </MealFormStep>
                     <MealFormStep :active="steps[4].active">
-                        <div class="max-w-2xl mx-auto">
+                        <div class="max-w-2xl mx-auto p-4">
                             <dt class="text-sm font-medium leading-6 text-gray-900 font-semibold text-center">Items</dt>
                         <dd class="text-sm text-gray-900">
                             <MealItemList :meal_items="form.meal_items" header_inactive="bg-white"
