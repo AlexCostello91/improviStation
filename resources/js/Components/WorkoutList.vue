@@ -66,7 +66,7 @@ let props = defineProps(['workouts']);
                 </tbody>
             </table>
             <div>
-                <PaginationPane :links="workouts.links" :pageSize="workouts.per_page" />
+                <PaginationPane :links="workouts.links" :pageSize="workouts.per_page" :current_page="workouts.current_page" :total_pages="workouts.last_page"/>
             </div>
         </div>
     </div>

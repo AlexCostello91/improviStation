@@ -11,6 +11,12 @@ const props = defineProps({
         type: Array,
         default: []
     },
+    current_page: {
+        type: Number
+    },
+    total_pages: {
+        type: Number
+    },
     pageSizeOptions: {
         type: Array,
         default: [
@@ -39,11 +45,11 @@ function pageSizeUpdated(option) {
 </script>
 <template>
     <div>
-        <nav class="flex items-center justify-between border-t border-gray-200 px-4 sm:px-0">
+        <nav class="flex items-center justify-between border-t border-gray-200">
             <div v-if="links.slice(0, 1).pop().url" class="-mt-px flex flex-1">
                 <Link :href="links.slice(0, 1).pop().url ? links.slice(0, 1).pop().url : 'null'"
-                    class="inline-flex items-center border-t-2 border-transparent p-2 text-base font-medium text-gray-500 hover:border-indigo-500 hover:text-indigo-600 group">
-                <ArrowLongLeftIcon class="mr-3 h-5 w-5 text-gray-400 group-hover:text-indigo-600" aria-hidden="true" />
+                    class="text-indigo-600 inline-flex items-center border-t-2 border-transparent p-2 text-base font-medium md:text-gray-500 md:hover:border-indigo-500 md:hover:text-indigo-600 group">
+                <ArrowLongLeftIcon class="text-indigo-600 mr-3 h-5 w-5 md:text-gray-400 md:group-hover:text-indigo-600" aria-hidden="true" />
                 Previous
                 </Link>
             </div>
@@ -61,15 +67,16 @@ function pageSizeUpdated(option) {
                     'border-transparent hover:border-indigo-500 hover:text-indigo-600': !link.active
                 }" :href="link.url ? link.url : 'null'"> {{ link.label }} </Link>
             </div>
+            <div class="flex mx-auto md:hidden"><span class="text-gray-500">Page {{ current_page }}/{{ total_pages }}</span></div>
             <div v-if="links.slice(-1).pop().url" class="-mt-px flex flex-1 justify-end">
                 <Link :href="links.slice(-1).pop().url ? links.slice(-1).pop().url : 'null'"
-                    class="inline-flex items-center border-t-2 border-transparent p-2 text-base font-medium text-gray-500 hover:border-indigo-500 hover:text-indigo-600 group">
+                    class="text-indigo-600 inline-flex items-center border-t-2 border-transparent p-2 text-base font-medium md:text-gray-500 md:hover:border-indigo-500 md:hover:text-indigo-600 group">
                 Next
-                <ArrowLongRightIcon class="ml-3 h-5 w-5 text-gray-400 group-hover:text-indigo-600" aria-hidden="true" />
+                <ArrowLongRightIcon class="text-indigo-600 ml-3 h-5 w-5 md:text-gray-400 md:group-hover:text-indigo-600" aria-hidden="true" />
                 </Link>
             </div>
             <!-- disabled next link -->
-            <div v-else class="-mt-px flex flex-1">
+            <div v-else class="-mt-px flex flex-1 justify-end">
                 <div class="inline-flex items-center border-t-2 border-transparent p-2 text-base font-medium text-gray-500">
                     Next
                     <ArrowLongRightIcon class="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />

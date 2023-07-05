@@ -99,7 +99,7 @@ function toggleShowAll() {
                 </tbody>
             </table>
             <div>
-                <PaginationPane :links="meals.links" :pageSize="meals.per_page" />
+                <PaginationPane :links="meals.links" :pageSize="meals.per_page" :current_page="meals.current_page" :total_pages="meals.last_page"/>
             </div>
         </div>
     </div>
