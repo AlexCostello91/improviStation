@@ -16,7 +16,7 @@ Requirements:
 
 2. Copy .env.example to .env
 
-3. Open in VScode, install the devcontainers extension and use the "Reopen in Devcontainer" command.
+3. Open in VScode, install the devcontainers extension and use the "Reopen in Container" command.
 
     When presented with terminal, run: 
     
