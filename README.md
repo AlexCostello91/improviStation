@@ -1,9 +1,13 @@
 # ImproviStation
 
-This is a simple Laravel/Vue project, utilizing VScode's devcontainer features. It requires docker to run locally.
+This is a simple Laravel/Vue 3 project, utilizing VScode's devcontainer features.
 
 ## TO RUN LOCALLY
-Generate SSL certs for nginx and place them in /docker/nginx/ssl/
+
+Dev Containers require docker. Generate self-signed SSL certs for nginx and place them in /docker/nginx/ssl/
+
+> openssl genrsa -out nginx.key 2048
+> openssl req -new -x509 -key nginx.key -out nginx.crt
 
 Copy .env.example to .env
 
@@ -21,3 +25,5 @@ Note that you may need to click the link provided by Vite in the terminal, as yo
 
 
 Also note that using Docker Desktop is not recommended, as it has many inconsistencies between host platforms and it raises configuration issues.
+
+For more information, please see the [Overview](https://code.visualstudio.com/docs/devcontainers/containers) page for VS Code Dev Containers.
