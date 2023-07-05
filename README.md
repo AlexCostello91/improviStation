@@ -27,6 +27,10 @@ Requirements:
     > php artisan migrate --seed
     
 4. Make an exception for Vite's self-signed SSL certs by visiting `https://[::]:5173/@vite/client` in your browser. After that, the website should be available at `https://localhost`.
+5. If you would like to login, you can use the following email/password:
+   >test@example.com
+   >
+   >password
 
 
 Alternatively, if you are already familiar with docker you can use the docker-compose file and configure the project how you like.
