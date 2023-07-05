@@ -4,6 +4,5 @@ RUN apk update \
     && apk add --no-cache sudo bash git vim less pv curl nodejs npm mysql-client openssh \
     && docker-php-ext-install pdo_mysql \
     && curl -sSL https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/local/bin/composer \
-    && npm install --global yarn
+    && mv composer.phar /usr/local/bin/composer
 CMD ["sleep", "infinity"]
