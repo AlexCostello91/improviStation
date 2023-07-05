@@ -30,6 +30,36 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        //Create Test user for consistent login creds
+        User::factory()
+        ->has(
+            Meal::factory()
+                ->has(
+                    MealItem::factory()
+                        ->has(
+                            Macro::factory()
+                            ->count($this->macrosPerMealItem)
+                            ->sequence(
+                                ['name' => 'protein'],
+                                ['name' => 'fat'],
+                                ['name' => 'calories'],
+                                ['name' => 'sodium'],
+                                ['name' => 'fiber'],
+                                ['name' => 'carbs'],
+                                ['name' => 'sugar'],
+                            )
+                        )
+                        ->count($this->mealItemsPerMeal)
+                )
+                ->count($this->mealsPerUser)
+        )
+        ->has(
+            Workout::factory()
+            ->count($this->workoutsPerUser)
+        )
+        ->create(['email'=>'test@example.com']);
+
+        //Create X other users
         User::factory()
             ->has(
                 Meal::factory()
