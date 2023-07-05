@@ -7,6 +7,7 @@ This is a simple Laravel/Vue 3 project, utilizing VScode's devcontainer features
 Dev Containers require docker. Generate self-signed SSL certs for nginx and place them in /docker/nginx/ssl/
 
 > openssl genrsa -out nginx.key 2048
+> 
 > openssl req -new -x509 -key nginx.key -out nginx.crt
 
 Copy .env.example to .env
