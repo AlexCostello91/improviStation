@@ -18,7 +18,7 @@ Requirements:
 
 3. Open in VScode, install the devcontainers extension and use the "Reopen in Container" command.
 
-    When presented with terminal, run: 
+    When presented with the terminal, run: 
     
     > composer install
     
