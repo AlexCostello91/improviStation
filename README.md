@@ -24,10 +24,10 @@ Requirements:
     
     > php artisan migrate --seed
     
-    > npm run dev
+4. Make an exception for Vite's self-signed SSL certs by visiting `https://[::]` in your browser. After that, the website should be available at `https://localhost`.
 
 
-Alternatively, if you are already familiar with docker you can use the docker-compose file and configure the project how you like. Note that you may need to click the link provided by Vite in the terminal, as your browser might complain about the self-signed certs. After doing that, the app should be running on `localhost`
+Alternatively, if you are already familiar with docker you can use the docker-compose file and configure the project how you like.
 
 Also note that using Docker Desktop is not recommended, as it has many inconsistencies between host platforms and it raises configuration issues.
 
